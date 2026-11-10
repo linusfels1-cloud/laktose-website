@@ -1,0 +1,9 @@
+{
+  "name": "laktose-website",
+  "private": true,
+  "type": "module",
+  "description": "Semesterprojekt Laktoseintoleranz, Biologie Klasse 11",
+  "dependencies": {
+    "@netlify/blobs": "11.1.4"
+  }
+}

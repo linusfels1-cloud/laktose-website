@@ -1,0 +1,8 @@
+# Einstellungen für Netlify: die Website liegt im Ordner "public",
+# die Server-Funktion für den Website-Rekord im Ordner "netlify/functions".
+[build]
+  publish = "public"
+  command = ""
+
+[functions]
+  directory = "netlify/functions"
