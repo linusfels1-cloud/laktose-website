@@ -32,7 +32,7 @@ h1:focus,h2:focus{outline:none}
 .beitrag-head{display:flex; align-items:baseline; gap:12px; padding:20px 24px 16px; border-bottom:1px solid var(--line)}
 .beitrag-head .teil{font:500 14px var(--f-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--accent); white-space:nowrap}
 .beitrag-head h3{font:800 clamp(24px, 3.2vw, 30px)/1.15 var(--f-display); margin:0; text-wrap:balance}
-.lab + .beitrag{margin-top:22px}
+.lab + .beitrag, .beitrag + .beitrag{margin-top:22px}
 @media (max-width:640px){ .beitrag-head{flex-direction:column; gap:4px; padding:16px 18px 12px} }
 .text h3{font:700 clamp(21px, 2.6vw, 24px)/1.2 var(--f-display); margin:28px 0 10px; text-wrap:balance}
 .text h3:first-child{margin-top:0}
@@ -431,12 +431,14 @@ body.quiz .qchip{display:block}
 @media (max-width:880px){
   .hero-grid{grid-template-columns:1fr; gap:28px}
 }
-@media (max-width:900px){
+/* Navigation: nur die aktuelle Frage zeigt ihren Titel, die anderen nur ihre Nummer (die Titel sind zu lang für alle nebeneinander) */
+@media all{
   .steps a span{display:none}
   .steps a{padding:4px}
   .steps a[aria-current] span{display:inline}
   .steps a[aria-current]{padding-right:11px}
 }
+@media (min-width:641px){ .steps a[href="#quellen"] span{display:inline} .steps a[href="#quellen"]{padding-right:11px} }
 @media (max-width:640px){
   .start{padding-block:40px 48px}
   .fragen{grid-template-columns:1fr; margin-top:32px}
@@ -547,7 +549,7 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
       <a href="#biologie" data-nav><b>2</b><span>Frage 2</span></a>
       <a href="#karte" data-nav><b>3</b><span>Frage 3</span></a>
       <a href="#symptome" data-nav><b>4</b><span>Frage 4</span></a>
-      <a href="#alltag" data-nav><b>5</b><span>Frage 5</span></a>
+      <a href="#alltag" data-nav><b>5</b><span>Was hilft bei Laktoseintoleranz?</span></a>
       <a href="#quellen" data-nav><b>Q</b><span>Quellen</span></a>
     </nav>
     <a class="top-quellen" href="#quellen">Quellen</a>
@@ -585,7 +587,7 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
         <li style="--i:1"><a href="#biologie"><span class="nr">02</span><span class="q">Frage 2</span><span class="sub">Untertitel folgt</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
         <li style="--i:2" class="wide"><a href="#karte"><span class="nr">03</span><span class="q">Frage 3</span><span class="sub">Untertitel folgt · mit interaktiver Weltkarte</span><span class="swatch" aria-hidden="true"><i style="background:var(--s1);--k:0"></i><i style="background:var(--s2);--k:1"></i><i style="background:var(--s3);--k:2"></i><i style="background:var(--s4);--k:3"></i><i style="background:var(--s5);--k:4"></i><i style="background:var(--s6);--k:5"></i><i style="background:var(--s7);--k:6"></i></span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
         <li style="--i:3"><a href="#symptome"><span class="nr">04</span><span class="q">Frage 4</span><span class="sub">Untertitel folgt</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
-        <li style="--i:4"><a href="#alltag"><span class="nr">05</span><span class="q">Frage 5</span><span class="sub">Untertitel folgt</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
+        <li style="--i:4"><a href="#alltag"><span class="nr">05</span><span class="q">Was hilft bei Laktoseintoleranz?</span><span class="sub">Laktase-Präparate, Probiotika und laktosefreie Ernährung</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
       </ol>
       <p class="seen-note" id="seenNote" aria-live="polite"></p>
     </div>
@@ -785,18 +787,35 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
   </section>
 
   <!-- ===================== FRAGE 5 ===================== -->
-  <section class="page kapitel" data-id="alltag" data-title="Frage 5">
+  <section class="page kapitel" data-id="alltag" data-title="Was hilft bei Laktoseintoleranz?">
     <div class="wrap">
-      <header class="khead"><div class="eyebrow">Frage 5 von 5</div><h2>Frage 5</h2><p class="topic">Untertitel folgt</p></header>
+      <header class="khead"><div class="eyebrow">Frage 5 von 5</div><h2>Was hilft bei Laktoseintoleranz?</h2><p class="topic">Laktase-Präparate, Probiotika und laktosefreie Ernährung</p></header>
       <div class="col">
+        <!-- TEIL 1 · Audio: Dateiname in data-audio eintragen, z. B. data-audio="audio/frage5-teil1.mp3" -->
         <div class="beitrag" data-audio="">
+          <div class="beitrag-head"><span class="teil">Teil 1</span><h3>Laktase-Präparate und Probiotika</h3></div>
           <div class="text">
-            <!-- TEXT FRAGE 5 -->
-            <div class="platzhalter">
-              <strong>Euer Text folgt hier</strong>
-              Mögliche Inhalte:
-              <ul><li>Laktosefreie Produkte und Laktase-Tabletten</li><li>Welche Käsesorten kaum Laktose enthalten</li><li>Calciumversorgung ohne Milch</li></ul>
-            </div>
+            <h3>Laktase-Präparate</h3>
+            <p>Laktase-Präparate gibt es in verschiedenen Formen, zum Beispiel als Kapseln, Tropfen und Kautabletten. Meist sind das keine Medikamente, sondern Nahrungsergänzungsmittel. Man nimmt sie kurz vor oder zusammen mit laktosehaltigen Lebensmitteln ein. Die Wirkung hält nur eine begrenzte Zeit an, deshalb braucht man sie zu jeder Mahlzeit neu. Es gibt auch Depot-Tabletten, die ihre Laktase nach und nach abgeben und laut Hersteller bis zu vier Stunden wirken.</p>
+            <p>So funktioniert es: Man schluckt zum Beispiel eine Kapsel. Sie gelangt durch die Speiseröhre in den Magen und löst sich dort innerhalb weniger Minuten auf. Isst man dann zum Beispiel Joghurt, mischt sich die Laktase aus der Kapsel mit dem Essen. Sie übernimmt die Aufgabe der fehlenden körpereigenen Laktase und spaltet den Zweifachzucker Laktose in die beiden Einfachzucker Glukose und Galaktose. Diese werden im Dünndarm von der Darmschleimhaut aufgenommen, und die Laktose verursacht keine Beschwerden mehr.</p>
+            <h3>Probiotika (helfen nur manchen Menschen)</h3>
+            <p>Probiotika sind lebende Bakterien, zum Beispiel Milchsäurebakterien, die man als Kapsel oder mit Joghurt zu sich nimmt. Sie können bei manchen Menschen die Beschwerden lindern, die Wissenschaft ist sich aber nicht ganz einig. Eine Meta-Analyse im <em>Journal of Dairy Science</em> von 2023 („Effects of Probiotics Administration on Lactose Intolerance in Adulthood“) kam zu dem Ergebnis, dass Probiotika Bauchschmerzen, Durchfall und Blähungen verringern. Eine ältere Übersichtsarbeit von 2005 fand dagegen, dass Probiotika im Allgemeinen nicht helfen, höchstens bestimmte Bakterienstämme.</p>
+            <p>Probiotika wirken ähnlich wie Laktase-Präparate: Im Dünndarm werden viele der Bakterien zersetzt und geben dabei das Enzym Beta-Galaktosidase frei. Das ist dieselbe Art von Enzym wie die Laktase und spaltet ebenfalls Laktose. Dabei wird aber nicht die ganze Laktose abgebaut. Deshalb werden die Beschwerden eher verringert als ganz beseitigt.</p>
+          </div>
+        </div>
+
+        <!-- TEIL 2 · Audio: Dateiname in data-audio eintragen, z. B. data-audio="audio/frage5-teil2.mp3" -->
+        <div class="beitrag" data-audio="">
+          <div class="beitrag-head"><span class="teil">Teil 2</span><h3>Laktosefrei essen</h3></div>
+          <div class="text">
+            <h3>Ernährung um Laktose herum</h3>
+            <p>Viele Menschen mit Laktoseintoleranz richten ihre Ernährung nach der Laktose aus, anstatt immer wieder Präparate zu nehmen. Sie meiden laktosereiche Lebensmittel oder greifen zu laktosefreien Produkten. Wer sich vegan ernährt, muss nichts umstellen, weil vegane Lebensmittel keine Laktose enthalten.</p>
+            <p>Ganz verzichten müssen die meisten Betroffenen aber nicht. Laut der Europäischen Behörde für Lebensmittelsicherheit (EFSA) vertragen die meisten etwa 12 Gramm Laktose auf einmal, das ist ungefähr ein Glas Milch. Hartkäse wie Parmesan, Emmentaler oder Gouda enthält sogar nur noch Spuren von Laktose.</p>
+            <p>Manche Betroffene essen auch absichtlich regelmäßig kleine Mengen laktosehaltiger Lebensmittel, um ihre Verträglichkeit zu trainieren. Der Körper bildet dadurch zwar nicht mehr Laktase, aber die Bakterien im Dickdarm können sich anpassen. So können die Beschwerden mit der Zeit geringer werden.</p>
+            <h3>Wie entstehen laktosefreie Lebensmittel?</h3>
+            <p>Meist wird der Milch das Enzym Laktase zugesetzt, also genau das Enzym, das bei Menschen mit Laktoseintoleranz fehlt. Es spaltet die Laktose schon vor dem Trinken in Glukose und Galaktose. Weil diese Einfachzucker süßer schmecken als Laktose, schmeckt laktosefreie Milch etwas süßer. Außerdem wird die Milch erhitzt (pasteurisiert), damit sie länger haltbar ist.</p>
+            <p>Eine weitere Technik ist die Filtration: Die Milch wird durch eine sehr feine Membran gepresst, die einen Teil der Laktose abtrennt. Den restlichen Milchzucker spaltet man oft zusätzlich mit Laktase.</p>
+            <p class="kurz">In Deutschland darf ein Lebensmittel nur „laktosefrei“ heißen, wenn es weniger als 0,1 Gramm Laktose pro 100 Gramm enthält.</p>
           </div>
         </div>
 
@@ -824,6 +843,11 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
         <li>Global Lactase Persistence Association Database (GLAD), Molecular and Cultural Evolution Lab, University College London. Tabelle „LP phenotypes with Americas“, Stand November 2020 (für Ingram et al., <em>Advanced Dairy Chemistry</em>, 2021). <a href="https://www.ucl.ac.uk/life-sciences/gee/gee-research-centres/research-groups/global-lactase-persistence-association-database-glad" target="_blank" rel="noopener">Website der Datenbank</a> (Kartendaten; die Einzelstudie steht bei jedem Land in der Karte)</li>
         <li>MedlinePlus Genetics (U.S. National Library of Medicine): Lactose intolerance. Stand 24. März 2023. <a href="https://medlineplus.gov/genetics/condition/lactose-intolerance/" target="_blank" rel="noopener">medlineplus.gov</a> (weltweit etwa 65 %)</li>
         <li>National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK): Symptoms &amp; Causes of Lactose Intolerance. Stand Februar 2018. <a href="https://www.niddk.nih.gov/health-information/digestive-diseases/lactose-intolerance/symptoms-causes" target="_blank" rel="noopener">niddk.nih.gov</a> (Beschwerden innerhalb weniger Stunden)</li>
+        <li>Ahn, S.-I., Kim, M. S., Park, D. G., Han, B. K. &amp; Kim, Y. J. (2023): Effects of probiotics administration on lactose intolerance in adulthood: A meta-analysis. <em>Journal of Dairy Science</em>, 106(7), 4489–4501. <a href="https://pubmed.ncbi.nlm.nih.gov/37225575/" target="_blank" rel="noopener">PubMed</a></li>
+        <li>Levri, K. M. u. a. (2005): Do probiotics reduce adult lactose intolerance? A systematic review. <em>The Journal of Family Practice</em>, 54(7), 613–620. <a href="https://pubmed.ncbi.nlm.nih.gov/16009090/" target="_blank" rel="noopener">PubMed</a></li>
+        <li>Hertzler, S. R. &amp; Savaiano, D. A. (1996): Colonic adaptation to daily lactose feeding in lactose maldigesters reduces lactose intolerance. <em>The American Journal of Clinical Nutrition</em>, 64(2), 232–236. <a href="https://pubmed.ncbi.nlm.nih.gov/8694025/" target="_blank" rel="noopener">PubMed</a> (Gewöhnung der Darmbakterien)</li>
+        <li>Verbraucherzentrale: Laktosefreie Lebensmittel: Nicht für jeden sinnvoll. Stand 11. Juni 2026. <a href="https://www.verbraucherzentrale.de/wissen/lebensmittel/kennzeichnung-und-inhaltsstoffe/laktosefreie-lebensmittel-nicht-fuer-jeden-sinnvoll-11053" target="_blank" rel="noopener">verbraucherzentrale.de</a> (12 g Laktose laut EFSA, Hartkäse, Grenzwert „laktosefrei“)</li>
+        <li>Shop Apotheke: Lactrase 1.500 FCC Kapseln, Produktinformation. <a href="https://www.shop-apotheke.com/arzneimittel/9175787/lactrase-1500-fcc-kapseln.htm" target="_blank" rel="noopener">shop-apotheke.com</a> (Einnahme, Auflösen im Magen)</li>
         <li>Kartengrundlage: Natural Earth über das Paket world-atlas (gemeinfrei).</li>
         <li><strong>Nicht mehr verwendet:</strong> Storhaug, Fosse &amp; Fadnes (2017): Country, regional, and global estimates for lactose malabsorption in adults. <em>The Lancet Gastroenterology &amp; Hepatology</em>. Die Studie wurde 2024 mit einer offiziellen Warnung versehen und im Januar 2025 zurückgezogen. <a href="https://pubmed.ncbi.nlm.nih.gov/39674208/" target="_blank" rel="noopener">Rückzugsnotiz bei PubMed</a></li>
         <!-- WEITERE QUELLEN DER GRUPPE HIER ERGÄNZEN (z. B. für die Laktosewerte im Quiz bei Frage 5) -->
