@@ -576,8 +576,8 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
     <nav class="steps" aria-label="Fragen">
       <a href="#laktose" data-nav><b>1</b><span>Was ist Laktoseintoleranz?</span></a>
       <a href="#biologie" data-nav><b>2</b><span>Liegt Laktoseintoleranz in den Genen?</span></a>
-      <a href="#karte" data-nav><b>3</b><span>Frage 3</span></a>
-      <a href="#symptome" data-nav><b>4</b><span>Frage 4</span></a>
+      <a href="#evolution" data-nav><b>3</b><span>Wie hat sich die Laktasepersistenz entwickelt?</span></a>
+      <a href="#karte" data-nav><b>4</b><span>Wo ist Laktoseintoleranz besonders häufig?</span></a>
       <a href="#alltag" data-nav><b>5</b><span>Welche Mittel helfen bei Laktoseintoleranz?</span></a>
       <a href="#essen" data-nav><b>6</b><span>Wie ernährt man sich mit Laktoseintoleranz?</span></a>
       <a href="#begriffe" data-nav><b>F</b><span>Fachbegriffe</span></a>
@@ -616,11 +616,11 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
            (auch oben in der Navigation und im data-title des jeweiligen Kapitels) -->
       <ol class="fragen">
         <li style="--i:0"><a href="#laktose"><span class="nr">01</span><span class="q">Was ist Laktoseintoleranz?</span><span class="sub">Wie unser Körper Milchzucker verdaut und was passiert, wenn Laktase fehlt</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
-        <li style="--i:1"><a href="#biologie"><span class="nr">02</span><span class="q">Liegt Laktoseintoleranz in den Genen?</span><span class="sub">Das LCT-Gen, eine entscheidende Mutation und die Evolution der Laktasepersistenz</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
-        <li style="--i:2" class="wide"><a href="#karte"><span class="nr">03</span><span class="q">Frage 3</span><span class="sub">Untertitel folgt · mit interaktiver Weltkarte</span><span class="swatch" aria-hidden="true"><i style="background:var(--s1);--k:0"></i><i style="background:var(--s2);--k:1"></i><i style="background:var(--s3);--k:2"></i><i style="background:var(--s4);--k:3"></i><i style="background:var(--s5);--k:4"></i><i style="background:var(--s6);--k:5"></i><i style="background:var(--s7);--k:6"></i></span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
-        <li style="--i:3"><a href="#symptome"><span class="nr">04</span><span class="q">Frage 4</span><span class="sub">Untertitel folgt</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
+        <li style="--i:1"><a href="#biologie"><span class="nr">02</span><span class="q">Liegt Laktoseintoleranz in den Genen?</span><span class="sub">Das LCT-Gen und die entscheidende Mutation</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
+        <li style="--i:2" class="wide"><a href="#evolution"><span class="nr">03</span><span class="q">Wie hat sich die Laktasepersistenz entwickelt?</span><span class="sub">Die Evolution des Menschen und ob man Laktoseintoleranz wieder loswird</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
+        <li style="--i:3" class="wide"><a href="#karte"><span class="nr">04</span><span class="q">Wo ist Laktoseintoleranz besonders häufig?</span><span class="sub">Interaktive Weltkarte mit Daten aus 54 Ländern · mit Quiz</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
         <li style="--i:4"><a href="#alltag"><span class="nr">05</span><span class="q">Welche Mittel helfen bei Laktoseintoleranz?</span><span class="sub">Laktase-Präparate und Probiotika</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
-        <li style="--i:5" class="wide"><a href="#essen"><span class="nr">06</span><span class="q">Wie ernährt man sich mit Laktoseintoleranz?</span><span class="sub">Laktosefreie Lebensmittel und wo überraschend viel oder wenig Laktose drinsteckt · mit Quiz</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
+        <li style="--i:5"><a href="#essen"><span class="nr">06</span><span class="q">Wie ernährt man sich mit Laktoseintoleranz?</span><span class="sub">Laktosefreie Lebensmittel und wo überraschend viel oder wenig Laktose drinsteckt · mit Quiz</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
       </ol>
       <p class="seen-note" id="seenNote" aria-live="polite"></p>
     </div>
@@ -685,6 +685,32 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
             <p>Ein Teil des Wasserstoffs aus der Gärung gelangt über das Blut in die Lunge und wird ausgeatmet. Beim H₂-Atemtest trinkt man deshalb eine Laktoselösung. Danach wird mehrmals gemessen, wie viel Wasserstoff in der Atemluft ist. Steigt der Wert deutlich an, wurde die Laktose nicht im Dünndarm verdaut, sondern erst von den Bakterien im Dickdarm.</p>
           </div>
         </div>
+
+        <div class="lab" id="lab4">
+          <div class="lab-head"><span class="tag">Schritt für Schritt</span><h3>Der Weg der Laktose ohne Laktase</h3></div>
+          <svg class="trip" id="trip" data-step="1" viewBox="0 0 640 190" role="img" aria-label="Schema: Weg der Laktose durch den Verdauungstrakt">
+            <line class="track" x1="60" y1="110" x2="600" y2="110"/>
+            <line class="flow" x1="60" y1="110" x2="600" y2="110"/>
+            <g class="st" data-s="1"><circle cx="90" cy="110" r="24"/><text class="n" x="90" y="116" text-anchor="middle">1</text><text class="l" x="90" y="164" text-anchor="middle">Magen</text></g>
+            <g class="st" data-s="2"><circle cx="250" cy="110" r="24"/><text class="n" x="250" y="116" text-anchor="middle">2</text><text class="l" x="250" y="164" text-anchor="middle">Dünndarm</text></g>
+            <g class="st" data-s="3"><circle cx="410" cy="110" r="24"/><text class="n" x="410" y="116" text-anchor="middle">3</text><text class="l" x="410" y="164" text-anchor="middle">Dickdarm</text></g>
+            <g class="st" data-s="4"><circle cx="570" cy="110" r="24"/><text class="n" x="570" y="116" text-anchor="middle">4</text><text class="l" x="570" y="164" text-anchor="middle">Folgen</text></g>
+            <g class="nolak"><text x="250" y="26" text-anchor="middle">✕ keine Laktase</text></g>
+            <g class="bact"><ellipse cx="378" cy="52" rx="9" ry="5"/><ellipse cx="444" cy="56" rx="9" ry="5"/><ellipse cx="372" cy="78" rx="8" ry="4.5"/><ellipse cx="448" cy="80" rx="8" ry="4.5"/><ellipse cx="410" cy="30" rx="9" ry="5"/></g>
+            <g class="bub">
+              <g><circle cx="546" cy="62" r="14"/><text x="546" y="66" text-anchor="middle">H₂</text></g>
+              <g><circle cx="574" cy="70" r="15"/><text x="574" y="74" text-anchor="middle">CO₂</text></g>
+              <g><circle cx="603" cy="60" r="15"/><text x="603" y="64" text-anchor="middle">CH₄</text></g>
+            </g>
+            <g class="tok" id="tok" style="transform:translate(90px,0)"><g class="bob"><circle cx="0" cy="64" r="15"/><text x="0" y="69" text-anchor="middle">L</text></g></g>
+          </svg>
+          <div class="steps-ui">
+            <button class="btn ghost" id="tPrev" aria-label="Vorheriger Schritt">←</button>
+            <div class="dots" id="tDots"></div>
+            <button class="btn" id="tNext">Weiter →</button>
+          </div>
+          <div class="trip-text" aria-live="polite"><h4 id="tTitle"></h4><p id="tBody"></p></div>
+        </div>
       </div>
       <nav class="pager" aria-label="Fragen wechseln"></nav>
     </div>
@@ -693,11 +719,11 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
   <!-- ===================== FRAGE 2 ===================== -->
   <section class="page kapitel" data-id="biologie" data-title="Liegt Laktoseintoleranz in den Genen?">
     <div class="wrap">
-      <header class="khead"><div class="eyebrow">Frage 2 von 6</div><h2>Liegt Laktoseintoleranz in den Genen?</h2><p class="topic">Das LCT-Gen, eine entscheidende Mutation und die Evolution der Laktasepersistenz</p></header>
+      <header class="khead"><div class="eyebrow">Frage 2 von 6</div><h2>Liegt Laktoseintoleranz in den Genen?</h2><p class="topic">Das LCT-Gen und die entscheidende Mutation</p></header>
       <div class="col">
-        <!-- TEIL 1 · Audio: Dateiname in data-audio eintragen, z. B. data-audio="audio/frage2-teil1.m4a" -->
+        <!-- Audio: Dateiname in data-audio eintragen, z. B. data-audio="audio/frage2.m4a" -->
         <div class="beitrag" data-audio="">
-          <div class="beitrag-head"><span class="teil">Teil 1</span><h3>Die Gene hinter der Laktoseintoleranz</h3></div>
+          <div class="beitrag-head"><h3>Die Gene hinter der Laktoseintoleranz</h3></div>
           <div class="text">
             <h3>Was ist Laktoseintoleranz?</h3>
             <p>Laktoseintoleranz ist die Unverträglichkeit gegenüber Milchzucker. Sie entsteht, wenn der menschliche Körper nicht genügend des Enzyms Laktase produziert, um den Milchzucker im Dünndarm vollständig zu spalten. Normalerweise zerlegt Laktase die Laktose in die beiden Einfachzucker Glukose und Galaktose, die anschließend vom Körper aufgenommen werden können. Fehlt dieses Enzym oder wird zu wenig davon produziert, gelangt die unverdaute Laktose in den Dickdarm. Dort wird sie von Darmbakterien abgebaut, wobei Gase und andere Stoffwechselprodukte entstehen. Dadurch können Beschwerden wie Bauchschmerzen, Blähungen und Durchfall auftreten.</p>
@@ -719,9 +745,19 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
           <p class="note">Schematische Darstellung, keine Messwerte. Wann die Laktase abnimmt, ist von Mensch zu Mensch verschieden.</p>
         </div>
 
-        <!-- TEIL 2 · Audio: Dateiname in data-audio eintragen, z. B. data-audio="audio/frage2-teil2.m4a" -->
+        </div>
+      </div>
+      <nav class="pager" aria-label="Fragen wechseln"></nav>
+    </div>
+  </section>
+  <!-- ===================== FRAGE 3 ===================== -->
+  <section class="page kapitel" data-id="evolution" data-title="Wie hat sich die Laktasepersistenz entwickelt?">
+    <div class="wrap">
+      <header class="khead"><div class="eyebrow">Frage 3 von 6</div><h2>Wie hat sich die Laktasepersistenz entwickelt?</h2><p class="topic">Die Evolution des Menschen und ob man Laktoseintoleranz wieder loswird</p></header>
+      <div class="col">
+        <!-- Audio: Dateiname in data-audio eintragen, z. B. data-audio="audio/frage3.m4a" -->
         <div class="beitrag" data-audio="">
-          <div class="beitrag-head"><span class="teil">Teil 2</span><h3>Evolution und Behandlung</h3></div>
+          <div class="beitrag-head"><h3>Evolution und Behandlung</h3></div>
           <div class="text">
             <h3>Wie sich die Laktasepersistenz entwickelt hat</h3>
             <p>Die Entwicklung der Laktasepersistenz lässt sich besonders gut durch die Evolution des Menschen erklären. Vor ungefähr 10.000 Jahren begannen Menschen in verschiedenen Regionen der Welt, Tiere wie Rinder, Ziegen und Schafe zu domestizieren und deren Milch als Nahrungsmittel zu nutzen. Zu dieser Zeit waren die meisten erwachsenen Menschen noch laktoseintolerant. Durch zufällige Mutationen entstanden jedoch genetische Varianten, die dafür sorgten, dass die Laktaseproduktion auch im Erwachsenenalter erhalten blieb.</p>
@@ -732,16 +768,16 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
             <h3>Zusammenfassung</h3>
             <p class="kurz">Die Laktoseintoleranz beruht bei den meisten Betroffenen auf einer genetisch gesteuerten Abnahme der Laktaseproduktion nach der Kindheit. Entscheidend sind dabei vor allem das LCT-Gen und seine regulatorischen Abschnitte im MCM6-Gen. Die Fähigkeit, auch als Erwachsener Milch zu verdauen, entwickelte sich durch zufällige Mutation und natürliche Selektion. Der Milchkonsum selbst verändert die Gene eines Menschen nicht, spielte aber eine wichtige Rolle bei der evolutionären Verbreitung der Laktasepersistenz.</p>
           </div>
-        </div>
       </div>
       <nav class="pager" aria-label="Fragen wechseln"></nav>
     </div>
   </section>
 
-  <!-- ===================== FRAGE 3: KARTE ===================== -->
-  <section class="page kapitel" data-id="karte" data-title="Frage 3">
+
+  <!-- ===================== FRAGE 4: KARTE ===================== -->
+  <section class="page kapitel" data-id="karte" data-title="Wo ist Laktoseintoleranz besonders häufig?">
     <div class="wrap">
-      <header class="khead"><div class="eyebrow">Frage 3 von 6</div><h2>Frage 3</h2><p class="topic">Untertitel folgt</p></header>
+      <header class="khead"><div class="eyebrow">Frage 4 von 6</div><h2>Wo ist Laktoseintoleranz besonders häufig?</h2><p class="topic">Interaktive Weltkarte mit Daten aus 54 Ländern</p></header>
 
       <div class="stats">
         <span>Weltweit etwa <b>65 %</b> (MedlinePlus, 2023)</span>
@@ -793,51 +829,6 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
     </div>
   </section>
 
-  <!-- ===================== FRAGE 4 ===================== -->
-  <section class="page kapitel" data-id="symptome" data-title="Frage 4">
-    <div class="wrap">
-      <header class="khead"><div class="eyebrow">Frage 4 von 6</div><h2>Frage 4</h2><p class="topic">Untertitel folgt</p></header>
-      <div class="col">
-        <div class="beitrag" data-audio="">
-          <div class="text">
-            <!-- TEXT FRAGE 4 -->
-            <div class="platzhalter">
-              <strong>Euer Text folgt hier</strong>
-              Mögliche Inhalte:
-              <ul><li>Typische Beschwerden im Alltag</li><li>Gentest als zweite Diagnosemöglichkeit</li><li>Abgrenzung zur Milcheiweißallergie</li></ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="lab" id="lab4">
-          <div class="lab-head"><span class="tag">Schritt für Schritt</span><h3>Der Weg der Laktose ohne Laktase</h3></div>
-          <svg class="trip" id="trip" data-step="1" viewBox="0 0 640 190" role="img" aria-label="Schema: Weg der Laktose durch den Verdauungstrakt">
-            <line class="track" x1="60" y1="110" x2="600" y2="110"/>
-            <line class="flow" x1="60" y1="110" x2="600" y2="110"/>
-            <g class="st" data-s="1"><circle cx="90" cy="110" r="24"/><text class="n" x="90" y="116" text-anchor="middle">1</text><text class="l" x="90" y="164" text-anchor="middle">Magen</text></g>
-            <g class="st" data-s="2"><circle cx="250" cy="110" r="24"/><text class="n" x="250" y="116" text-anchor="middle">2</text><text class="l" x="250" y="164" text-anchor="middle">Dünndarm</text></g>
-            <g class="st" data-s="3"><circle cx="410" cy="110" r="24"/><text class="n" x="410" y="116" text-anchor="middle">3</text><text class="l" x="410" y="164" text-anchor="middle">Dickdarm</text></g>
-            <g class="st" data-s="4"><circle cx="570" cy="110" r="24"/><text class="n" x="570" y="116" text-anchor="middle">4</text><text class="l" x="570" y="164" text-anchor="middle">Folgen</text></g>
-            <g class="nolak"><text x="250" y="26" text-anchor="middle">✕ keine Laktase</text></g>
-            <g class="bact"><ellipse cx="378" cy="52" rx="9" ry="5"/><ellipse cx="444" cy="56" rx="9" ry="5"/><ellipse cx="372" cy="78" rx="8" ry="4.5"/><ellipse cx="448" cy="80" rx="8" ry="4.5"/><ellipse cx="410" cy="30" rx="9" ry="5"/></g>
-            <g class="bub">
-              <g><circle cx="546" cy="62" r="14"/><text x="546" y="66" text-anchor="middle">H₂</text></g>
-              <g><circle cx="574" cy="70" r="15"/><text x="574" y="74" text-anchor="middle">CO₂</text></g>
-              <g><circle cx="603" cy="60" r="15"/><text x="603" y="64" text-anchor="middle">CH₄</text></g>
-            </g>
-            <g class="tok" id="tok" style="transform:translate(90px,0)"><g class="bob"><circle cx="0" cy="64" r="15"/><text x="0" y="69" text-anchor="middle">L</text></g></g>
-          </svg>
-          <div class="steps-ui">
-            <button class="btn ghost" id="tPrev" aria-label="Vorheriger Schritt">←</button>
-            <div class="dots" id="tDots"></div>
-            <button class="btn" id="tNext">Weiter →</button>
-          </div>
-          <div class="trip-text" aria-live="polite"><h4 id="tTitle"></h4><p id="tBody"></p></div>
-        </div>
-      </div>
-      <nav class="pager" aria-label="Fragen wechseln"></nav>
-    </div>
-  </section>
 
   <!-- ===================== FRAGE 5 ===================== -->
   <section class="page kapitel" data-id="alltag" data-title="Welche Mittel helfen bei Laktoseintoleranz?">
@@ -1238,7 +1229,7 @@ document.getElementById('zReset').onclick=mapReset;
 (function(){
 const T=ms=>REDUCED?0:ms;
 const $=id=>document.getElementById(id);
-const CH=['laktose','biologie','karte','symptome','alltag','essen'];
+const CH=['laktose','biologie','evolution','karte','alltag','essen'];
 
 /* ===== Hinweis-Blase + Konfetti ===== */
 let toastTimer;
