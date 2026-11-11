@@ -29,12 +29,12 @@ h1:focus,h2:focus{outline:none}
 .switch button:hover{color:var(--ink)}
 .panel{padding:22px 24px}
 /* Texte der Gruppe */
-.beitrag-head{display:flex; align-items:baseline; gap:10px; padding:16px 24px 12px; border-bottom:1px solid var(--line)}
-.beitrag-head .teil{font:500 12px var(--f-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--accent); white-space:nowrap}
-.beitrag-head h3{font:700 19px/1.25 var(--f-display); margin:0; text-wrap:balance}
+.beitrag-head{display:flex; align-items:baseline; gap:12px; padding:20px 24px 16px; border-bottom:1px solid var(--line)}
+.beitrag-head .teil{font:500 14px var(--f-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--accent); white-space:nowrap}
+.beitrag-head h3{font:800 clamp(24px, 3.2vw, 30px)/1.15 var(--f-display); margin:0; text-wrap:balance}
 .lab + .beitrag{margin-top:22px}
-@media (max-width:640px){ .beitrag-head{flex-direction:column; gap:2px; padding:14px 18px 10px} }
-.text h3{font:700 19px/1.25 var(--f-display); margin:24px 0 8px; text-wrap:balance}
+@media (max-width:640px){ .beitrag-head{flex-direction:column; gap:4px; padding:16px 18px 12px} }
+.text h3{font:700 clamp(21px, 2.6vw, 24px)/1.2 var(--f-display); margin:28px 0 10px; text-wrap:balance}
 .text h3:first-child{margin-top:0}
 .text p{margin:0 0 12px}
 .text > :last-child{margin-bottom:0}
@@ -600,7 +600,6 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
         <div class="beitrag" data-audio="">
           <div class="beitrag-head"><span class="teil">Teil 1</span><h3>Wie Laktose normalerweise verdaut wird</h3></div>
           <div class="text">
-            <p class="kurz">Bei einer Laktoseintoleranz hat der Körper weniger oder gar keine Laktase.</p>
             <p>Normalerweise wird die Laktose im Dünndarm von dem Enzym Laktase zerlegt. Die Laktase sitzt an der Oberfläche der Dünndarmzellen, im sogenannten Bürstensaum. Laktose ist ein Zweifachzucker (Disaccharid). Der Körper kann nur Einfachzucker aufnehmen, deshalb muss die Laktose zuerst gespalten werden.</p>
             <p>Die Laktase spaltet die Bindung zwischen den beiden Zuckerbausteinen durch Hydrolyse, also unter Einbau von Wasser. Das Wasser dafür ist im Darminhalt ohnehin vorhanden. Danach liegen zwei Einfachzucker vor: Glukose und Galaktose.</p>
             <p class="gl"><span>Laktose + H₂O</span> → <span>Glukose + Galaktose</span></p>
@@ -639,6 +638,7 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
         <div class="beitrag" data-audio="">
           <div class="beitrag-head"><span class="teil">Teil 2</span><h3>Was bei einer Laktoseintoleranz passiert</h3></div>
           <div class="text">
+            <p class="kurz">Bei einer Laktoseintoleranz hat der Körper weniger oder gar keine Laktase.</p>
             <p>Bei einer Laktoseintoleranz fehlt die Laktase teilweise oder ganz. Deshalb wird nur ein Teil der Laktose oder gar keine Laktose gespalten. Was gespalten werden konnte, wird ganz normal aufgenommen. Die übrige Laktose bleibt im Dünndarm. Sie wirkt wie ein Magnet für Wasser: Durch Osmose strömt Wasser aus dem umliegenden Gewebe in den Dünndarm. Der Darminhalt wird dadurch mehr und flüssiger und wird schneller in den Dickdarm weitertransportiert.</p>
             <h3>Im Dickdarm</h3>
             <p>Im Dickdarm stürzen sich Bakterien auf die Laktose und vergären (fermentieren) sie. Dabei entstehen Gase wie Wasserstoff, Kohlenstoffdioxid und Methan, daher kommen die Blähungen. Außerdem stellen die Bakterien kurzkettige Fettsäuren und Milchsäure her. Weil aus einem Laktose-Molekül viele kleine Teilchen werden, ziehen diese zusätzlich Wasser in den Darm, so wie vorher die Laktose.</p>
