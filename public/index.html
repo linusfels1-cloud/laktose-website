@@ -33,6 +33,23 @@ h1:focus,h2:focus{outline:none}
 .beitrag-head .teil{font:500 14px var(--f-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--accent); white-space:nowrap}
 .beitrag-head h3{font:800 clamp(24px, 3.2vw, 30px)/1.15 var(--f-display); margin:0; text-wrap:balance}
 .lab + .beitrag, .beitrag + .beitrag{margin-top:22px}
+/* Fachbegriffe */
+.gl-top{background:var(--accent-soft); border-radius:var(--radius,14px); padding:20px 22px}
+.gl-top h3{font:700 20px var(--f-display); margin:0 0 12px; color:var(--accent)}
+.gl-top ol{margin:0; padding-left:22px; display:grid; gap:8px}
+.gl-top li b{font-family:var(--f-display); margin-right:6px}
+.gl-search{display:flex; flex-direction:column; gap:6px; margin:26px 0 6px}
+.gl-search input{font:16px var(--f-body); padding:12px 14px; border:1px solid var(--line); border-radius:10px; background:var(--surface); color:var(--ink); width:100%; max-width:420px}
+.gl-cat{margin-top:26px}
+.gl-cat h3{font:700 clamp(20px, 2.4vw, 23px) var(--f-display); margin:0 0 10px; display:flex; align-items:center; gap:10px}
+.gl-note{font:500 11px var(--f-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--muted); background:var(--bg); border:1px solid var(--line); border-radius:999px; padding:2px 8px}
+.gl-cat dl{margin:0; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius,14px); overflow:hidden}
+.gl-item{display:grid; grid-template-columns:minmax(0,220px) minmax(0,1fr); gap:6px 18px; padding:12px 18px; border-top:1px solid var(--line)}
+.gl-item:first-child{border-top:0}
+.gl-item dt{font:700 16px var(--f-display)}
+.gl-item dd{margin:0; font-size:16px}
+.gl-none{margin-top:20px; color:var(--muted)}
+@media (max-width:640px){ .gl-item{grid-template-columns:1fr; gap:2px} }
 @media (max-width:640px){ .beitrag-head{flex-direction:column; gap:4px; padding:16px 18px 12px} }
 .text h3{font:700 clamp(21px, 2.6vw, 24px)/1.2 var(--f-display); margin:28px 0 10px; text-wrap:balance}
 .text h3:first-child{margin-top:0}
@@ -141,12 +158,19 @@ header.top .bar{display:flex; align-items:center; gap:16px; min-height:58px}
 .steps a.seen:not([aria-current]) b{border-color:var(--accent); color:var(--accent)}
 .progress{height:3px}
 .progress i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--s4),var(--accent)); transition:width .5s cubic-bezier(.3,.7,.2,1)}
-body[data-step="1"] .progress i{width:14.3%} body[data-step="2"] .progress i{width:28.6%}
-body[data-step="3"] .progress i{width:42.9%} body[data-step="4"] .progress i{width:57.1%}
-body[data-step="5"] .progress i{width:71.4%} body[data-step="6"] .progress i{width:85.7%}
-body[data-step="7"] .progress i{width:100%}
+body[data-step="1"] .progress i{width:12.5%} body[data-step="2"] .progress i{width:25%}
+body[data-step="3"] .progress i{width:37.5%} body[data-step="4"] .progress i{width:50%}
+body[data-step="5"] .progress i{width:62.5%} body[data-step="6"] .progress i{width:75%}
+body[data-step="7"] .progress i{width:87.5%} body[data-step="8"] .progress i{width:100%}
 .top-quellen{margin-left:auto; font:500 15px var(--f-display); color:var(--muted); text-decoration:none}
 .top-quellen:hover{color:var(--accent)}
+.top-quellen + .top-quellen{margin-left:18px}
+@media (max-width:480px){ .top-quellen{font-size:14px} .top-quellen + .top-quellen{margin-left:12px} }
+/* Lange Fragetitel in der Navigation kürzen statt die Leiste zu sprengen */
+.steps a span{white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:300px}
+@media (max-width:1000px){ .steps a span{max-width:190px} }
+@media (max-width:800px){ .steps a span{max-width:140px} }
+@media (max-width:400px){ .top-quellen[href="#begriffe"]{display:none} }
 body[data-page="start"] .steps{display:none}
 body:not([data-page="start"]) .top-quellen{display:none}
 
@@ -188,6 +212,7 @@ body:not([data-page="start"]) .top-quellen{display:none}
 .fragen .nr{grid-row:1 / span 2; font:500 13px var(--f-mono); color:var(--accent); background:var(--accent-soft); border-radius:8px; padding:4px 8px; margin-top:3px; transition:background .25s, color .25s}
 .fragen a.seen .nr{background:var(--accent); color:#fff}
 .fragen .q{font:700 22px/1.2 var(--f-display); text-wrap:balance}
+.fragen a{grid-template-columns:auto minmax(0,1fr) auto} .fragen li{min-width:0} .fragen .q, .fragen .sub{hyphens:auto; overflow-wrap:break-word}
 .fragen .sub{grid-column:2; font-size:15px; color:var(--muted)}
 .fragen .go{grid-row:1 / span 2; grid-column:3; align-self:center; width:36px; height:36px; border-radius:50%; display:grid; place-items:center; color:var(--accent); background:var(--accent-soft); font:500 18px var(--f-display); transition:transform .25s, background .25s, color .25s}
 .fragen a:hover .go{transform:translateX(4px); background:var(--accent); color:#fff}
@@ -550,13 +575,15 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
     <!-- NAVIGATION: Die Kurznamen der Fragen hier anpassen -->
     <nav class="steps" aria-label="Fragen">
       <a href="#laktose" data-nav><b>1</b><span>Was ist Laktoseintoleranz?</span></a>
-      <a href="#biologie" data-nav><b>2</b><span>Frage 2</span></a>
+      <a href="#biologie" data-nav><b>2</b><span>Liegt Laktoseintoleranz in den Genen?</span></a>
       <a href="#karte" data-nav><b>3</b><span>Frage 3</span></a>
       <a href="#symptome" data-nav><b>4</b><span>Frage 4</span></a>
       <a href="#alltag" data-nav><b>5</b><span>Welche Mittel helfen bei Laktoseintoleranz?</span></a>
       <a href="#essen" data-nav><b>6</b><span>Wie ernährt man sich mit Laktoseintoleranz?</span></a>
+      <a href="#begriffe" data-nav><b>F</b><span>Fachbegriffe</span></a>
       <a href="#quellen" data-nav><b>Q</b><span>Quellen</span></a>
     </nav>
+    <a class="top-quellen" href="#begriffe">Fachbegriffe</a>
     <a class="top-quellen" href="#quellen">Quellen</a>
   </div>
   <div class="progress"><i></i></div>
@@ -589,7 +616,7 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
            (auch oben in der Navigation und im data-title des jeweiligen Kapitels) -->
       <ol class="fragen">
         <li style="--i:0"><a href="#laktose"><span class="nr">01</span><span class="q">Was ist Laktoseintoleranz?</span><span class="sub">Wie unser Körper Milchzucker verdaut und was passiert, wenn Laktase fehlt</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
-        <li style="--i:1"><a href="#biologie"><span class="nr">02</span><span class="q">Frage 2</span><span class="sub">Untertitel folgt</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
+        <li style="--i:1"><a href="#biologie"><span class="nr">02</span><span class="q">Liegt Laktoseintoleranz in den Genen?</span><span class="sub">Das LCT-Gen, eine entscheidende Mutation und die Evolution der Laktasepersistenz</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
         <li style="--i:2" class="wide"><a href="#karte"><span class="nr">03</span><span class="q">Frage 3</span><span class="sub">Untertitel folgt · mit interaktiver Weltkarte</span><span class="swatch" aria-hidden="true"><i style="background:var(--s1);--k:0"></i><i style="background:var(--s2);--k:1"></i><i style="background:var(--s3);--k:2"></i><i style="background:var(--s4);--k:3"></i><i style="background:var(--s5);--k:4"></i><i style="background:var(--s6);--k:5"></i><i style="background:var(--s7);--k:6"></i></span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
         <li style="--i:3"><a href="#symptome"><span class="nr">04</span><span class="q">Frage 4</span><span class="sub">Untertitel folgt</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
         <li style="--i:4"><a href="#alltag"><span class="nr">05</span><span class="q">Welche Mittel helfen bei Laktoseintoleranz?</span><span class="sub">Laktase-Präparate und Probiotika</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
@@ -664,18 +691,23 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
   </section>
 
   <!-- ===================== FRAGE 2 ===================== -->
-  <section class="page kapitel" data-id="biologie" data-title="Frage 2">
+  <section class="page kapitel" data-id="biologie" data-title="Liegt Laktoseintoleranz in den Genen?">
     <div class="wrap">
-      <header class="khead"><div class="eyebrow">Frage 2 von 6</div><h2>Frage 2</h2><p class="topic">Untertitel folgt</p></header>
+      <header class="khead"><div class="eyebrow">Frage 2 von 6</div><h2>Liegt Laktoseintoleranz in den Genen?</h2><p class="topic">Das LCT-Gen, eine entscheidende Mutation und die Evolution der Laktasepersistenz</p></header>
       <div class="col">
+        <!-- TEIL 1 · Audio: Dateiname in data-audio eintragen, z. B. data-audio="audio/frage2-teil1.m4a" -->
         <div class="beitrag" data-audio="">
+          <div class="beitrag-head"><span class="teil">Teil 1</span><h3>Die Gene hinter der Laktoseintoleranz</h3></div>
           <div class="text">
-            <!-- TEXT FRAGE 2 -->
-            <div class="platzhalter">
-              <strong>Euer Text folgt hier</strong>
-              Mögliche Inhalte:
-              <ul><li>Das Enzym Laktase im Dünndarm</li><li>Laktasepersistenz und das LCT-Gen</li><li>Warum sich die Mutation in Milchviehregionen ausgebreitet hat</li></ul>
-            </div>
+            <h3>Was ist Laktoseintoleranz?</h3>
+            <p>Laktoseintoleranz ist die Unverträglichkeit gegenüber Milchzucker. Sie entsteht, wenn der menschliche Körper nicht genügend des Enzyms Laktase produziert, um den Milchzucker im Dünndarm vollständig zu spalten. Normalerweise zerlegt Laktase die Laktose in die beiden Einfachzucker Glukose und Galaktose, die anschließend vom Körper aufgenommen werden können. Fehlt dieses Enzym oder wird zu wenig davon produziert, gelangt die unverdaute Laktose in den Dickdarm. Dort wird sie von Darmbakterien abgebaut, wobei Gase und andere Stoffwechselprodukte entstehen. Dadurch können Beschwerden wie Bauchschmerzen, Blähungen und Durchfall auftreten.</p>
+            <h3>Das LCT-Gen</h3>
+            <p>Die genetische Grundlage dafür liegt hauptsächlich im sogenannten LCT-Gen auf Chromosom 2. Dieses Gen enthält die Bauanleitung für das Enzym Laktase. Bei fast allen Menschen wird das Enzym während der Säuglingszeit in ausreichender Menge produziert, da Milch in dieser Lebensphase die wichtigste Nahrungsquelle ist. Bei den meisten Menschen nimmt die Aktivität des LCT-Gens jedoch nach dem Abstillen ab. Das bedeutet, dass immer weniger Laktase hergestellt wird und die Fähigkeit, Milchzucker zu verdauen, im Laufe des Lebens nachlässt. Dieses natürliche Phänomen wird als Laktase-Nichtpersistenz bezeichnet und ist die häufigste genetische Ursache für Laktoseintoleranz.</p>
+            <h3>Die entscheidende Mutation</h3>
+            <p>Interessanterweise befindet sich die entscheidende genetische Veränderung nicht direkt im LCT-Gen, sondern im benachbarten Gen MCM6. Dort liegt ein sogenanntes regulatorisches Element, das die Aktivität des LCT-Gens beeinflusst. Eine besonders wichtige Genvariante ist die sogenannte SNP-Mutation −13910 C&gt;T. Sie liegt 13.910 Basen vor dem Beginn des LCT-Gens. SNP steht für Single Nucleotide Polymorphism und bezeichnet eine Veränderung an einer einzelnen Stelle der DNA. Bei dieser Variante wird die DNA-Base Cytosin durch Thymin ersetzt.</p>
+            <p>Diese Veränderung sorgt dafür, dass das LCT-Gen auch im Erwachsenenalter aktiv bleibt und weiterhin ausreichend Laktase produziert wird. Menschen mit dieser Genvariante besitzen deshalb meistens eine lebenslange Fähigkeit, Milchzucker zu verdauen. Die Variante wird autosomal-dominant vererbt. Das bedeutet, dass bereits eine Kopie dieser Genvariante, also von einem Elternteil, ausreicht, um die Laktaseproduktion im Erwachsenenalter aufrechtzuerhalten. Menschen ohne eine solche Variante entwickeln dagegen häufig eine Laktase-Nichtpersistenz. Neben der europäischen Variante gibt es weitere genetische Veränderungen, die beispielsweise in afrikanischen und nahöstlichen Bevölkerungsgruppen vorkommen.</p>
+            <h3>Verändert Milchtrinken die Gene?</h3>
+            <p>Ein wichtiger Punkt ist, dass der Konsum von Milch die eigene DNA nicht verändert. Wer regelmäßig Milch trinkt, kann dadurch also nicht die genetische Veranlagung zur Laktasepersistenz entwickeln. Die genetischen Unterschiede entstehen durch Mutationen, die zufällig bei der Weitergabe und Veränderung der DNA auftreten. Allerdings kann regelmäßiger Milchkonsum Einfluss darauf haben, wie gut manche Menschen Milchprodukte vertragen, da sich beispielsweise die Darmbakterien an die Nahrungszusammensetzung anpassen können. Dadurch kann es bei einigen Menschen zu weniger Beschwerden kommen, ohne dass sich ihre genetische Veranlagung verändert.</p>
           </div>
         </div>
 
@@ -685,6 +717,21 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
           <div class="age-row"><label for="age">Alter</label><input type="range" id="age" min="0" max="30" step="0.5" value="0"><output id="ageOut" for="age">0 Jahre</output></div>
           <div class="age-read"><span class="emo" id="ageEmo" aria-hidden="true">👶</span><p id="ageText" aria-live="polite"></p></div>
           <p class="note">Schematische Darstellung, keine Messwerte. Wann die Laktase abnimmt, ist von Mensch zu Mensch verschieden.</p>
+        </div>
+
+        <!-- TEIL 2 · Audio: Dateiname in data-audio eintragen, z. B. data-audio="audio/frage2-teil2.m4a" -->
+        <div class="beitrag" data-audio="">
+          <div class="beitrag-head"><span class="teil">Teil 2</span><h3>Evolution und Behandlung</h3></div>
+          <div class="text">
+            <h3>Wie sich die Laktasepersistenz entwickelt hat</h3>
+            <p>Die Entwicklung der Laktasepersistenz lässt sich besonders gut durch die Evolution des Menschen erklären. Vor ungefähr 10.000 Jahren begannen Menschen in verschiedenen Regionen der Welt, Tiere wie Rinder, Ziegen und Schafe zu domestizieren und deren Milch als Nahrungsmittel zu nutzen. Zu dieser Zeit waren die meisten erwachsenen Menschen noch laktoseintolerant. Durch zufällige Mutationen entstanden jedoch genetische Varianten, die dafür sorgten, dass die Laktaseproduktion auch im Erwachsenenalter erhalten blieb.</p>
+            <p>Menschen mit diesen Varianten hatten in Gesellschaften, in denen Milch eine wichtige Nahrungsquelle war, teilweise einen Überlebens- und Fortpflanzungsvorteil. Milch konnte zusätzliche Energie, Flüssigkeit und Nährstoffe liefern. Dadurch hatten diese Menschen unter bestimmten Umweltbedingungen bessere Chancen, zu überleben und ihre Gene weiterzugeben. Durch die natürliche Selektion wurden die entsprechenden Genvarianten über viele Generationen häufiger. Dieser Vorgang wird auch als Koevolution von Genen und Kultur bezeichnet, da die menschliche Ernährungsweise die evolutionäre Entwicklung beeinflusste. Besonders in Nordeuropa verbreitete sich die Laktasepersistenz stark. In anderen Regionen, beispielsweise in Ostasien, blieb die Laktase-Nichtpersistenz dagegen deutlich häufiger.</p>
+            <h3>Kann man Laktoseintoleranz wieder loswerden?</h3>
+            <p>Ob man Laktoseintoleranz wieder loswerden kann, hängt von ihrer Ursache ab. Bei der genetisch bedingten Laktase-Nichtpersistenz gibt es bisher keine etablierte Möglichkeit, die genetische Veranlagung dauerhaft zu verändern oder die natürliche Laktaseproduktion wiederherzustellen. Allerdings können Betroffene ihre Beschwerden durch laktosefreie Milchprodukte, Laktase-Tabletten oder den Konsum kleinerer Mengen Milchprodukte reduzieren. Joghurt und bestimmte Käsesorten werden ebenfalls häufig besser vertragen, da bei ihrer Herstellung ein Teil der Laktose abgebaut wird.</p>
+            <p>Anders sieht es bei einer sogenannten sekundären Laktoseintoleranz aus. Diese kann beispielsweise durch Erkrankungen oder eine Schädigung des Dünndarms entstehen. Wenn die eigentliche Ursache behandelt wird und sich die Darmschleimhaut erholt, kann sich auch die Laktaseproduktion wieder verbessern.</p>
+            <h3>Zusammenfassung</h3>
+            <p class="kurz">Die Laktoseintoleranz beruht bei den meisten Betroffenen auf einer genetisch gesteuerten Abnahme der Laktaseproduktion nach der Kindheit. Entscheidend sind dabei vor allem das LCT-Gen und seine regulatorischen Abschnitte im MCM6-Gen. Die Fähigkeit, auch als Erwachsener Milch zu verdauen, entwickelte sich durch zufällige Mutation und natürliche Selektion. Der Milchkonsum selbst verändert die Gene eines Menschen nicht, spielte aber eine wichtige Rolle bei der evolutionären Verbreitung der Laktasepersistenz.</p>
+          </div>
         </div>
       </div>
       <nav class="pager" aria-label="Fragen wechseln"></nav>
@@ -862,13 +909,94 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
   </section>
 
   <!-- ===================== QUELLEN ===================== -->
+  <!-- ===================== FACHBEGRIFFE ===================== -->
+  <section class="page kapitel" data-id="begriffe" data-title="Fachbegriffe">
+    <div class="wrap">
+      <header class="khead"><div class="eyebrow">Nachschlagen</div><h2>Fachbegriffe</h2><p class="topic">Die wichtigsten Begriffe einfach erklärt</p></header>
+      <div class="col">
+        <div class="gl-top">
+          <h3>Die 5 wichtigsten Begriffe zur Genetik</h3>
+          <ol><li><b>LCT-Gen</b><span>Enthält die Bauanleitung für das Enzym Laktase.</span></li><li><b>MCM6-Gen</b><span>Enthält regulatorische Bereiche, die beeinflussen, ob das LCT-Gen aktiv bleibt.</span></li><li><b>Laktasepersistenz</b><span>Die Fähigkeit, auch als Erwachsener Milchzucker verdauen zu können.</span></li><li><b>Mutation</b><span>Eine Veränderung der DNA, durch die neue Genvarianten entstehen können.</span></li><li><b>Natürliche Selektion</b><span>Sorgt dafür, dass vorteilhafte Genvarianten über Generationen häufiger werden können.</span></li></ol>
+        </div>
+        <label class="gl-search"><span class="label">Begriff suchen</span><input type="search" id="glSearch" placeholder="z. B. Enzym" autocomplete="off"></label>
+        <div class="gl-cat">
+          <h3>Genetik und DNA</h3>
+          <dl>
+            <div class="gl-item"><dt>Genetik</dt><dd>Die Wissenschaft, die sich mit der Vererbung und den Genen beschäftigt.</dd></div>
+            <div class="gl-item"><dt>DNA (Desoxyribonukleinsäure)</dt><dd>Der Träger der Erbinformation eines Lebewesens. Sie enthält den Bauplan des Körpers.</dd></div>
+            <div class="gl-item"><dt>Gen</dt><dd>Ein bestimmter Abschnitt der DNA, der beispielsweise die Bauanleitung für ein Protein enthält.</dd></div>
+            <div class="gl-item"><dt>Chromosom</dt><dd>Eine Struktur im Zellkern, auf der die DNA aufgewickelt und geordnet ist.</dd></div>
+            <div class="gl-item"><dt>LCT-Gen</dt><dd>Das Gen, das die Bauanleitung für das Enzym Laktase enthält.</dd></div>
+            <div class="gl-item"><dt>MCM6-Gen</dt><dd>Ein Gen, in dessen Bereich regulatorische Abschnitte liegen, die beeinflussen, wie aktiv das LCT-Gen ist.</dd></div>
+            <div class="gl-item"><dt>Genvariante</dt><dd>Eine unterschiedliche Version eines bestimmten DNA-Abschnitts.</dd></div>
+            <div class="gl-item"><dt>Mutation</dt><dd>Eine dauerhafte Veränderung der DNA.</dd></div>
+            <div class="gl-item"><dt>SNP (Single Nucleotide Polymorphism)</dt><dd>Eine Veränderung an einer einzelnen Stelle der DNA, bei der eine andere Base vorkommt.</dd></div>
+            <div class="gl-item"><dt>Regulatorisches Element</dt><dd>Ein DNA-Abschnitt, der steuert, wann und wie stark ein Gen aktiv ist.</dd></div>
+            <div class="gl-item"><dt>Genexpression</dt><dd>Der Vorgang, bei dem die Information eines Gens genutzt wird, um beispielsweise ein Protein herzustellen.</dd></div>
+            <div class="gl-item"><dt>Autosomal-dominant</dt><dd>Ein Vererbungsmuster, bei dem eine bestimmte Genvariante auf einem normalen Körperchromosom ausreicht, um ein Merkmal auszuprägen.</dd></div>
+          </dl>
+        </div>
+        <div class="gl-cat">
+          <h3>Verdauung und Laktose</h3>
+          <dl>
+            <div class="gl-item"><dt>Laktose</dt><dd>Milchzucker, der natürlicherweise in Milch enthalten ist.</dd></div>
+            <div class="gl-item"><dt>Laktase</dt><dd>Ein Enzym, das Milchzucker in kleinere Zuckerbestandteile zerlegt.</dd></div>
+            <div class="gl-item"><dt>Enzym</dt><dd>Ein Protein, das bestimmte chemische Reaktionen im Körper beschleunigt.</dd></div>
+            <div class="gl-item"><dt>Glukose</dt><dd>Traubenzucker. Ein Einfachzucker, den der Körper zur Energiegewinnung verwendet.</dd></div>
+            <div class="gl-item"><dt>Galaktose</dt><dd>Ein Einfachzucker, der zusammen mit Glukose beim Abbau von Laktose entsteht.</dd></div>
+            <div class="gl-item"><dt>Dünndarm</dt><dd>Der Teil des Verdauungssystems, in dem die meisten Nährstoffe aufgenommen werden.</dd></div>
+            <div class="gl-item"><dt>Dickdarm</dt><dd>Der Teil des Darms, in dem unter anderem Wasser aufgenommen wird und Darmbakterien unverdaute Nahrungsbestandteile abbauen.</dd></div>
+            <div class="gl-item"><dt>Darmbakterien</dt><dd>Mikroorganismen im Darm, die bei der Verdauung helfen und unverdaute Nahrungsbestandteile verarbeiten können.</dd></div>
+            <div class="gl-item"><dt>Stoffwechselprodukte</dt><dd>Stoffe, die bei chemischen Vorgängen im Körper oder durch Darmbakterien entstehen.</dd></div>
+            <div class="gl-item"><dt>Laktoseintoleranz</dt><dd>Eine Unverträglichkeit gegenüber Milchzucker, die durch eine zu geringe Laktaseaktivität entsteht.</dd></div>
+            <div class="gl-item"><dt>Laktase-Nichtpersistenz</dt><dd>Die genetisch bedingte Abnahme der Laktaseproduktion nach der Kindheit.</dd></div>
+            <div class="gl-item"><dt>Laktasepersistenz</dt><dd>Die Fähigkeit, auch im Erwachsenenalter weiterhin ausreichend Laktase zu produzieren.</dd></div>
+            <div class="gl-item"><dt>Sekundäre Laktoseintoleranz</dt><dd>Eine erworbene Laktoseintoleranz, die beispielsweise durch eine Schädigung der Dünndarmschleimhaut entsteht.</dd></div>
+            <div class="gl-item"><dt>Darmschleimhaut</dt><dd>Die innere Schutz- und Aufnahmefläche des Darms. Hier befinden sich auch die Zellen, die Laktase herstellen.</dd></div>
+          </dl>
+        </div>
+        <div class="gl-cat">
+          <h3>Evolution und Entwicklung des Menschen</h3>
+          <dl>
+            <div class="gl-item"><dt>Evolution</dt><dd>Die langfristige Veränderung vererbbarer Merkmale einer Population über viele Generationen.</dd></div>
+            <div class="gl-item"><dt>Natürliche Selektion</dt><dd>Ein Vorgang, bei dem Lebewesen mit bestimmten vorteilhaften Merkmalen häufiger überleben und sich fortpflanzen.</dd></div>
+            <div class="gl-item"><dt>Population</dt><dd>Eine Gruppe von Lebewesen derselben Art, die in einem bestimmten Gebiet lebt.</dd></div>
+            <div class="gl-item"><dt>Domestizierung</dt><dd>Die Zähmung und gezielte Zucht von ursprünglich wilden Tieren durch den Menschen.</dd></div>
+            <div class="gl-item"><dt>Fortpflanzung</dt><dd>Die Erzeugung von Nachkommen, durch die Gene an die nächste Generation weitergegeben werden.</dd></div>
+            <div class="gl-item"><dt>Koevolution von Genen und Kultur</dt><dd>Die gegenseitige Beeinflussung von genetischer Entwicklung und menschlichen Verhaltensweisen, beispielsweise durch die Milchwirtschaft.</dd></div>
+            <div class="gl-item"><dt>Überlebensvorteil</dt><dd>Ein Merkmal, das die Wahrscheinlichkeit erhöht, unter bestimmten Bedingungen zu überleben.</dd></div>
+          </dl>
+        </div>
+        <div class="gl-cat">
+          <h3>Weitere Begriffe von dieser Website <span class="gl-note">ergänzt</span></h3>
+          <dl>
+            <div class="gl-item"><dt>Disaccharid</dt><dd>Fachwort für Zweifachzucker. Laktose ist ein Disaccharid aus Glukose und Galaktose.</dd></div>
+            <div class="gl-item"><dt>Hydrolyse</dt><dd>Spaltung einer chemischen Bindung unter Einbau von Wasser. So spaltet die Laktase die Laktose.</dd></div>
+            <div class="gl-item"><dt>Bürstensaum</dt><dd>Die feinen Ausstülpungen an der Oberfläche der Dünndarmzellen. Dort sitzt die Laktase.</dd></div>
+            <div class="gl-item"><dt>Osmose</dt><dd>Wasser strömt durch eine Membran dorthin, wo mehr gelöste Teilchen sind.</dd></div>
+            <div class="gl-item"><dt>SGLT1</dt><dd>Transportprotein, das Glukose und Galaktose zusammen mit Natrium-Ionen in die Dünndarmzellen bringt.</dd></div>
+            <div class="gl-item"><dt>GLUT2</dt><dd>Transportprotein, das die Einfachzucker aus den Dünndarmzellen ins Blut bringt.</dd></div>
+            <div class="gl-item"><dt>Fermentation (Gärung)</dt><dd>Abbau von Stoffen durch Bakterien ohne Sauerstoff. Dabei entstehen zum Beispiel Gase.</dd></div>
+            <div class="gl-item"><dt>H₂-Atemtest</dt><dd>Test auf Laktoseintoleranz: Nach dem Trinken einer Laktoselösung wird der Wasserstoff in der Atemluft gemessen.</dd></div>
+            <div class="gl-item"><dt>Probiotika</dt><dd>Lebende Bakterien, zum Beispiel Milchsäurebakterien, die man als Kapsel oder in Joghurt zu sich nimmt.</dd></div>
+            <div class="gl-item"><dt>Pasteurisieren</dt><dd>Kurzes Erhitzen von Milch, um Keime abzutöten und sie länger haltbar zu machen.</dd></div>
+          </dl>
+        </div>
+        <p class="gl-none" id="glNone" hidden>Kein Begriff gefunden.</p>
+      </div>
+      <nav class="pager" aria-label="Fragen wechseln"></nav>
+    </div>
+  </section>
+
   <section class="page kapitel quellen" data-id="quellen" data-title="Quellen">
     <div class="wrap">
       <header class="khead"><div class="eyebrow">Anhang</div><h2>Quellen</h2></header>
       <ol>
         <li>Global Lactase Persistence Association Database (GLAD), Molecular and Cultural Evolution Lab, University College London. Tabelle „LP phenotypes with Americas“, Stand November 2020 (für Ingram et al., <em>Advanced Dairy Chemistry</em>, 2021). <a href="https://www.ucl.ac.uk/life-sciences/gee/gee-research-centres/research-groups/global-lactase-persistence-association-database-glad" target="_blank" rel="noopener">Website der Datenbank</a> (Kartendaten; die Einzelstudie steht bei jedem Land in der Karte)</li>
-        <li>MedlinePlus Genetics (U.S. National Library of Medicine): Lactose intolerance. Stand 24. März 2023. <a href="https://medlineplus.gov/genetics/condition/lactose-intolerance/" target="_blank" rel="noopener">medlineplus.gov</a> (weltweit etwa 65 %)</li>
-        <li>National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK): Symptoms &amp; Causes of Lactose Intolerance. Stand Februar 2018. <a href="https://www.niddk.nih.gov/health-information/digestive-diseases/lactose-intolerance/symptoms-causes" target="_blank" rel="noopener">niddk.nih.gov</a> (Beschwerden innerhalb weniger Stunden)</li>
+        <li>MedlinePlus Genetics (U.S. National Library of Medicine): Lactose intolerance. Stand 24. März 2023, abgerufen am 9. November 2026. <a href="https://medlineplus.gov/genetics/condition/lactose-intolerance/" target="_blank" rel="noopener">medlineplus.gov</a> (weltweit etwa 65 %, Genetik)</li>
+        <li>National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK): Symptoms &amp; Causes of Lactose Intolerance. Stand Februar 2018, abgerufen am 10. November 2026. <a href="https://www.niddk.nih.gov/health-information/digestive-diseases/lactose-intolerance/symptoms-causes" target="_blank" rel="noopener">niddk.nih.gov</a> (Beschwerden innerhalb weniger Stunden, Ursachen)</li>
+        <li>Cohen, C. E., Swallow, D. M. &amp; Walker, C. (2024): The molecular basis of lactase persistence: Linking genetics and epigenetics. <em>Annals of Human Genetics</em>, 89(5), 321–332. Online erschienen am 22. August 2024. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12336946/" target="_blank" rel="noopener">PubMed Central</a> (LCT-Gen, MCM6, Variante −13910 C&gt;T)</li>
+        <li>Ségurel, L. &amp; Bon, C. (2017): On the Evolution of Lactase Persistence in Humans. <em>Annual Review of Genomics and Human Genetics</em>, 18. Online erschienen am 19. April 2017, abgerufen am 10. November 2026. <a href="https://doi.org/10.1146/annurev-genom-091416-035340" target="_blank" rel="noopener">doi:10.1146/annurev-genom-091416-035340</a> (Evolution der Laktasepersistenz)</li>
         <li>Ahn, S.-I., Kim, M. S., Park, D. G., Han, B. K. &amp; Kim, Y. J. (2023): Effects of probiotics administration on lactose intolerance in adulthood: A meta-analysis. <em>Journal of Dairy Science</em>, 106(7), 4489–4501. <a href="https://pubmed.ncbi.nlm.nih.gov/37225575/" target="_blank" rel="noopener">PubMed</a></li>
         <li>Levri, K. M. u. a. (2005): Do probiotics reduce adult lactose intolerance? A systematic review. <em>The Journal of Family Practice</em>, 54(7), 613–620. <a href="https://pubmed.ncbi.nlm.nih.gov/16009090/" target="_blank" rel="noopener">PubMed</a></li>
         <li>Hertzler, S. R. &amp; Savaiano, D. A. (1996): Colonic adaptation to daily lactose feeding in lactose maldigesters reduces lactose intolerance. <em>The American Journal of Clinical Nutrition</em>, 64(2), 232–236. <a href="https://pubmed.ncbi.nlm.nih.gov/8694025/" target="_blank" rel="noopener">PubMed</a> (Gewöhnung der Darmbakterien)</li>
@@ -1525,6 +1653,20 @@ function fNext(){
   if(fScore>=8) confetti();
 }
 fShow();
+
+/* ===== Fachbegriffe durchsuchen ===== */
+(function(){
+  const inp=document.getElementById('glSearch'); if(!inp) return;
+  inp.addEventListener('input',()=>{
+    const q=inp.value.trim().toLowerCase(); let hits=0;
+    document.querySelectorAll('.gl-cat').forEach(cat=>{
+      let n=0;
+      cat.querySelectorAll('.gl-item').forEach(it=>{ const ok=!q || it.textContent.toLowerCase().includes(q); it.hidden=!ok; if(ok) n++; });
+      cat.hidden=n===0; hits+=n;
+    });
+    document.getElementById('glNone').hidden=hits>0;
+  });
+})();
 
 /* ===== Seitenwechsel ===== */
 document.addEventListener('pagechange',e=>{
