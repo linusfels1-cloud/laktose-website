@@ -141,9 +141,10 @@ header.top .bar{display:flex; align-items:center; gap:16px; min-height:58px}
 .steps a.seen:not([aria-current]) b{border-color:var(--accent); color:var(--accent)}
 .progress{height:3px}
 .progress i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--s4),var(--accent)); transition:width .5s cubic-bezier(.3,.7,.2,1)}
-body[data-step="1"] .progress i{width:16.6%} body[data-step="2"] .progress i{width:33.3%}
-body[data-step="3"] .progress i{width:50%} body[data-step="4"] .progress i{width:66.6%}
-body[data-step="5"] .progress i{width:83.3%} body[data-step="6"] .progress i{width:100%}
+body[data-step="1"] .progress i{width:14.3%} body[data-step="2"] .progress i{width:28.6%}
+body[data-step="3"] .progress i{width:42.9%} body[data-step="4"] .progress i{width:57.1%}
+body[data-step="5"] .progress i{width:71.4%} body[data-step="6"] .progress i{width:85.7%}
+body[data-step="7"] .progress i{width:100%}
 .top-quellen{margin-left:auto; font:500 15px var(--f-display); color:var(--muted); text-decoration:none}
 .top-quellen:hover{color:var(--accent)}
 body[data-page="start"] .steps{display:none}
@@ -418,6 +419,8 @@ body.quiz .qchip{display:block}
 @keyframes shake{20%,60%{transform:translateX(-9px)} 40%,80%{transform:translateX(9px)}}
 .food-btns{display:flex; gap:10px; justify-content:center; margin-top:14px; flex-wrap:wrap}
 .food-res{text-align:center; margin:12px 0 0; min-height:1.6em; font-size:16px}
+.food-why{text-align:center; margin:6px auto 0; max-width:46ch; font-size:15px; color:var(--muted)}
+.food-why:empty{display:none}
 .food-prog{display:flex; justify-content:center; gap:5px; margin-top:10px}
 .food-prog i{width:22px; height:6px; border-radius:3px; background:var(--line); transition:background .3s}
 .food-prog i.r{background:var(--ok)} .food-prog i.w{background:var(--bad)} .food-prog i.c{background:var(--accent)}
@@ -549,7 +552,8 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
       <a href="#biologie" data-nav><b>2</b><span>Frage 2</span></a>
       <a href="#karte" data-nav><b>3</b><span>Frage 3</span></a>
       <a href="#symptome" data-nav><b>4</b><span>Frage 4</span></a>
-      <a href="#alltag" data-nav><b>5</b><span>Was hilft bei Laktoseintoleranz?</span></a>
+      <a href="#alltag" data-nav><b>5</b><span>Welche Mittel helfen bei Laktoseintoleranz?</span></a>
+      <a href="#essen" data-nav><b>6</b><span>Wie ernährt man sich mit Laktoseintoleranz?</span></a>
       <a href="#quellen" data-nav><b>Q</b><span>Quellen</span></a>
     </nav>
     <a class="top-quellen" href="#quellen">Quellen</a>
@@ -587,7 +591,8 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
         <li style="--i:1"><a href="#biologie"><span class="nr">02</span><span class="q">Frage 2</span><span class="sub">Untertitel folgt</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
         <li style="--i:2" class="wide"><a href="#karte"><span class="nr">03</span><span class="q">Frage 3</span><span class="sub">Untertitel folgt · mit interaktiver Weltkarte</span><span class="swatch" aria-hidden="true"><i style="background:var(--s1);--k:0"></i><i style="background:var(--s2);--k:1"></i><i style="background:var(--s3);--k:2"></i><i style="background:var(--s4);--k:3"></i><i style="background:var(--s5);--k:4"></i><i style="background:var(--s6);--k:5"></i><i style="background:var(--s7);--k:6"></i></span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
         <li style="--i:3"><a href="#symptome"><span class="nr">04</span><span class="q">Frage 4</span><span class="sub">Untertitel folgt</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
-        <li style="--i:4"><a href="#alltag"><span class="nr">05</span><span class="q">Was hilft bei Laktoseintoleranz?</span><span class="sub">Laktase-Präparate, Probiotika und laktosefreie Ernährung</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
+        <li style="--i:4"><a href="#alltag"><span class="nr">05</span><span class="q">Welche Mittel helfen bei Laktoseintoleranz?</span><span class="sub">Laktase-Präparate und Probiotika</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
+        <li style="--i:5" class="wide"><a href="#essen"><span class="nr">06</span><span class="q">Wie ernährt man sich mit Laktoseintoleranz?</span><span class="sub">Laktosefreie Lebensmittel und wo überraschend viel oder wenig Laktose drinsteckt · mit Quiz</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
       </ol>
       <p class="seen-note" id="seenNote" aria-live="polite"></p>
     </div>
@@ -596,7 +601,7 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
   <!-- ===================== FRAGE 1 ===================== -->
   <section class="page kapitel" data-id="laktose" data-title="Was ist Laktoseintoleranz?">
     <div class="wrap">
-      <header class="khead"><div class="eyebrow">Frage 1 von 5</div><h2>Was ist Laktoseintoleranz?</h2><p class="topic">Wie unser Körper Milchzucker verdaut und was passiert, wenn Laktase fehlt</p></header>
+      <header class="khead"><div class="eyebrow">Frage 1 von 6</div><h2>Was ist Laktoseintoleranz?</h2><p class="topic">Wie unser Körper Milchzucker verdaut und was passiert, wenn Laktase fehlt</p></header>
       <div class="col">
         <!-- TEIL 1 · Audio: Dateiname in data-audio eintragen, z. B. data-audio="audio/frage1-teil1.mp3" -->
         <div class="beitrag" data-audio="">
@@ -660,7 +665,7 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
   <!-- ===================== FRAGE 2 ===================== -->
   <section class="page kapitel" data-id="biologie" data-title="Frage 2">
     <div class="wrap">
-      <header class="khead"><div class="eyebrow">Frage 2 von 5</div><h2>Frage 2</h2><p class="topic">Untertitel folgt</p></header>
+      <header class="khead"><div class="eyebrow">Frage 2 von 6</div><h2>Frage 2</h2><p class="topic">Untertitel folgt</p></header>
       <div class="col">
         <div class="beitrag" data-audio="">
           <div class="text">
@@ -688,7 +693,7 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
   <!-- ===================== FRAGE 3: KARTE ===================== -->
   <section class="page kapitel" data-id="karte" data-title="Frage 3">
     <div class="wrap">
-      <header class="khead"><div class="eyebrow">Frage 3 von 5</div><h2>Frage 3</h2><p class="topic">Untertitel folgt</p></header>
+      <header class="khead"><div class="eyebrow">Frage 3 von 6</div><h2>Frage 3</h2><p class="topic">Untertitel folgt</p></header>
 
       <div class="stats">
         <span>Weltweit etwa <b>65 %</b> (MedlinePlus, 2023)</span>
@@ -743,7 +748,7 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
   <!-- ===================== FRAGE 4 ===================== -->
   <section class="page kapitel" data-id="symptome" data-title="Frage 4">
     <div class="wrap">
-      <header class="khead"><div class="eyebrow">Frage 4 von 5</div><h2>Frage 4</h2><p class="topic">Untertitel folgt</p></header>
+      <header class="khead"><div class="eyebrow">Frage 4 von 6</div><h2>Frage 4</h2><p class="topic">Untertitel folgt</p></header>
       <div class="col">
         <div class="beitrag" data-audio="">
           <div class="text">
@@ -787,32 +792,51 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
   </section>
 
   <!-- ===================== FRAGE 5 ===================== -->
-  <section class="page kapitel" data-id="alltag" data-title="Was hilft bei Laktoseintoleranz?">
+  <section class="page kapitel" data-id="alltag" data-title="Welche Mittel helfen bei Laktoseintoleranz?">
     <div class="wrap">
-      <header class="khead"><div class="eyebrow">Frage 5 von 5</div><h2>Was hilft bei Laktoseintoleranz?</h2><p class="topic">Laktase-Präparate, Probiotika und laktosefreie Ernährung</p></header>
+      <header class="khead"><div class="eyebrow">Frage 5 von 6</div><h2>Welche Mittel helfen bei Laktoseintoleranz?</h2><p class="topic">Laktase-Präparate und Probiotika</p></header>
       <div class="col">
         <!-- TEIL 1 · Audio: Dateiname in data-audio eintragen, z. B. data-audio="audio/frage5-teil1.mp3" -->
         <div class="beitrag" data-audio="">
-          <div class="beitrag-head"><span class="teil">Teil 1</span><h3>Laktase-Präparate und Probiotika</h3></div>
+          <div class="beitrag-head"><span class="teil">Teil 1</span><h3>Laktase-Präparate</h3></div>
           <div class="text">
-            <h3>Laktase-Präparate</h3>
             <p>Laktase-Präparate gibt es in verschiedenen Formen, zum Beispiel als Kapseln, Tropfen und Kautabletten. Meist sind das keine Medikamente, sondern Nahrungsergänzungsmittel. Man nimmt sie kurz vor oder zusammen mit laktosehaltigen Lebensmitteln ein. Die Wirkung hält nur eine begrenzte Zeit an, deshalb braucht man sie zu jeder Mahlzeit neu. Es gibt auch Depot-Tabletten, die ihre Laktase nach und nach abgeben und laut Hersteller bis zu vier Stunden wirken.</p>
             <p>So funktioniert es: Man schluckt zum Beispiel eine Kapsel. Sie gelangt durch die Speiseröhre in den Magen und löst sich dort innerhalb weniger Minuten auf. Isst man dann zum Beispiel Joghurt, mischt sich die Laktase aus der Kapsel mit dem Essen. Sie übernimmt die Aufgabe der fehlenden körpereigenen Laktase und spaltet den Zweifachzucker Laktose in die beiden Einfachzucker Glukose und Galaktose. Diese werden im Dünndarm von der Darmschleimhaut aufgenommen, und die Laktose verursacht keine Beschwerden mehr.</p>
-            <h3>Probiotika (helfen nur manchen Menschen)</h3>
-            <p>Probiotika sind lebende Bakterien, zum Beispiel Milchsäurebakterien, die man als Kapsel oder mit Joghurt zu sich nimmt. Sie können bei manchen Menschen die Beschwerden lindern, die Wissenschaft ist sich aber nicht ganz einig. Eine Meta-Analyse im <em>Journal of Dairy Science</em> von 2023 („Effects of Probiotics Administration on Lactose Intolerance in Adulthood“) kam zu dem Ergebnis, dass Probiotika Bauchschmerzen, Durchfall und Blähungen verringern. Eine ältere Übersichtsarbeit von 2005 fand dagegen, dass Probiotika im Allgemeinen nicht helfen, höchstens bestimmte Bakterienstämme.</p>
-            <p>Probiotika wirken ähnlich wie Laktase-Präparate: Im Dünndarm werden viele der Bakterien zersetzt und geben dabei das Enzym Beta-Galaktosidase frei. Das ist dieselbe Art von Enzym wie die Laktase und spaltet ebenfalls Laktose. Dabei wird aber nicht die ganze Laktose abgebaut. Deshalb werden die Beschwerden eher verringert als ganz beseitigt.</p>
           </div>
         </div>
 
         <!-- TEIL 2 · Audio: Dateiname in data-audio eintragen, z. B. data-audio="audio/frage5-teil2.mp3" -->
         <div class="beitrag" data-audio="">
-          <div class="beitrag-head"><span class="teil">Teil 2</span><h3>Laktosefrei essen</h3></div>
+          <div class="beitrag-head"><span class="teil">Teil 2</span><h3>Probiotika (helfen nur manchen Menschen)</h3></div>
           <div class="text">
-            <h3>Ernährung um Laktose herum</h3>
+            <p>Probiotika sind lebende Bakterien, zum Beispiel Milchsäurebakterien, die man als Kapsel oder mit Joghurt zu sich nimmt. Sie können bei manchen Menschen die Beschwerden lindern, die Wissenschaft ist sich aber nicht ganz einig. Eine Meta-Analyse im <em>Journal of Dairy Science</em> von 2023 („Effects of Probiotics Administration on Lactose Intolerance in Adulthood“) kam zu dem Ergebnis, dass Probiotika Bauchschmerzen, Durchfall und Blähungen verringern. Eine ältere Übersichtsarbeit von 2005 fand dagegen, dass Probiotika im Allgemeinen nicht helfen, höchstens bestimmte Bakterienstämme.</p>
+            <p>Probiotika wirken ähnlich wie Laktase-Präparate: Im Dünndarm werden viele der Bakterien zersetzt und geben dabei das Enzym Beta-Galaktosidase frei. Das ist dieselbe Art von Enzym wie die Laktase und spaltet ebenfalls Laktose. Dabei wird aber nicht die ganze Laktose abgebaut. Deshalb werden die Beschwerden eher verringert als ganz beseitigt.</p>
+          </div>
+        </div>
+      </div>
+      <nav class="pager" aria-label="Fragen wechseln"></nav>
+    </div>
+  </section>
+
+  <!-- ===================== FRAGE 6 ===================== -->
+  <section class="page kapitel" data-id="essen" data-title="Wie ernährt man sich mit Laktoseintoleranz?">
+    <div class="wrap">
+      <header class="khead"><div class="eyebrow">Frage 6 von 6</div><h2>Wie ernährt man sich mit Laktoseintoleranz?</h2><p class="topic">Laktosefreie Lebensmittel und wo überraschend viel oder wenig Laktose drinsteckt</p></header>
+      <div class="col">
+        <!-- TEIL 1 · Audio: Dateiname in data-audio eintragen, z. B. data-audio="audio/frage6-teil1.mp3" -->
+        <div class="beitrag" data-audio="">
+          <div class="beitrag-head"><span class="teil">Teil 1</span><h3>Ernährung um Laktose herum</h3></div>
+          <div class="text">
             <p>Viele Menschen mit Laktoseintoleranz richten ihre Ernährung nach der Laktose aus, anstatt immer wieder Präparate zu nehmen. Sie meiden laktosereiche Lebensmittel oder greifen zu laktosefreien Produkten. Wer sich vegan ernährt, muss nichts umstellen, weil vegane Lebensmittel keine Laktose enthalten.</p>
             <p>Ganz verzichten müssen die meisten Betroffenen aber nicht. Laut der Europäischen Behörde für Lebensmittelsicherheit (EFSA) vertragen die meisten etwa 12 Gramm Laktose auf einmal, das ist ungefähr ein Glas Milch. Hartkäse wie Parmesan, Emmentaler oder Gouda enthält sogar nur noch Spuren von Laktose.</p>
             <p>Manche Betroffene essen auch absichtlich regelmäßig kleine Mengen laktosehaltiger Lebensmittel, um ihre Verträglichkeit zu trainieren. Der Körper bildet dadurch zwar nicht mehr Laktase, aber die Bakterien im Dickdarm können sich anpassen. So können die Beschwerden mit der Zeit geringer werden.</p>
-            <h3>Wie entstehen laktosefreie Lebensmittel?</h3>
+          </div>
+        </div>
+
+        <!-- TEIL 2 · Audio: Dateiname in data-audio eintragen, z. B. data-audio="audio/frage6-teil2.mp3" -->
+        <div class="beitrag" data-audio="">
+          <div class="beitrag-head"><span class="teil">Teil 2</span><h3>Wie entstehen laktosefreie Lebensmittel?</h3></div>
+          <div class="text">
             <p>Meist wird der Milch das Enzym Laktase zugesetzt, also genau das Enzym, das bei Menschen mit Laktoseintoleranz fehlt. Es spaltet die Laktose schon vor dem Trinken in Glukose und Galaktose. Weil diese Einfachzucker süßer schmecken als Laktose, schmeckt laktosefreie Milch etwas süßer. Außerdem wird die Milch erhitzt (pasteurisiert), damit sie länger haltbar ist.</p>
             <p>Eine weitere Technik ist die Filtration: Die Milch wird durch eine sehr feine Membran gepresst, die einen Teil der Laktose abtrennt. Den restlichen Milchzucker spaltet man oft zusätzlich mit Laktase.</p>
             <p class="kurz">In Deutschland darf ein Lebensmittel nur „laktosefrei“ heißen, wenn es weniger als 0,1 Gramm Laktose pro 100 Gramm enthält.</p>
@@ -820,15 +844,16 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
         </div>
 
         <div class="lab" id="lab5">
-          <div class="lab-head"><span class="tag">Quiz</span><h3>Viel oder wenig Laktose?</h3></div>
+          <div class="lab-head"><span class="tag">Quiz</span><h3>Viel oder wenig Laktose? Hättest du das gedacht?</h3></div>
           <div class="food-stage"><div class="food" id="fCard"><span class="fe" id="fEmo" aria-hidden="true"></span><span class="fn" id="fName"></span><span class="fv" id="fVal"></span></div></div>
+          <p class="food-res" id="fRes" aria-live="polite"></p>
+          <p class="food-why" id="fWhy" aria-live="polite"></p>
           <div class="food-btns" id="fBtns">
             <button class="btn warm" data-a="viel">Viel Laktose</button>
             <button class="btn" data-a="wenig">Wenig oder fast keine</button>
           </div>
-          <p class="food-res" id="fRes" aria-live="polite"></p>
           <div class="food-prog" id="fProg" aria-hidden="true"></div>
-          <p class="note" style="text-align:center">Ungefähre Werte pro 100 g bzw. 100 ml, sie schwanken je nach Produkt. „Wenig“ heißt hier: unter 1 g.</p>
+          <p class="note" style="text-align:center">Ungefähre Werte pro 100 g bzw. 100 ml, sie schwanken je nach Produkt. „Wenig“ heißt hier: unter 1 g, „viel“: über 3 g. Quellen siehe Quellenseite.</p>
         </div>
       </div>
       <nav class="pager" aria-label="Fragen wechseln"></nav>
@@ -850,7 +875,10 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
         <li>Shop Apotheke: Lactrase 1.500 FCC Kapseln, Produktinformation. <a href="https://www.shop-apotheke.com/arzneimittel/9175787/lactrase-1500-fcc-kapseln.htm" target="_blank" rel="noopener">shop-apotheke.com</a> (Einnahme, Auflösen im Magen)</li>
         <li>Kartengrundlage: Natural Earth über das Paket world-atlas (gemeinfrei).</li>
         <li><strong>Nicht mehr verwendet:</strong> Storhaug, Fosse &amp; Fadnes (2017): Country, regional, and global estimates for lactose malabsorption in adults. <em>The Lancet Gastroenterology &amp; Hepatology</em>. Die Studie wurde 2024 mit einer offiziellen Warnung versehen und im Januar 2025 zurückgezogen. <a href="https://pubmed.ncbi.nlm.nih.gov/39674208/" target="_blank" rel="noopener">Rückzugsnotiz bei PubMed</a></li>
-        <!-- WEITERE QUELLEN DER GRUPPE HIER ERGÄNZEN (z. B. für die Laktosewerte im Quiz bei Frage 5) -->
+        <li>Institut für Ernährungsmedizin, Klinikum rechts der Isar der TU München: Ernährung bei Laktoseintoleranz. Stand März 2016 (Werte nach Kraut, Lebensmitteltabelle für die Praxis). <a href="https://www.mri.tum.de/sites/default/files/2023-07/laktoseintoleranz_ernaehrung_2016.pdf" target="_blank" rel="noopener">PDF</a> (Laktosewerte im Quiz bei Frage 6)</li>
+        <li>Gesellschaft für gesunde Ernährung: Lactosegehaltstabelle (Informationsmaterial zu Lactrase), ohne Jahr. <a href="https://www.bildungsinstitut-rlp.drk.de/fileadmin/downloads/Bereitschaften/Fachdienstausbildung_Verpflegungsdienst/Hintergrundinfos/02_Lactosegehaltstabelle.pdf" target="_blank" rel="noopener">PDF</a> (Käse unter 0,1 g, Magermilchpulver)</li>
+        <li>Verbraucherzentrale Hamburg: Nutella: Weniger Kakao, mehr Milchpulver. Stand 9. November 2017. <a href="https://www.vzhh.de/themen/lebensmittel-ernaehrung/produktchecks/nutella-weniger-kakao-mehr-milchpulver" target="_blank" rel="noopener">vzhh.de</a> (8,7 % Magermilchpulver)</li>
+        <!-- WEITERE QUELLEN DER GRUPPE HIER ERGÄNZEN -->
       </ol>
       <nav class="pager" aria-label="Fragen wechseln"></nav>
     </div>
@@ -1077,7 +1105,7 @@ document.getElementById('zReset').onclick=mapReset;
 (function(){
 const T=ms=>REDUCED?0:ms;
 const $=id=>document.getElementById(id);
-const CH=['laktose','biologie','karte','symptome','alltag'];
+const CH=['laktose','biologie','karte','symptome','alltag','essen'];
 
 /* ===== Hinweis-Blase + Konfetti ===== */
 let toastTimer;
@@ -1113,7 +1141,7 @@ function renderSeen(){
   const pips=CH.map(c=>`<i class="${seen.has(c)?'on':''}"></i>`).join('');
   $('seenNote').innerHTML = n===0
     ? 'Tipp: Fangt bei Frage 1 an oder springt direkt zur Weltkarte.'
-    : n<5 ? `<span class="pips">${pips}</span> ${n} von 5 Fragen angeschaut`
+    : n<CH.length ? `<span class="pips">${pips}</span> ${n} von ${CH.length} Fragen angeschaut`
           : `<span class="pips">${pips}</span> Alle Fragen angeschaut 🎉`;
 }
 
@@ -1431,33 +1459,37 @@ $('tNext').onclick=()=>goStep(tStep===STEPS.length-1 ? 0 : tStep+1);
 tDots.querySelectorAll('button').forEach((b,j)=>b.onclick=()=>goStep(j));
 goStep(0);
 
-/* ===== 5: Quiz „Viel oder wenig Laktose?“ =====
-   Richtwerte pro 100 g/ml – vor der Präsentation mit einer Nährwerttabelle prüfen und als Quelle angeben. */
+/* ===== 6: Quiz „Viel oder wenig Laktose?“ =====
+   Lebensmittel, bei denen man sich leicht verschätzt: versteckte Laktose und überraschend wenig.
+   Werte pro 100 g bzw. 100 ml nach: Institut für Ernährungsmedizin, Klinikum rechts der Isar der TU München
+   (2016, nach Kraut, Lebensmitteltabelle für die Praxis) und Gesellschaft für gesunde Ernährung (Lactosegehaltstabelle).
+   Nougatcreme: 8,7 % Magermilchpulver (Verbraucherzentrale Hamburg 2017) × ca. 51 g Laktose pro 100 g Magermilchpulver.
+   Aufbau: [Emoji, Name, Wert, 'viel' oder 'wenig', Erklärung] */
 const FOODS=[
-  ['🥛','Kuhmilch','ca. 4,8 g','viel'],
-  ['🧀','Parmesan','unter 0,1 g','wenig'],
-  ['🍦','Vanilleeis','ca. 5–6 g','viel'],
-  ['🧈','Butter','ca. 0,6 g','wenig'],
-  ['🥣','Naturjoghurt','ca. 3–4 g','viel'],
-  ['🧀','Emmentaler','unter 0,1 g','wenig'],
-  ['🍫','Milchschokolade','ca. 7–10 g','viel'],
-  ['🥛','Laktosefreie Milch','unter 0,1 g','wenig']
+  ['🧈','Butter','ca. 0,6 g','wenig','Butter ist fast nur Milchfett. Die Laktose steckt im Wasseranteil, und davon ist kaum etwas drin.'],
+  ['🍫','Nougatcreme (z. B. Nutella)','ca. 4 g','viel','Sie enthält Magermilchpulver, bei Nutella 8,7 %. Darin steckt viel Laktose.'],
+  ['🧀','Parmesan','unter 0,1 g','wenig','Der größte Teil der Laktose fließt bei der Herstellung mit der Molke ab. Den Rest bauen Bakterien beim langen Reifen ab.'],
+  ['🥣','Hüttenkäse','ca. 3,3 g','viel','Obwohl es Käse ist: Hüttenkäse ist ein Frischkäse und reift nicht. Deshalb bleibt die Laktose drin.'],
+  ['🧀','Harzer Käse','unter 0,1 g','wenig','Harzer ist ein Sauermilchkäse. Milchsäurebakterien haben die Laktose fast vollständig abgebaut.'],
+  ['☕','Kaffeemilch aus der Dose','ca. 9,3 g','viel','Kondensmilch: Der Milch wird Wasser entzogen. Dadurch steckt fast doppelt so viel Laktose drin wie in normaler Milch.'],
+  ['🧀','Camembert','unter 0,1 g','wenig','Auch Weichkäse reift. Dabei wird die Laktose fast vollständig abgebaut.'],
+  ['🥛','Buttermilch','ca. 4 g','viel','Trotz des Namens: Buttermilch ist die Flüssigkeit, die beim Buttern übrig bleibt. Da steckt fast so viel Laktose drin wie in Milch.'],
+  ['🥗','Feta','ca. 0,5 g','wenig','Feta reift in Salzlake. Dabei wird der größte Teil der Laktose abgebaut.'],
+  ['🍔','Scheiblettenkäse (Schmelzkäse)','ca. 4,1 g','viel','Schmelzkäse ist kein gereifter Käse am Stück. Oft wird Milchpulver oder Molke dazugegeben, deshalb steckt viel Laktose drin.']
 ];
 let fIdx=0, fScore=0, fRes=[], fLock=false;
 const fCard=$('fCard'), fBtns=$('fBtns');
+const F_ASK='<button class="btn warm" data-a="viel">Viel Laktose</button><button class="btn" data-a="wenig">Wenig oder fast keine</button>';
 function fShow(){
   const f=FOODS[fIdx];
   $('fEmo').textContent=f[0]; $('fName').textContent=f[1]; $('fVal').textContent='?';
   fCard.className='food'; void fCard.offsetWidth; fCard.classList.add('in');
-  $('fRes').textContent=`Lebensmittel ${fIdx+1} von ${FOODS.length}`;
+  $('fRes').textContent=`Lebensmittel ${fIdx+1} von ${FOODS.length}`; $('fWhy').textContent='';
+  fBtns.innerHTML=F_ASK; bindF();
   fProg(); fLock=false;
 }
 function fProg(){ $('fProg').innerHTML=FOODS.map((_,i)=>`<i class="${fRes[i]===true?'r':fRes[i]===false?'w':i===fIdx?'c':''}"></i>`).join(''); }
-function fRestart(){
-  fIdx=0; fScore=0; fRes=[];
-  fBtns.innerHTML='<button class="btn warm" data-a="viel">Viel Laktose</button><button class="btn" data-a="wenig">Wenig oder fast keine</button>';
-  bindF(); fShow();
-}
+function fRestart(){ fIdx=0; fScore=0; fRes=[]; fShow(); }
 function bindF(){ fBtns.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>fAnswer(b.dataset.a)); }
 function fAnswer(a){
   if(fLock) return; fLock=true;
@@ -1465,24 +1497,29 @@ function fAnswer(a){
   fRes[fIdx]=ok; if(ok) fScore++;
   $('fVal').textContent=f[2]+' Laktose';
   fCard.className='food '+(ok?'right':'wrong');
-  $('fRes').textContent = ok ? 'Richtig!' : (f[3]==='viel' ? 'Leider falsch, da steckt viel Laktose drin.' : 'Leider falsch, da ist kaum Laktose drin.');
+  $('fRes').innerHTML = ok ? '<b>Richtig!</b>' : (f[3]==='viel' ? '<b>Überraschung:</b> Da steckt viel Laktose drin.' : '<b>Überraschung:</b> Da ist kaum Laktose drin.');
+  $('fWhy').textContent=f[4];
   fProg();
-  setTimeout(()=>{
-    fIdx++;
-    if(fIdx<FOODS.length) fShow();
-    else{
-      fCard.className='food in';
-      $('fEmo').textContent = fScore>=7 ? '🏆' : fScore>=5 ? '👍' : '🤔';
-      $('fName').textContent=`${fScore} von ${FOODS.length} richtig`;
-      $('fVal').textContent = fScore>=7 ? 'Laktose-Profi!' : 'Lang gereifter Käse ist fast laktosefrei.';
-      $('fRes').textContent=''; fProg();
-      fBtns.innerHTML='<button class="btn" id="fAgain">Nochmal spielen</button>';
-      $('fAgain').onclick=fRestart;
-      if(fScore>=7) confetti();
-    }
-  },T(1500));
+  const last=fIdx===FOODS.length-1;
+  fBtns.innerHTML=`<button class="btn" id="fNext">${last?'Ergebnis anzeigen':'Weiter →'}</button>`;
+  $('fNext').onclick=fNext;
 }
-bindF(); fShow();
+function fNext(){
+  fIdx++;
+  if(fIdx<FOODS.length){ fShow(); return; }
+  const n=FOODS.length;
+  fCard.className='food in';
+  $('fEmo').textContent = fScore>=8 ? '🏆' : fScore>=6 ? '👍' : '🤔';
+  $('fName').textContent=`${fScore} von ${n} richtig`;
+  $('fVal').textContent = fScore>=8 ? 'Laktose-Profi!' : 'Ganz schön knifflig, oder?';
+  $('fRes').textContent='';
+  $('fWhy').textContent='Merke: Gereifter Käse hat kaum Laktose. Frischkäse, Schmelzkäse und Produkte mit Milchpulver dagegen schon.';
+  fProg();
+  fBtns.innerHTML='<button class="btn" id="fAgain">Nochmal spielen</button>';
+  $('fAgain').onclick=fRestart;
+  if(fScore>=8) confetti();
+}
+fShow();
 
 /* ===== Seitenwechsel ===== */
 document.addEventListener('pagechange',e=>{
@@ -1492,7 +1529,7 @@ document.addEventListener('pagechange',e=>{
   if(id==='biologie' && !REDUCED){ cv.classList.remove('draw'); void cv.getBoundingClientRect(); cv.classList.add('draw'); }
   if(CH.includes(id) && !seen.has(id)){
     seen.add(id); saveSeen(); renderSeen();
-    if(CH.every(c=>seen.has(c))){ setTimeout(()=>{ confetti(); toast('Alle fünf Fragen angeschaut! 🎉'); },T(600)); }
+    if(CH.every(c=>seen.has(c))){ setTimeout(()=>{ confetti(); toast('Alle sechs Fragen angeschaut! 🎉'); },T(600)); }
   }
 });
 renderSeen();
