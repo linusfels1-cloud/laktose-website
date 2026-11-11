@@ -316,7 +316,255 @@ const TEIL2 = {
   ]
 };
 
-const VIDEOS = { 'frage1-teil1': TEIL1, 'frage1-teil2': TEIL2 };
+/* ---------- weitere Zeichen-Helfer für Frage 5 und 6 ---------- */
+const capsule = (x, y, c1, c2, rot=0, s=1) => `<g transform="translate(${x},${y}) rotate(${rot}) scale(${s})"><path d="M0,-18 L-26,-18 A18,18 0 0,0 -26,18 L0,18Z" fill="${c1}"/><path d="M0,-18 L26,-18 A18,18 0 0,1 26,18 L0,18Z" fill="${c2}"/><path d="M-26,-18 L26,-18 A18,18 0 0,1 26,18 L-26,18 A18,18 0 0,1 -26,-18Z" fill="none" stroke="#14213d" stroke-width="2.5"/><rect x="-20" y="-11" width="14" height="5" rx="2.5" fill="#fff" opacity=".6"/></g>`;
+const tablet = (x, y, c, s=1) => `<g transform="translate(${x},${y}) scale(${s})"><circle r="26" fill="${c}" stroke="#14213d" stroke-width="2.5"/><line x1="-14" y1="0" x2="14" y2="0" stroke="#14213d" stroke-width="2" opacity=".35"/></g>`;
+const dropBottle = (x, y, s=1) => `<g transform="translate(${x},${y}) scale(${s})"><rect x="-22" y="-20" width="44" height="64" rx="10" fill="#e3eafb" stroke="#14213d" stroke-width="2.5"/><rect x="-10" y="-40" width="20" height="22" rx="4" fill="#fff" stroke="#14213d" stroke-width="2.5"/><path d="M0,-58 C-8,-46 -8,-42 0,-40 C8,-42 8,-46 0,-58Z" fill="#9aa3b6"/><rect x="-14" y="0" width="28" height="18" rx="3" fill="#fff"/><text class="na-t" y="14" style="fill:#14213d; font-size:10px">LAKT</text></g>`;
+const yogurt = (x, y, s=1) => `<g transform="translate(${x},${y}) scale(${s})"><path d="M-34,-26 L34,-26 L26,34 Q25,40 18,40 L-18,40 Q-25,40 -26,34Z" fill="#fff" stroke="#14213d" stroke-width="2.5"/><rect x="-38" y="-34" width="76" height="10" rx="4" fill="#e0793c"/><text class="na-t" y="12" style="fill:#14213d; font-size:13px">Joghurt</text></g>`;
+const milkGlass = (x, y, s=1, lbl='') => `<g transform="translate(${x},${y}) scale(${s})"><path d="M-26,-40 L26,-40 L20,40 L-20,40Z" fill="#fff" stroke="#14213d" stroke-width="2.5"/><path d="M-24,-22 L24,-22 L20,40 L-20,40Z" fill="#f1f4fa"/>${lbl?`<text class="na-t" y="16" style="fill:#14213d; font-size:12px">${lbl}</text>`:''}</g>`;
+const germ = (x, y, s=1) => `<g transform="translate(${x},${y}) scale(${s})">${[0,45,90,135,180,225,270,315].map(a=>`<line x1="0" y1="0" x2="${Math.cos(a*Math.PI/180)*20}" y2="${Math.sin(a*Math.PI/180)*20}" stroke="#7a5cc4" stroke-width="3"/>`).join('')}<circle r="13" fill="#7a5cc4"/></g>`;
+const leaf = (x, y, s=1) => `<g transform="translate(${x},${y}) scale(${s})"><path d="M0,40 C-40,10 -30,-40 30,-44 C34,10 20,34 0,40Z" fill="#bfe6d5" stroke="#1f9d6b" stroke-width="3"/><path d="M0,40 C4,10 12,-14 26,-38" fill="none" stroke="#1f9d6b" stroke-width="2.5"/></g>`;
+const card = (x, y, w, h, txt, cls='') => `<rect class="card" x="${x}" y="${y}" width="${w}" height="${h}" rx="14"/><text class="t-lbl t-c ${cls}" x="${x+w/2}" y="${y+h/2+8}">${txt}</text>`;
+const meter = (x, y, w, frac, color) => `<rect x="${x}" y="${y}" width="${w}" height="34" rx="10" fill="#eef1f6"/><rect x="${x}" y="${y}" width="${w*frac}" height="34" rx="10" fill="${color}"/>`;
+
+/* ================= FRAGE 5 · TEIL 1: Laktase-Präparate ================= */
+const F5T1 = {
+  duration: 48.0,
+  chapters: [[0,'Formen'],[6.68,'Einnahme'],[10.84,'Wirkdauer'],[19.98,'Weg in den Magen'],[28.23,'Laktase spaltet'],[35.16,'Zwei Einfachzucker'],[42.46,'Aufnahme im Darm']],
+  subs: [
+    [0,'Laktase-Enzympräparate kommen in verschiedenen Formen und Farben vor, wie Kapseln, Tropfen und Kautabletten.'],
+    [6.68,'Sie werden meist kurz vor dem Verzehr von laktosehaltigen Lebensmitteln eingenommen.'],
+    [10.84,'Sie wirken dann 30 bis 45 Minuten.'],
+    [13.58,'Doch es gibt auch Versionen, die länger wirken und es dem Körper ermöglichen, laktosehaltige Lebensmittel zu sich zu nehmen.'],
+    [19.98,'Das läuft so ab, dass man zum Beispiel die Kapsel schluckt. Sie wird durch die Speiseröhre in den Magen befördert und löst sich dort langsam auf.'],
+    [28.23,'Wenn man dann zum Beispiel Joghurt isst, setzt sich die Laktase aus der Kapsel frei und beschleunigt den Spaltungsprozess der Laktose.'],
+    [35.16,'Dabei wird der Zweifachzucker Laktose zu zwei Einfachzuckern: Glukose und Galaktose.'],
+    [42.46,'Diese werden dann durch die Darmschleimhaut aufgenommen, wodurch die Laktose kein Problem mehr darstellt.']
+  ],
+  scenes: [
+    { start: 0, svg: () =>
+      `<g ${at(0.4)}><text class="t-big" x="480" y="90">Laktase-Präparate</text></g>
+       <g ${at(2.8)}><text class="t-sm t-c" x="480" y="130">verschiedene Formen und Farben</text></g>
+       <g ${at(4.3,'pop')}>${capsule(190,250,'#1f9d6b','#bfe6d5',-20,1.5)}${capsule(270,320,'#1f4fc4','#e3eafb',15,1.5)}${capsule(170,360,'#e0793c','#fdeee3',5,1.5)}<text class="t-lbl t-c" x="220" y="450">Kapseln</text></g>
+       <g ${at(5.0,'pop')}>${dropBottle(480,300,1.6)}<text class="t-lbl t-c" x="480" y="450">Tropfen</text></g>
+       <g ${at(5.4,'pop')}>${tablet(700,260,'#fdeee3',1.3)}${tablet(790,300,'#e3eafb',1.3)}${tablet(720,350,'#e3f5ed',1.3)}<text class="t-lbl t-c" x="745" y="450">Kautabletten</text></g>` },
+    { start: 6.68, svg: () =>
+      `<g ${at(6.9)}>${capsule(230,260,'#1f9d6b','#bfe6d5',0,2)}<text class="t-lbl t-c" x="230" y="350">Präparat</text></g>
+       <g ${at(7.3)}>${arrow(330,260,560,260)}<text class="t-sm t-c" x="445" y="235">kurz vorher</text></g>
+       <g ${at(8.6,'pop')}>${yogurt(660,250,1.5)}${milkGlass(790,255,1.4)}<text class="t-lbl t-c" x="720" y="350">laktosehaltiges Essen</text></g>
+       <g ${at(9.3)}>${card(300,410,360,56,'zusammen mit dem Essen')}</g>` },
+    { start: 10.84, svg: () => {
+      const X0=160, W=700;
+      return `<g ${at(10.9)}><text class="t-mid" x="480" y="90">Wie lange wirkt es?</text></g>
+        <line class="axis" x1="${X0}" y1="420" x2="${X0+W}" y2="420"/>
+        ${[0,1,2,3,4].map(h=>`<line class="grid" x1="${X0+h*W/4}" x2="${X0+h*W/4}" y1="180" y2="420"/><text class="t-sm t-c" x="${X0+h*W/4}" y="452">${h} h</text>`).join('')}
+        <text class="t-sm" x="${X0+W}" y="482" text-anchor="end">Zeit nach der Einnahme</text>
+        <g ${at(11.2)}><text class="t-sm" x="${X0}" y="200">normales Präparat</text></g>
+        <g ${at(11.4,'grow-x')}><rect x="${X0}" y="212" width="${W/4*0.65}" height="44" rx="10" fill="#1f9d6b"/></g>
+        <g ${at(12.6)}><text class="t-lbl t-ok" x="${X0+W/4*0.65+14}" y="242">begrenzte Wirkdauer</text></g>
+        <g ${at(14.2)}><text class="t-sm" x="${X0}" y="310">Depot-Tablette</text></g>
+        <g ${at(14.6,'grow-x')}><rect x="${X0}" y="322" width="${W}" height="44" rx="10" fill="#bfe6d5" stroke="#1f9d6b" stroke-width="3"/></g>
+        <g ${at(15.4)}><text class="t-lbl t-ok" x="${X0+20}" y="352">wirkt länger</text></g>`;
+    }},
+    { start: 19.98, svg: () =>
+      `<circle class="body" cx="300" cy="105" r="52"/>
+       <path class="body" d="M215,180 Q300,150 385,180 L410,500 Q300,530 190,500 Z"/>
+       <path d="M300,150 L300,300" stroke="#d9877d" stroke-width="14" stroke-linecap="round"/>
+       <path class="lung" d="M300,290 C380,280 400,330 380,370 C360,410 300,400 280,380 C260,360 250,320 300,290Z" style="fill:#fdeee3; stroke:#e0793c"/>
+       <g ${at(22.0)}><g ${mv(23.3, 0, 120)}><g ${mv(25.0, 30, 90)}><g ${at(26.7,'gone')}>${capsule(300,130,'#1f9d6b','#bfe6d5',90,0.8)}</g></g></g></g>
+       <g ${at(24.2)}><text class="t-sm" x="320" y="220">Speiseröhre</text></g>
+       <g ${at(25.0)}><text class="t-lbl t-warm" x="400" y="345">Magen</text></g>
+       ${[[315,330],[345,345],[325,365],[355,325]].map(([x,y],i)=>`<g ${at(27.0+i*0.12,'pop')}>${enzyme(x,y,0.45)}</g>`).join('')}
+       <g ${at(27.3)}><rect class="card" x="560" y="300" width="360" height="90" rx="14"/><text class="t-lbl" x="580" y="335">Kapsel löst sich auf,</text><text class="t-lbl t-ok" x="580" y="368">Laktase wird frei</text></g>
+       <g ${at(22.0)}><text class="t-mid" x="560" y="140" style="text-anchor:start">Kapsel schlucken</text></g>` },
+    { start: 28.23, svg: () => {
+      const mols = [[240,250],[480,190],[700,260],[380,360],[600,380]];
+      return `<rect class="lumen" x="0" y="0" width="960" height="540" style="fill:#fdf3ea"/>
+        <g ${at(28.9,'pop')}>${yogurt(110,120,1.2)}<text class="t-sm t-c" x="110" y="190">Joghurt</text></g>
+        ${mols.map(([x,y],i)=>`<line class="bond gone" data-at="${33.2+i*0.2}" x1="${x-22}" y1="${y}" x2="${x+22}" y2="${y}"/>
+          <g ${mv(33.25+i*0.2,-14,0)}>${sugar('gal',x-22,y,15,false)}</g><g ${mv(33.25+i*0.2,14,0)}>${sugar('glu',x+22,y,15,false)}</g>`).join('')}
+        ${mols.map(([x,y],i)=>`<g ${at(30.6+i*0.1)}><g ${mv(32.6+i*0.2,0,-30)}>${enzyme(x,y+64,0.6)}</g></g>`).join('')}
+        <g ${at(30.7)}><rect class="card" x="560" y="30" width="370" height="56" rx="14"/><text class="t-lbl t-ok" x="580" y="66">Laktase aus der Kapsel</text></g>
+        <g ${at(32.8)}><text class="t-lbl t-c" x="480" y="490">spaltet die Laktose</text></g>`;
+    }},
+    { start: 35.16, svg: () =>
+      `${lac(230, 260, 46)}<g ${at(36.8)}><text class="t-lbl t-c" x="230" y="350">Zweifachzucker</text></g>
+       <g ${at(37.9)}>${arrow(370,260,520,260)}</g>
+       <g ${at(38.2,'pop')}>${sugar('glu', 620, 260, 46)}${sugar('gal', 800, 260, 46)}<text class="t-lbl t-c" x="710" y="350">zwei Einfachzucker</text></g>
+       <g ${at(40.2)}><text class="t-lbl t-warm t-c" x="620" y="180">Glukose</text></g>
+       <g ${at(40.8)}><text class="t-lbl t-acc t-c" x="800" y="180">Galaktose</text></g>` },
+    { start: 42.46, svg: () => {
+      let s = '';
+      [[150,90,'glu'],[260,140,'gal'],[470,80,'glu'],[580,150,'gal'],[780,100,'glu'],[880,150,'gal']].forEach(([x,y,k],i)=>{
+        const vi = Math.min(8, Math.round((x-60)/104)); const tx = villusTop(vi)[0]-x, ty = 300-y;
+        s += `<g ${mv(43.5+i*0.12, tx, ty)}><g ${at(44.6+i*0.1,'gone')}>${sugar(k,x,y,16,false)}</g></g>`;
+      });
+      return gutWall() + s +
+        `<g ${at(43.5)}><text class="t-sm" x="560" y="300">Darmschleimhaut</text></g>
+         <g ${at(45.5,'pop')}>${check(480,420)}</g>
+         <g ${at(45.6)}><rect class="card" x="530" y="392" width="360" height="56" rx="14"/><text class="t-lbl t-ok" x="550" y="428">keine Beschwerden</text></g>`;
+    }}
+  ]
+};
+
+/* ==================== FRAGE 5 · TEIL 2: Probiotika ===================== */
+const F5T2 = {
+  duration: 36.3,
+  chapters: [[0,'Was sind Probiotika?'],[6.96,'Was die Forschung sagt'],[14.22,'Wie sie wirken'],[18.82,'Im Dünndarm'],[24.66,'Laktose wird gespalten'],[31.7,'Weniger Beschwerden']],
+  subs: [
+    [0,'Probiotika können bei manchen Menschen auch gegen die Beschwerden einer Laktoseintoleranz helfen, obwohl sich die Wissenschaft nicht einig ist.'],
+    [6.96,'Sie erwähnt teilweise positive Effekte, aber nicht zuverlässig genug für eine Bestätigung des Mittels für diesen Anwendungszweck.'],
+    [14.22,'Dabei funktionieren Probiotika ähnlich wie Laktase-Enzympräparate:'],
+    [18.82,'Sie zersetzen sich stattdessen im Dünndarm und geben eine Beta-Galaktosidase ab,'],
+    [24.66,'die ähnlich wie Laktase auch Laktose zersetzt.'],
+    [28.0,'Dabei verbleibt noch etwas Laktose, und nicht alles wird abgebaut.'],
+    [31.7,'Das führt dazu, dass die Symptome eher reduziert als beseitigt werden.']
+  ],
+  scenes: [
+    { start: 0, svg: () =>
+      `<g ${at(0.3)}><text class="t-big" x="480" y="90">Probiotika</text></g>
+       <g ${at(0.8)}><text class="t-sm t-c" x="480" y="128">lebende Milchsäurebakterien, z. B. als Kapsel oder im Joghurt</text></g>
+       <g ${at(1.0,'pop')}>${capsule(250,280,'#7a5cc4','#e6dff7',-15,2.2)}</g>
+       ${[[420,250,20],[470,300,-30],[520,240,60],[560,310,10],[610,260,-50]].map(([x,y,r],i)=>`<g ${at(1.2+i*0.1,'pop')}><g class="${i%2?'float':'float2'}">${bact(x,y,r)}</g></g>`).join('')}
+       <g ${at(1.8)}>${yogurt(780,280,1.6)}</g>
+       <g ${at(3.9)}><rect class="card" x="240" y="400" width="480" height="64" rx="14"/><text class="t-lbl t-c" x="480" y="441">Die Wissenschaft ist sich nicht einig</text></g>` },
+    { start: 6.96, svg: () =>
+      `<g ${at(7.0)}><text class="t-mid" x="480" y="90">Was die Forschung sagt</text></g>
+       <g ${at(7.6,'pop')}><rect class="card" x="90" y="160" width="360" height="200" rx="18"/>${check(270,215)}<text class="t-lbl t-c" x="270" y="290">teilweise positive</text><text class="t-lbl t-c" x="270" y="322">Effekte</text></g>
+       <g ${at(9.2,'pop')}><rect class="card" x="510" y="160" width="360" height="200" rx="18"/>${g(690,215,'<circle r="22" fill="#e0793c"/><text class="na-t" y="8" style="font-size:24px">!</text>')}<text class="t-lbl t-c" x="690" y="290">aber nicht</text><text class="t-lbl t-c" x="690" y="322">zuverlässig genug</text></g>
+       <g ${at(10.6)}><text class="t-sm t-c" x="480" y="430">kein anerkanntes Mittel gegen Laktoseintoleranz</text></g>` },
+    { start: 14.22, svg: () =>
+      `<g ${at(14.4)}>${capsule(260,250,'#1f9d6b','#bfe6d5',0,2.4)}<text class="t-lbl t-c" x="260" y="350">Laktase-Präparat</text></g>
+       <g ${at(15.3)}><text class="t-big" x="480" y="268">≈</text><text class="t-sm t-c" x="480" y="310">ähnlich</text></g>
+       <g ${at(14.6)}>${bact(660,230,10)}${bact(720,270,-20)}${bact(680,300,40)}<text class="t-lbl t-c" x="700" y="350">Probiotika</text></g>
+       <g ${at(16.2)}><text class="t-sm t-c" x="480" y="440">beide liefern ein Enzym, das Laktose spaltet</text></g>` },
+    { start: 18.82, svg: () => {
+      const bs = [[220,120,20],[420,90,-30],[620,130,50],[790,95,10]];
+      return gutWall() +
+        bs.map(([x,y,r],i)=>`<g ${at(19.5+i*0.15,'gone')}>${bact(x,y,r)}</g>
+          <g ${at(19.6+i*0.15,'pop')}><g ${at(20.6,'gone')}>${[[-14,-6],[10,8],[16,-10],[-6,12]].map(([dx,dy])=>`<circle cx="${x+dx}" cy="${y+dy}" r="5" fill="#7a5cc4" opacity=".6"/>`).join('')}</g></g>
+          <g ${at(21.3+i*0.12,'pop')}>${enzyme(x,y+18,0.55)}</g>`).join('') +
+        `<g ${at(19.5)}><rect class="card" x="300" y="12" width="360" height="52" rx="14"/><text class="t-lbl t-c" x="480" y="46">Bakterien zersetzen sich</text></g>
+         <g ${at(21.6)}><rect class="card" x="250" y="250" width="460" height="56" rx="14"/><text class="t-lbl t-ok t-c" x="480" y="286">Beta-Galaktosidase wird frei</text></g>`;
+    }},
+    { start: 24.66, svg: () => {
+      const mols = [[150,170],[330,120],[500,200],[650,130],[800,190],[420,300]];
+      const cut = [0,2,3,5];
+      return `<rect class="lumen" x="0" y="0" width="960" height="540"/>` +
+        mols.map(([x,y],i)=>{ const c = cut.includes(i);
+          return c ? `<line class="bond gone" data-at="${26.3+i*0.15}" x1="${x-22}" y1="${y}" x2="${x+22}" y2="${y}"/>
+            <g ${mv(26.35+i*0.15,-14,0)}>${sugar('gal',x-22,y,15,false)}</g><g ${mv(26.35+i*0.15,14,0)}>${sugar('glu',x+22,y,15,false)}</g>
+            <g ${at(25.0)}>${enzyme(x,y+50,0.5)}</g>`
+          : `<g ${at(28.9,'pulse')}>${lac(x,y,15,false)}</g>`; }).join('') +
+        `<g ${at(25.3)}><text class="t-sm t-c" x="480" y="40">spaltet Laktose, ähnlich wie Laktase</text></g>
+         <g ${at(28.9)}><rect class="card" x="230" y="400" width="500" height="56" rx="14"/><text class="t-lbl t-bad t-c" x="480" y="436">etwas Laktose bleibt übrig</text></g>
+         <g ${at(30.3)}><text class="t-sm t-c" x="480" y="490">nicht alles wird abgebaut</text></g>`;
+    }},
+    { start: 31.7, svg: () =>
+      `<g ${at(31.8)}><text class="t-mid" x="480" y="100">Beschwerden</text></g>
+       <text class="t-sm" x="150" y="200">ohne Hilfe</text>${meter(150,212,660,1,'#d4493f')}
+       <g ${at(32.9)}><text class="t-sm" x="150" y="300">mit Probiotika</text></g>
+       <g ${at(33.0)}><rect x="150" y="312" width="660" height="34" rx="10" fill="#eef1f6"/></g>
+       <g ${at(33.3,'grow-x')}><rect x="150" y="312" width="${660*0.45}" height="34" rx="10" fill="#e0793c"/></g>
+       <g ${at(34.9)}><rect class="card" x="230" y="400" width="500" height="60" rx="14"/><text class="t-lbl t-c" x="480" y="438">eher reduziert als beseitigt</text></g>` }
+  ]
+};
+
+/* =============== FRAGE 6 · TEIL 1: Ernährung um Laktose herum =============== */
+const F6T1 = {
+  duration: 31.1,
+  chapters: [[0,'Um Laktose herum essen'],[9.6,'Vegan'],[18.36,'Toleranz trainieren'],[25.76,'Die 12-Gramm-Grenze']],
+  subs: [
+    [0,'Viele Menschen mit Laktoseintoleranz ernähren sich eher um laktosehaltige Lebensmittel herum, anstatt immer wieder zu Medikamenten zu greifen.'],
+    [9.6,'Veganer müssen ihre Ernährung nicht umstellen, da sie sowieso keine laktosehaltigen Lebensmittel zu sich nehmen, denn Laktose ist ein Milchzucker.'],
+    [18.36,'Manche Betroffenen konsumieren auch absichtlich laktosehaltige Lebensmittel, um ihre Toleranz zu trainieren und mehr Laktose aushalten zu können.'],
+    [25.76,'Dabei liegt die Grenze bei einem normalen Menschen mit Laktoseintoleranz bei etwa 12 Gramm Laktose.']
+  ],
+  scenes: [
+    { start: 0, svg: () =>
+      `<g ${at(1.0)}><circle cx="480" cy="280" r="130" fill="#fff" stroke="#9aa3b6" stroke-width="4"/><circle cx="480" cy="280" r="100" fill="none" stroke="#dbe1ea" stroke-width="3"/></g>
+       <g ${at(3.9)}><path class="ln ln-ok dash" d="M300,280 A180,180 0 1,1 480,460"/><text class="t-lbl t-ok t-c" x="480" y="70">um die Laktose herum</text></g>
+       <g ${at(4.0,'pop')}>${milkGlass(480,280,1.4)}${cross(530,230)}</g>
+       <g ${at(4.6,'pop')}>${leaf(700,200,1)}</g>
+       <g ${at(4.8,'pop')}>${g(250,190,'<circle r="40" fill="#fdeee3" stroke="#e0793c" stroke-width="3"/><text class="t-ring" y="8" style="font-size:20px">Obst</text>')}</g>
+       <g ${at(5.0,'pop')}>${g(250,390,'<rect x="-50" y="-26" width="100" height="52" rx="18" fill="#fff6dc" stroke="#d9a520" stroke-width="3"/><text class="t-ring" y="7" style="font-size:18px">Brot</text>')}</g>
+       <g ${at(6.4)}><rect class="card" x="640" y="380" width="290" height="110" rx="16"/>${capsule(700,420,'#1f9d6b','#bfe6d5',0,0.9)}<path d="M665,395 L735,445" stroke="#d4493f" stroke-width="5" stroke-linecap="round"/><text class="t-sm" x="760" y="426">nicht immer</text><text class="t-sm" x="760" y="452">Tabletten</text></g>` },
+    { start: 9.6, svg: () =>
+      `<g ${at(10.0,'pop')}>${leaf(260,250,2.2)}<text class="t-big" x="260" y="410">vegan</text></g>
+       <g ${at(11.4)}><rect class="card" x="470" y="140" width="420" height="80" rx="16"/>${check(515,180)}<text class="t-lbl" x="550" y="188">keine Umstellung nötig</text></g>
+       <g ${at(12.7)}><text class="t-sm" x="480" y="280">keine Milchprodukte</text></g>
+       <g ${at(12.7)}>${milkGlass(560,360,1.2)}${cross(600,320)}</g>
+       <g ${at(16.3)}><rect class="card" x="660" y="320" width="230" height="80" rx="16"/><text class="t-lbl t-c" x="775" y="352">Laktose =</text><text class="t-lbl t-c t-acc" x="775" y="384">Milchzucker</text></g>` },
+    { start: 18.36, svg: () => {
+      const days = ['Mo','Di','Mi','Do','Fr'];
+      return `<g ${at(18.5)}><text class="t-mid" x="480" y="90">Toleranz trainieren</text></g>` +
+        days.map((d,i)=>`<g ${at(20.1+i*0.3,'pop')}><rect class="card" x="${110+i*150}" y="150" width="120" height="160" rx="14"/><text class="t-sm t-c" x="${170+i*150}" y="182">${d}</text>${milkGlass(170+i*150,250,0.6+i*0.08)}</g>`).join('') +
+        `<g ${at(21.4)}><text class="t-sm t-c" x="480" y="350">regelmäßig kleine Mengen Laktose</text></g>
+         <g ${at(24.3)}>${arrow(140,430,820,400,'ln-ok')}<text class="t-lbl t-ok" x="560" y="470">mehr Laktose aushalten</text></g>`;
+    }},
+    { start: 25.76, svg: () =>
+      `<g ${at(26.0)}><text class="t-mid" x="480" y="90">Die Grenze</text></g>
+       <g ${at(28.4,'pop')}><text x="330" y="300" style="font:800 120px var(--f-display); fill:#1f4fc4; text-anchor:middle">12 g</text><text class="t-lbl t-c" x="330" y="350">Laktose</text></g>
+       <g ${at(29.6)}><text class="t-big" x="560" y="290">≈</text></g>
+       <g ${at(29.8,'pop')}>${milkGlass(720,260,2.2)}<text class="t-lbl t-c" x="720" y="380">1 Glas Milch</text></g>
+       <g ${at(30.2)}><text class="t-sm t-c" x="480" y="450">vertragen die meisten Betroffenen auf einmal (EFSA)</text></g>` }
+  ]
+};
+
+/* ================ FRAGE 6 · TEIL 2: Laktosefreie Milch ================= */
+const F6T2 = {
+  duration: 21.7,
+  chapters: [[0,'Pasteurisieren'],[7.28,'Laktase dazugeben'],[15.96,'Filtern']],
+  subs: [
+    [0,'Die Milch wird zunächst pasteurisiert. Das bedeutet, dass sie stark erhitzt wird.'],
+    [3.88,'Das wird gemacht, um Keime abzutöten und sie länger haltbar zu machen.'],
+    [7.28,'Anschließend wird der Milch Laktase zugefügt, da dieses Enzym bei laktoseintoleranten Personen fehlt und nötig ist für den Abbau der Laktose.'],
+    [15.96,'Eine weitere Technik ist, dass die Milch durch einen Filter gejagt wird, wobei die Laktose herausgefiltert wird.']
+  ],
+  scenes: [
+    { start: 0, svg: () => {
+      const germs = [[400,250],[470,320],[540,240],[440,380],[560,360]];
+      return `<rect x="350" y="150" width="260" height="290" rx="30" fill="#fff" stroke="#14213d" stroke-width="3"/>
+        <rect x="356" y="200" width="248" height="234" rx="24" fill="#f1f4fa"/>
+        <text class="t-sm t-c" x="480" y="185">Milch</text>
+        <g ${at(1.2)}><rect x="690" y="140" width="34" height="270" rx="17" fill="#fff" stroke="#14213d" stroke-width="3"/><circle cx="707" cy="420" r="30" fill="#d4493f"/></g>
+        <g ${at(1.4,'grow')}><rect x="698" y="200" width="18" height="220" rx="9" fill="#d4493f"/></g>
+        <g ${at(2.2)}><text class="t-lbl t-bad" x="745" y="215">ca. 72 °C</text><text class="t-sm" x="745" y="242">kurz erhitzt</text></g>
+        <g ${at(2.9)}>${[400,480,560].map(x=>`<path d="M${x},490 C${x-20},470 ${x-6},450 ${x},438 C${x+6},450 ${x+20},470 ${x},490Z" class="flash in" fill="#e0793c"/>`).join('')}</g>
+        ${germs.map(([x,y],i)=>`<g ${at(4.6+i*0.05,'pop')}><g ${at(5.1+i*0.08,'gone')}>${germ(x,y,0.9)}</g></g><g ${at(5.1+i*0.08,'pop')}><g ${at(5.9,'gone')}>${cross(x,y)}</g></g>`).join('')}
+        <g ${at(4.7)}><text class="t-lbl" x="80" y="260">Keime</text><text class="t-lbl t-bad" x="80" y="292">werden abgetötet</text></g>
+        <g ${at(6.3)}><rect class="card" x="60" y="360" width="250" height="64" rx="14"/>${check(100,392)}<text class="t-lbl" x="132" y="400">länger haltbar</text></g>`;
+    }},
+    { start: 7.28, svg: () => {
+      const mols = [[420,260],[540,320],[450,390],[560,230]];
+      return `<rect x="350" y="150" width="260" height="290" rx="30" fill="#fff" stroke="#14213d" stroke-width="3"/>
+        <rect x="356" y="200" width="248" height="234" rx="24" fill="#f1f4fa"/>
+        <text class="t-sm t-c" x="480" y="185">Milch</text>` +
+        mols.map(([x,y],i)=>`<line class="bond gone" data-at="${14.6+i*0.15}" x1="${x-20}" y1="${y}" x2="${x+20}" y2="${y}"/>
+          <g ${mv(14.65+i*0.15,-12,0)}>${sugar('gal',x-20,y,14,false)}</g><g ${mv(14.65+i*0.15,12,0)}>${sugar('glu',x+20,y,14,false)}</g>`).join('') +
+        `<g ${at(7.9)}><g ${mv(8.3,0,70)}><path d="M466,40 L494,40 L494,90 L486,110 L474,110 L466,90Z" fill="#fff" stroke="#14213d" stroke-width="3"/><rect x="462" y="20" width="36" height="24" rx="6" fill="#9aa3b6"/></g></g>
+        ${[[430,300],[510,280],[480,360],[530,400]].map(([x,y],i)=>`<g ${at(8.9+i*0.12,'pop')}>${enzyme(x,y,0.45)}</g>`).join('')}
+        <g ${at(8.9)}><text class="t-lbl t-ok" x="650" y="130">Laktase</text><text class="t-sm" x="650" y="158">wird zugefügt</text></g>
+        <g ${at(10.2)}><rect class="card" x="640" y="200" width="290" height="90" rx="14"/><text class="t-sm" x="660" y="235">das Enzym, das bei</text><text class="t-sm" x="660" y="262">Betroffenen fehlt</text></g>
+        <g ${at(14.6)}><rect class="card" x="640" y="330" width="290" height="90" rx="14"/><text class="t-lbl" x="660" y="368">Laktose wird</text><text class="t-lbl t-ok" x="660" y="400">abgebaut</text></g>`;
+    }},
+    { start: 15.96, svg: () => {
+      let parts = '';
+      for(let k=0;k<6;k++){ const y=200+k*36; parts += `<g ${mv(17.4+k*0.12, 560, 0)}><circle cx="${110+(k%2)*40}" cy="${y}" r="9" fill="#9aa3b6"/></g>`; }
+      const mols = [[250,230],[330,300],[260,350]];
+      return `<g ${at(16.2)}><text class="t-mid" x="480" y="70">Filtern</text></g>
+        <rect x="60" y="170" width="380" height="240" rx="20" fill="#f1f4fa" stroke="#9aa3b6" stroke-width="3"/>
+        <rect x="520" y="170" width="380" height="240" rx="20" fill="#f1f4fa" stroke="#9aa3b6" stroke-width="3"/>
+        <g ${at(17.9)}><rect x="468" y="150" width="24" height="280" rx="6" fill="#fff" stroke="#14213d" stroke-width="3"/>${Array.from({length:12},(_,k)=>`<line x1="474" x2="486" y1="${165+k*22}" y2="${165+k*22}" stroke="#9aa3b6" stroke-width="3"/>`).join('')}<text class="t-sm t-c" x="480" y="138">Membranfilter</text></g>
+        ${parts}
+        ${mols.map(([x,y],i)=>`<g ${mv(19.5+i*0.15, 130+i*110-x, 375-y)}>${lac(x,y,16,false)}</g>`).join('')}
+        <g ${at(19.6)}>${arrow(250,410,250,470,'ln-acc')}<text class="t-lbl t-acc" x="270" y="470">Laktose wird abgetrennt</text></g>
+        <g ${at(18.2)}><text class="t-sm t-c" x="710" y="440">Milch ohne Laktose</text></g>`;
+    }}
+  ]
+};
+
+const VIDEOS = { 'frage1-teil1': TEIL1, 'frage1-teil2': TEIL2, 'frage5-teil1': F5T1, 'frage5-teil2': F5T2, 'frage6-teil1': F6T1, 'frage6-teil2': F6T2 };
 
 /* ---------- Player ---------- */
 const fmt = s => { s = Math.max(0, Math.floor(s)); return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`; };
@@ -324,6 +572,7 @@ const ICON_PLAY = '<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="
 const ICON_PAUSE = '<svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><rect x="3.5" y="2.5" width="4" height="13" rx="1" fill="currentColor"/><rect x="10.5" y="2.5" width="4" height="13" rx="1" fill="currentColor"/></svg>';
 const ICON_BIG = '<svg width="30" height="30" viewBox="0 0 18 18" aria-hidden="true"><path d="M5 2.5v13l11-6.5z" fill="currentColor"/></svg>';
 
+let mountCount = 0;
 function mount(host, src, id){
   const V = VIDEOS[id]; if(!V) return false;
   const root = document.createElement('div');
@@ -350,9 +599,12 @@ function mount(host, src, id){
         seek = $('.vp-seek'), fill = $('.vp-ticks .fill'), time = $('.vp-time'), play = $('.vp-play');
 
   // Szenen anlegen
-  const scenes = V.scenes.map(sc => {
+  const uid = 'v' + (++mountCount);
+  const scenes = V.scenes.map((sc, si) => {
     const d = document.createElement('div'); d.className = 'vp-scene';
-    d.innerHTML = `<svg viewBox="0 0 960 540" role="img" aria-hidden="true">${arrowDefs}${sc.svg()}</svg>`;
+    const pre = uid + 's' + si;   // eigene IDs je Szene, sonst fehlen Pfeilspitzen, wenn die erste Grafik ausgeblendet ist
+    const markup = (arrowDefs + sc.svg()).replace(/id="ah/g, `id="${pre}ah`).replace(/url\(#ah/g, `url(#${pre}ah`);
+    d.innerHTML = `<svg viewBox="0 0 960 540" role="img" aria-hidden="true">${markup}</svg>`;
     scenesEl.appendChild(d);
     return { el: d, start: sc.start, timed: [...d.querySelectorAll('[data-at]')] };
   });
