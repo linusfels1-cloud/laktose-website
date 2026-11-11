@@ -28,6 +28,14 @@ h1:focus,h2:focus{outline:none}
 .switch button[aria-selected="true"]{background:var(--accent-soft); color:var(--accent)}
 .switch button:hover{color:var(--ink)}
 .panel{padding:22px 24px}
+/* Texte der Gruppe */
+.text h3{font:700 19px/1.25 var(--f-display); margin:24px 0 8px; text-wrap:balance}
+.text h3:first-child{margin-top:0}
+.text p{margin:0 0 12px}
+.text > :last-child{margin-bottom:0}
+.text .kurz{font:600 18px/1.45 var(--f-display); color:var(--accent); background:var(--accent-soft); padding:12px 14px; border-radius:10px; margin-bottom:20px}
+.text .gl span{white-space:nowrap}
+.text .gl{font-family:var(--f-mono); font-size:15px; text-align:center; padding:10px 12px; border:1px dashed var(--line); border-radius:10px; margin:4px 0 14px}
 .platzhalter{border:1.5px dashed var(--hatch); border-radius:10px; padding:18px 20px; color:var(--muted)}
 .platzhalter strong{color:var(--ink); font-family:var(--f-display); font-weight:700; display:block; margin-bottom:6px}
 .platzhalter ul{margin:8px 0 0; padding-left:20px}
@@ -586,12 +594,13 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
         <!-- AUDIO: Dateiname in data-audio eintragen, z. B. data-audio="audio/kapitel1.mp3" -->
         <div class="beitrag" data-audio="">
           <div class="text">
-            <!-- TEXT FRAGE 1: den Platzhalter unten durch euren Text ersetzen -->
-            <div class="platzhalter">
-              <strong>Euer Text folgt hier</strong>
-              Mögliche Inhalte:
-              <ul><li>Laktose als Disaccharid der Milch</li><li>Aufbau aus Glukose und Galaktose</li><li>Wo Laktose überall drinsteckt</li></ul>
-            </div>
+            <!-- TEXT FRAGE 1 -->
+            <p class="kurz">Bei einer Laktoseintoleranz hat der Körper weniger oder gar keine Laktase.</p>
+            <h3>Wie Laktose normalerweise verdaut wird</h3>
+            <p>Normalerweise wird die Laktose im Dünndarm von dem Enzym Laktase zerlegt. Die Laktase sitzt an der Oberfläche der Dünndarmzellen, im sogenannten Bürstensaum. Laktose ist ein Zweifachzucker (Disaccharid). Der Körper kann nur Einfachzucker aufnehmen, deshalb muss die Laktose zuerst gespalten werden.</p>
+            <p>Die Laktase spaltet die Bindung zwischen den beiden Zuckerbausteinen durch Hydrolyse, also unter Einbau von Wasser. Das Wasser dafür ist im Darminhalt ohnehin vorhanden. Danach liegen zwei Einfachzucker vor: Glukose und Galaktose.</p>
+            <p class="gl"><span>Laktose + H₂O</span> → <span>Glukose + Galaktose</span></p>
+            <p>Das Transportprotein SGLT1 nimmt die beiden Einfachzucker zusammen mit Natrium-Ionen in die Dünndarmzellen auf. Durch Osmose folgt Wasser den aufgenommenen Teilchen in die Zellen. Auf der anderen Seite der Zelle bringt das Transportprotein GLUT2 die Einfachzucker ins Blut.</p>
           </div>
         </div>
 
@@ -717,11 +726,15 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
         <div class="beitrag" data-audio="">
           <div class="text">
             <!-- TEXT FRAGE 4 -->
-            <div class="platzhalter">
-              <strong>Euer Text folgt hier</strong>
-              Mögliche Inhalte:
-              <ul><li>Was im Dickdarm mit unverdauter Laktose passiert</li><li>Typische Beschwerden</li><li>H₂-Atemtest und Gentest</li><li>Abgrenzung zur Milcheiweißallergie</li></ul>
-            </div>
+            <h3>Was bei einer Laktoseintoleranz passiert</h3>
+            <p>Bei einer Laktoseintoleranz fehlt die Laktase teilweise oder ganz. Deshalb wird nur ein Teil der Laktose oder gar keine Laktose gespalten. Was gespalten werden konnte, wird ganz normal aufgenommen. Die übrige Laktose bleibt im Dünndarm. Sie wirkt wie ein Magnet für Wasser: Durch Osmose strömt Wasser aus dem umliegenden Gewebe in den Dünndarm. Der Darminhalt wird dadurch mehr und flüssiger und wird schneller in den Dickdarm weitertransportiert.</p>
+            <h3>Im Dickdarm</h3>
+            <p>Im Dickdarm stürzen sich Bakterien auf die Laktose und vergären (fermentieren) sie. Dabei entstehen Gase wie Wasserstoff, Kohlenstoffdioxid und Methan, daher kommen die Blähungen. Außerdem stellen die Bakterien kurzkettige Fettsäuren und Milchsäure her. Weil aus einem Laktose-Molekül viele kleine Teilchen werden, ziehen diese zusätzlich Wasser in den Darm, so wie vorher die Laktose.</p>
+            <p>Durch die Gase und das viele Wasser dehnt sich der Dickdarm. Diese Dehnung verursacht Bauchschmerzen und reizt die Darmmuskulatur. Sie zieht sich krampfartig zusammen, um den Inhalt schnell loszuwerden. Dies führt zum Durchfall.</p>
+            <h3>Wann die Beschwerden kommen</h3>
+            <p>Die Beschwerden beginnen meist innerhalb weniger Stunden nach dem Essen oder Trinken. Wie stark sie sind, hängt davon ab, wie viel Laktose man zu sich genommen hat und wie viel Laktase der Körper noch bildet.</p>
+            <h3>So stellt man es fest: der H₂-Atemtest</h3>
+            <p>Ein Teil des Wasserstoffs aus der Gärung gelangt über das Blut in die Lunge und wird ausgeatmet. Beim H₂-Atemtest trinkt man deshalb eine Laktoselösung. Danach wird mehrmals gemessen, wie viel Wasserstoff in der Atemluft ist. Steigt der Wert deutlich an, wurde die Laktose nicht im Dünndarm verdaut, sondern erst von den Bakterien im Dickdarm.</p>
           </div>
         </div>
 
@@ -794,6 +807,7 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
       <ol>
         <li>Global Lactase Persistence Association Database (GLAD), Molecular and Cultural Evolution Lab, University College London. Tabelle „LP phenotypes with Americas“, Stand November 2020 (für Ingram et al., <em>Advanced Dairy Chemistry</em>, 2021). <a href="https://www.ucl.ac.uk/life-sciences/gee/gee-research-centres/research-groups/global-lactase-persistence-association-database-glad" target="_blank" rel="noopener">Website der Datenbank</a> (Kartendaten; die Einzelstudie steht bei jedem Land in der Karte)</li>
         <li>MedlinePlus Genetics (U.S. National Library of Medicine): Lactose intolerance. Stand 24. März 2023. <a href="https://medlineplus.gov/genetics/condition/lactose-intolerance/" target="_blank" rel="noopener">medlineplus.gov</a> (weltweit etwa 65 %)</li>
+        <li>National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK): Symptoms &amp; Causes of Lactose Intolerance. Stand Februar 2018. <a href="https://www.niddk.nih.gov/health-information/digestive-diseases/lactose-intolerance/symptoms-causes" target="_blank" rel="noopener">niddk.nih.gov</a> (Beschwerden innerhalb weniger Stunden)</li>
         <li>Kartengrundlage: Natural Earth über das Paket world-atlas (gemeinfrei).</li>
         <li><strong>Nicht mehr verwendet:</strong> Storhaug, Fosse &amp; Fadnes (2017): Country, regional, and global estimates for lactose malabsorption in adults. <em>The Lancet Gastroenterology &amp; Hepatology</em>. Die Studie wurde 2024 mit einer offiziellen Warnung versehen und im Januar 2025 zurückgezogen. <a href="https://pubmed.ncbi.nlm.nih.gov/39674208/" target="_blank" rel="noopener">Rückzugsnotiz bei PubMed</a></li>
         <!-- WEITERE QUELLEN DER GRUPPE HIER ERGÄNZEN (z. B. für die Laktosewerte im Quiz bei Frage 5) -->
@@ -1353,8 +1367,8 @@ function revealMap(){
 /* ===== 4: Weg der Laktose ===== */
 const STEPS=[
   {x:90,  t:'1 · Magen', b:'Mit Milch, Joghurt oder Eis gelangt Laktose über den Magen in den Dünndarm. Im Magen wird sie noch nicht gespalten.'},
-  {x:250, t:'2 · Dünndarm', b:'Normalerweise spaltet hier die Laktase die Laktose in Glukose und Galaktose, die ins Blut gelangen. Ist zu wenig Laktase da, bleibt die Laktose ungespalten.'},
-  {x:410, t:'3 · Dickdarm', b:'Die ungespaltene Laktose wandert weiter in den Dickdarm. Dort vergären Darmbakterien sie. Außerdem zieht die Laktose Wasser in den Darm.'},
+  {x:250, t:'2 · Dünndarm', b:'Normalerweise spaltet hier die Laktase die Laktose in Glukose und Galaktose, die ins Blut gelangen. Ist zu wenig Laktase da, bleibt die Laktose ungespalten und zieht durch Osmose Wasser in den Darm.'},
+  {x:410, t:'3 · Dickdarm', b:'Die ungespaltene Laktose wandert mit dem Wasser weiter in den Dickdarm. Dort vergären Darmbakterien sie.'},
   {x:570, t:'4 · Folgen', b:'Bei der Gärung entstehen Gase wie Wasserstoff (H₂), Kohlendioxid und Methan. Das führt zu Blähungen, Bauchschmerzen und oft Durchfall. Ein Teil des H₂ wird ausgeatmet, und genau das misst der H₂-Atemtest.'}
 ];
 const trip=$('trip'), tok=$('tok'), tDots=$('tDots'), tText=document.querySelector('.trip-text');
