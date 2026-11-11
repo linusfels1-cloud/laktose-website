@@ -1,0 +1,134 @@
+/* ==========================================================================
+   Video-Player für die Aufnahmen (Frage 1)
+   Die Aufnahme läuft, dazu wechseln Grafiken zu den passenden Zeitpunkten.
+   Farben kommen aus den Variablen der Seite (index.html, :root).
+   ========================================================================== */
+.vp{--v-bact:#7a5cc4; --v-acid:#d9a520; --v-tissue:#f7dcd8; --v-tissue-line:#d9877d; --v-blood:#c8423a;
+  display:flex; flex-direction:column; gap:10px}
+.vp-stage{position:relative; aspect-ratio:16/9; max-width:100%; border-radius:12px; overflow:hidden; background:#fbfcfe; border:1px solid var(--line)}
+.vp-scene{position:absolute; inset:0; opacity:0; transition:opacity .5s ease; pointer-events:none}
+.vp-scene.on{opacity:1}
+.vp-scene svg{display:block; width:100%; height:100%}
+.vp-chip{font:700 17px var(--f-display); color:var(--ink); display:flex; align-items:center; gap:8px; min-height:24px}
+.vp-chip::before{content:"Kapitel"; font:500 12px var(--f-mono); letter-spacing:.08em; text-transform:uppercase; color:var(--accent); padding:3px 8px; border-radius:999px; background:var(--accent-soft)}
+.vp-big{position:absolute; inset:0; margin:auto; width:78px; height:78px; border-radius:50%; border:0; background:var(--accent); color:#fff;
+  display:grid; place-items:center; cursor:pointer; box-shadow:0 10px 30px -10px rgba(31,79,196,.7); transition:transform .2s, opacity .3s}
+.vp-big:hover{transform:scale(1.06)}
+.vp[data-state="playing"] .vp-big, .vp[data-started] .vp-big{opacity:0; pointer-events:none}
+.vp-sub{margin:0; min-height:3.2em; padding:10px 14px; border-radius:10px; background:var(--ink); color:#fff; font:500 16px/1.45 var(--f-display); text-align:center; text-wrap:balance}
+.vp[data-cc="off"] .vp-sub{display:none}
+.vp-ctl{display:flex; align-items:center; gap:10px}
+.vp-ctl button{flex:none; height:40px; min-width:40px; padding:0 10px; border-radius:10px; border:1px solid var(--line); background:var(--surface); color:var(--ink);
+  font:600 13px var(--f-display); cursor:pointer; display:grid; place-items:center}
+.vp-ctl button:hover{border-color:var(--accent); color:var(--accent)}
+.vp-ctl .vp-play{background:var(--accent); border-color:var(--accent); color:#fff; width:44px; height:44px; border-radius:50%; padding:0}
+.vp-ctl .vp-play:hover{color:#fff; filter:brightness(1.08)}
+.vp-ctl .vp-cc[aria-pressed="true"]{background:var(--accent-soft); color:var(--accent); border-color:transparent}
+.vp-time{font:500 13px var(--f-mono); color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap}
+.vp-bar{position:relative; flex:1; min-width:0; height:40px; display:flex; align-items:center}
+.vp-ticks{position:absolute; left:0; right:0; top:50%; height:6px; margin-top:-3px; border-radius:3px; background:var(--line); pointer-events:none; overflow:hidden}
+.vp-ticks .fill{position:absolute; inset:0 auto 0 0; width:0; background:var(--accent)}
+.vp-ticks i{position:absolute; top:0; bottom:0; width:2px; margin-left:-1px; background:var(--surface)}
+.vp-seek{position:relative; width:100%; margin:0; height:40px; background:transparent; -webkit-appearance:none; appearance:none; cursor:pointer}
+.vp-seek::-webkit-slider-runnable-track{height:6px; background:transparent}
+.vp-seek::-moz-range-track{height:6px; background:transparent}
+.vp-seek::-webkit-slider-thumb{-webkit-appearance:none; width:18px; height:18px; margin-top:-6px; border-radius:50%; background:var(--accent); border:3px solid var(--surface); box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.vp-seek::-moz-range-thumb{width:14px; height:14px; border-radius:50%; background:var(--accent); border:3px solid var(--surface)}
+.vp-chapters{list-style:none; margin:2px 0 0; padding:0; display:flex; flex-wrap:wrap; gap:6px}
+.vp-chapters button{font:500 13px var(--f-display); color:var(--muted); background:var(--bg); border:1px solid var(--line); border-radius:999px; padding:6px 11px; cursor:pointer}
+.vp-chapters button b{font:500 12px var(--f-mono); margin-right:6px; color:var(--muted)}
+.vp-chapters button:hover{color:var(--ink); border-color:var(--accent)}
+.vp-chapters button.on{background:var(--accent-soft); color:var(--accent); border-color:transparent}
+.vp-chapters button.on b{color:var(--accent)}
+@media (pointer:coarse){ .vp-chapters button{padding:9px 12px} .vp-ctl button{height:44px; min-width:44px} }
+@media (max-width:640px){
+  .vp-sub{font-size:15px; min-height:4.4em; padding:8px 10px}
+  .vp-chip{font-size:15px}
+  .vp-big{width:64px; height:64px}
+}
+
+/* ---------- Grafik-Bausteine ---------- */
+.vp text{font-family:var(--f-display); fill:var(--ink)}
+.vp .t-big{font-size:40px; font-weight:800; text-anchor:middle}
+.vp .t-mid{font-size:26px; font-weight:700; text-anchor:middle}
+.vp .t-lbl{font-size:22px; font-weight:600}
+.vp .t-sm{font-family:var(--f-mono); font-size:17px; fill:var(--muted)}
+.vp .t-c{text-anchor:middle}
+.vp .t-bad{fill:var(--bad)} .vp .t-ok{fill:var(--ok)} .vp .t-warm{fill:var(--warm)} .vp .t-acc{fill:var(--accent)} .vp .t-water{fill:var(--water)}
+.vp .t-ring{font-family:var(--f-mono); font-weight:600; text-anchor:middle; fill:var(--ink)}
+.vp .lumen{fill:#eef3fc}
+.vp .colon{fill:#fdf3ea; stroke:#e7b892; stroke-width:3}
+.vp .tissue{fill:var(--v-tissue); stroke:var(--v-tissue-line); stroke-width:2.5}
+.vp .cell{fill:#fff4f2; stroke:var(--v-tissue-line); stroke-width:3}
+.vp .blood{fill:var(--v-blood)}
+.vp .gal{fill:var(--accent-soft); stroke:var(--accent); stroke-width:3; stroke-linejoin:round}
+.vp .glu{fill:var(--warm-soft); stroke:var(--warm); stroke-width:3; stroke-linejoin:round}
+.vp .bond{stroke:var(--ink); stroke-width:3}
+.vp .enz{fill:var(--ok)}
+.vp .enz-miss{fill:none; stroke:var(--bad); stroke-width:2.5; stroke-dasharray:5 5}
+.vp .water{fill:var(--water)}
+.vp .na{fill:#8a93a8}
+.vp .na-t{font-family:var(--f-mono); font-size:13px; font-weight:600; fill:#fff; text-anchor:middle}
+.vp .sglt{fill:#bfe6d5; stroke:var(--ok); stroke-width:3}
+.vp .glut{fill:#ffd9bf; stroke:var(--warm); stroke-width:3}
+.vp .bact{fill:var(--v-bact)}
+.vp .acid{fill:var(--v-acid)}
+.vp .gas{fill:#fff; stroke:#8a93a8; stroke-width:2}
+.vp .gas-t{font-family:var(--f-mono); font-size:15px; font-weight:600; text-anchor:middle; fill:var(--muted)}
+.vp .ln{fill:none; stroke:var(--ink); stroke-width:3; stroke-linecap:round; stroke-linejoin:round}
+.vp .ln-acc{stroke:var(--accent)} .vp .ln-bad{stroke:var(--bad)} .vp .ln-ok{stroke:var(--ok)} .vp .ln-water{stroke:var(--water)} .vp .ln-mut{stroke:#9aa3b6}
+.vp .dash{stroke-dasharray:8 8}
+.vp .card{fill:var(--surface); stroke:var(--line); stroke-width:2}
+.vp .mark-ok{fill:var(--ok)} .vp .mark-bad{fill:var(--bad)}
+.vp .flood{fill:var(--water); opacity:.22}
+.vp .pain{fill:none; stroke:var(--bad); stroke-width:4; stroke-linejoin:round}
+.vp .muscle{fill:none; stroke:var(--v-tissue-line); stroke-width:6; stroke-linecap:round}
+.vp .body{fill:#f3f5f9; stroke:#9aa3b6; stroke-width:3}
+.vp .lung{fill:#f7dcd8; stroke:var(--v-tissue-line); stroke-width:2.5}
+.vp .axis{stroke:var(--ink); stroke-width:2.5; fill:none}
+.vp .grid{stroke:var(--line); stroke-width:1.5}
+
+/* ---------- Zeitsteuerung ----------
+   data-at="Sekunden": ab diesem Zeitpunkt bekommt das Element die Klasse .in
+   data-out="Sekunden": ab diesem Zeitpunkt bekommt es zusätzlich .out
+   .fade  = erscheint      .move = bewegt sich um (--tx, --ty)      .gone = verschwindet
+   .grow  = wächst von unten     .draw = Linie wird gezeichnet       .pop = springt kurz auf */
+.vp .fade{opacity:0; transition:opacity .5s ease}
+.vp .fade.in{opacity:1}
+.vp .move{transition:transform 1.1s cubic-bezier(.45,.05,.25,1)}
+.vp .move.in{transform:translate(var(--tx,0px), var(--ty,0px))}
+.vp .gone{transition:opacity .5s ease}
+.vp .gone.in{opacity:0}
+.vp .out{opacity:0 !important; transition:opacity .4s ease}
+.vp .grow{transform-box:fill-box; transform-origin:50% 100%; transform:scaleY(0); transition:transform 2.2s ease}
+.vp .grow.in{transform:scaleY(1)}
+.vp .grow-x{transform-box:fill-box; transform-origin:0 50%; transform:scaleX(0); transition:transform 1.4s ease}
+.vp .grow-x.in{transform:scaleX(1)}
+.vp .swell{transform-box:fill-box; transform-origin:50% 50%; transition:transform 1.4s ease}
+.vp .swell.in{transform:scale(1.08,1.3)}
+.vp .draw{stroke-dasharray:1400; stroke-dashoffset:1400; transition:stroke-dashoffset 2.5s ease}
+.vp .draw.in{stroke-dashoffset:0}
+.vp .pop{transform-box:fill-box; transform-origin:center; opacity:0; transform:scale(.4); transition:opacity .35s, transform .45s cubic-bezier(.3,1.6,.5,1)}
+.vp .pop.in{opacity:1; transform:scale(1)}
+
+/* Dauer-Animationen, laufen nur während das Video spielt */
+.vp .float{animation:vpFloat 3.2s ease-in-out infinite alternate}
+.vp .float2{animation:vpFloat 2.6s ease-in-out -1.3s infinite alternate}
+@keyframes vpFloat{to{transform:translate(0,-8px)}}
+.vp .rise.in{animation:vpRise 2.4s linear infinite}
+@keyframes vpRise{0%{transform:translate(0,30px); opacity:0} 20%{opacity:1} 100%{transform:translate(0,-60px); opacity:0}}
+.vp .pulse.in{animation:vpPulse 1.2s ease-in-out infinite}
+@keyframes vpPulse{50%{opacity:.35}}
+.vp .flash.in{animation:vpFlash .9s steps(2) infinite}
+@keyframes vpFlash{50%{opacity:.2}}
+.vp .cramp.in{transform-box:fill-box; transform-origin:50% 50%; animation:vpCramp 1s ease-in-out infinite}
+@keyframes vpCramp{0%,100%{transform:scale(1.08,1.3)} 50%{transform:scale(1.02,.92)}}
+.vp .chomp.in{transform-box:fill-box; transform-origin:center; animation:vpChomp .5s ease-in-out infinite}
+@keyframes vpChomp{50%{transform:scale(1.15,.85)}}
+.vp .flowx.in{animation:vpFlowX 1.6s linear infinite}
+@keyframes vpFlowX{0%{transform:translate(-30px,0); opacity:0} 25%{opacity:1} 100%{transform:translate(60px,0); opacity:0}}
+.vp[data-state="paused"] *{animation-play-state:paused !important}
+@media (prefers-reduced-motion: reduce){
+  .vp *{animation:none !important}
+  .vp .move, .vp .grow, .vp .grow-x, .vp .draw, .vp .swell{transition-duration:.01s}
+}

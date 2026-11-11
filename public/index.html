@@ -537,6 +537,7 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
   .steps a[aria-current]{padding-right:4px}
 }
 </style>
+<link rel="stylesheet" href="video.css">
 </head>
 <body>
 
@@ -603,8 +604,8 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
     <div class="wrap">
       <header class="khead"><div class="eyebrow">Frage 1 von 6</div><h2>Was ist Laktoseintoleranz?</h2><p class="topic">Wie unser Körper Milchzucker verdaut und was passiert, wenn Laktase fehlt</p></header>
       <div class="col">
-        <!-- TEIL 1 · Audio: Dateiname in data-audio eintragen, z. B. data-audio="audio/frage1-teil1.mp3" -->
-        <div class="beitrag" data-audio="">
+        <!-- TEIL 1 · Aufnahme und Video (Grafiken stehen in video.js) -->
+        <div class="beitrag" data-audio="audio/frage1-teil1.m4a" data-video="frage1-teil1">
           <div class="beitrag-head"><span class="teil">Teil 1</span><h3>Wie Laktose normalerweise verdaut wird</h3></div>
           <div class="text">
             <p>Normalerweise wird die Laktose im Dünndarm von dem Enzym Laktase zerlegt. Die Laktase sitzt an der Oberfläche der Dünndarmzellen, im sogenannten Bürstensaum. Laktose ist ein Zweifachzucker (Disaccharid). Der Körper kann nur Einfachzucker aufnehmen, deshalb muss die Laktose zuerst gespalten werden.</p>
@@ -641,8 +642,8 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
           </div>
         </div>
 
-        <!-- TEIL 2 · Audio: Dateiname in data-audio eintragen, z. B. data-audio="audio/frage1-teil2.mp3" -->
-        <div class="beitrag" data-audio="">
+        <!-- TEIL 2 · Aufnahme und Video (Grafiken stehen in video.js) -->
+        <div class="beitrag" data-audio="audio/frage1-teil2.m4a" data-video="frage1-teil2">
           <div class="beitrag-head"><span class="teil">Teil 2</span><h3>Was bei einer Laktoseintoleranz passiert</h3></div>
           <div class="text">
             <p class="kurz">Bei einer Laktoseintoleranz hat der Körper weniger oder gar keine Laktase.</p>
@@ -890,6 +891,7 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script src="video.js"></script>
 <script>
 /* ---------- Beiträge: Lesen / Anhören ---------- */
 const ICON_READ='<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3h5a1 1 0 0 1 1 1v9a1 1 0 0 0-1-1H2zM14 3H9a1 1 0 0 0-1 1v9a1 1 0 0 1 1-1h5z" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>';
@@ -898,13 +900,16 @@ document.querySelectorAll('.beitrag').forEach((b,i)=>{
   const textEl=b.querySelector('.text');
   const src=(b.dataset.audio||'').trim();
   const sw=document.createElement('div'); sw.className='switch'; sw.setAttribute('role','tablist');
-  sw.innerHTML=`<button role="tab" id="t${i}l" aria-selected="true">${ICON_READ}Lesen</button><button role="tab" id="t${i}h" aria-selected="false">${ICON_LISTEN}Anhören</button>`;
+  const isVideo=!!(src && b.dataset.video && window.VideoPlayer && window.VideoPlayer.videos[b.dataset.video]);
+  const ICON_VIDEO='<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><rect x="1.5" y="3" width="13" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M6.5 5.8v4.4L10.2 8z" fill="currentColor"/></svg>';
+  sw.innerHTML=`<button role="tab" id="t${i}l" aria-selected="true">${ICON_READ}Lesen</button><button role="tab" id="t${i}h" aria-selected="false">${isVideo?ICON_VIDEO+'Video ansehen':ICON_LISTEN+'Anhören'}</button>`;
   const pRead=document.createElement('div'); pRead.className='panel'; pRead.appendChild(textEl);
   const pListen=document.createElement('div'); pListen.className='panel'; pListen.hidden=true;
   pListen.innerHTML = src
-    ? `<audio controls preload="metadata" src="${src}"></audio>`
+    ? (isVideo ? '' : `<audio controls preload="metadata" src="${src}"></audio>`)
     : `<div class="player"><span class="play"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M1 1l12 7-12 7z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></span><span class="bar"></span><span class="time">0:00</span></div><p class="player-note">Die Aufnahme zu diesem Kapitel ist noch nicht eingebunden.</p>`;
   b.append(sw,pRead,pListen);
+  if(isVideo) window.VideoPlayer.mount(pListen, src, b.dataset.video);
   const [bl,bh]=sw.querySelectorAll('button');
   const show=listen=>{ bl.setAttribute('aria-selected',!listen); bh.setAttribute('aria-selected',listen); pRead.hidden=listen; pListen.hidden=!listen; if(!listen){const a=pListen.querySelector('audio'); a&&a.pause();} };
   bl.onclick=()=>show(false); bh.onclick=()=>show(true);
