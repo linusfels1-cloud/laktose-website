@@ -726,8 +726,8 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
     <div class="wrap">
       <header class="khead"><div class="eyebrow">Frage 2 von 6</div><h2>Liegt Laktoseintoleranz in den Genen?</h2><p class="topic">Das LCT-Gen und die entscheidende Mutation</p></header>
       <div class="col">
-        <!-- Audio: Dateiname in data-audio eintragen, z. B. data-audio="audio/frage2.m4a" -->
-        <div class="beitrag" data-audio="">
+        <!-- Audio: KI-Stimme, audio/frage2.m4a (eigene Aufnahme später einfach gleich benennen und ersetzen) -->
+        <div class="beitrag" data-audio="audio/frage2.m4a" data-video="frage2" data-ki="Gesprochen mit einer KI-Stimme (Piper, Stimme „Thorsten“).">
           <div class="beitrag-head"><h3>Die Gene hinter der Laktoseintoleranz</h3></div>
           <div class="text">
             <h3>Was ist Laktoseintoleranz?</h3>
@@ -760,8 +760,8 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
     <div class="wrap">
       <header class="khead"><div class="eyebrow">Frage 3 von 6</div><h2>Wie hat sich die Laktasepersistenz entwickelt?</h2><p class="topic">Die Evolution des Menschen und ob man Laktoseintoleranz wieder loswird</p></header>
       <div class="col">
-        <!-- Audio: Dateiname in data-audio eintragen, z. B. data-audio="audio/frage3.m4a" -->
-        <div class="beitrag" data-audio="">
+        <!-- Audio: KI-Stimme, audio/frage3.m4a (eigene Aufnahme später einfach gleich benennen und ersetzen) -->
+        <div class="beitrag" data-audio="audio/frage3.m4a" data-video="frage3" data-ki="Gesprochen mit einer KI-Stimme (Piper, Stimme „Thorsten“).">
           <div class="beitrag-head"><h3>Evolution und Behandlung</h3></div>
           <div class="text">
             <h3>Wie sich die Laktasepersistenz entwickelt hat</h3>
@@ -1018,6 +1018,8 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
           <dl class="qmeta"><dt>Autor</dt><dd><span class="na">nicht angegeben</span> (keine Einzelperson); Herausgeber: Gesellschaft für gesunde Ernährung mbH, Frankfurt am Main</dd><dt>Veröffentlicht</dt><dd><span class="na">nicht angegeben</span></dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
         <li>Nutella: Weniger Kakao – mehr Milchpulver. <a href="https://www.vzhh.de/themen/lebensmittel-ernaehrung/produktchecks/nutella-weniger-kakao-mehr-milchpulver" target="_blank" rel="noopener">vzhh.de</a> (8,7 % Magermilchpulver)
           <dl class="qmeta"><dt>Autor</dt><dd><span class="na">nicht angegeben</span> (keine Einzelperson); Herausgeber: Verbraucherzentrale Hamburg</dd><dt>Veröffentlicht</dt><dd>Stand 9. November 2017; Erstveröffentlichung <span class="na">nicht angegeben</span></dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
+        <li>Sprachausgabe für Frage 2 und 3: Piper (Text-to-Speech-Programm) mit der Stimme „Thorsten“ (high). <a href="https://github.com/thorstenMueller/Thorsten-Voice" target="_blank" rel="noopener">github.com/thorstenMueller/Thorsten-Voice</a> (Stimme unter CC0-Lizenz frei nutzbar)
+          <dl class="qmeta"><dt>Autor</dt><dd>Thorsten Müller (Stimme); Programm Piper: The Home Assistant Authors</dd><dt>Veröffentlicht</dt><dd><span class="na">nicht angegeben</span>; verwendet wurde Piper Version 1.8.0</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
         <!-- WEITERE QUELLEN DER GRUPPE HIER ERGÄNZEN -->
       </ol>
       <nav class="pager" aria-label="Fragen wechseln"></nav>
@@ -1049,6 +1051,7 @@ document.querySelectorAll('.beitrag').forEach((b,i)=>{
     : `<div class="player"><span class="play"><svg width="14" height="16" viewBox="0 0 14 16"><path d="M1 1l12 7-12 7z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></span><span class="bar"></span><span class="time">0:00</span></div><p class="player-note">Die Aufnahme zu diesem Kapitel ist noch nicht eingebunden.</p>`;
   b.append(sw,pRead,pListen);
   if(isVideo) window.VideoPlayer.mount(pListen, src, b.dataset.video);
+  if(b.dataset.ki) pListen.insertAdjacentHTML('beforeend', `<p class="player-note">${b.dataset.ki}</p>`);
   const [bl,bh]=sw.querySelectorAll('button');
   const show=listen=>{ bl.setAttribute('aria-selected',!listen); bh.setAttribute('aria-selected',listen); pRead.hidden=listen; pListen.hidden=!listen; if(!listen){const a=pListen.querySelector('audio'); a&&a.pause();} };
   bl.onclick=()=>show(false); bh.onclick=()=>show(true);

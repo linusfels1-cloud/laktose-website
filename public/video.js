@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Video-Player für Frage 1
+   Video-Player für alle Fragen
    Eure Aufnahme läuft, dazu wechseln die Grafiken an den passenden Stellen.
 
    So passt ihr Zeitpunkte an:
@@ -564,7 +564,352 @@ const F6T2 = {
   ]
 };
 
-const VIDEOS = { 'frage1-teil1': TEIL1, 'frage1-teil2': TEIL2, 'frage5-teil1': F5T1, 'frage5-teil2': F5T2, 'frage6-teil1': F6T1, 'frage6-teil2': F6T2 };
+/* ---------- Zusatz-Helfer für Frage 2 und 3 ---------- */
+const OK = '#1f9d6b', BAD = '#d4493f', WARM = '#e0793c', ACC = '#1f4fc4', MUT = '#9aa3b6', INK = '#14213d';
+// Person: Kopf + Körper, Farbe zeigt den Status
+const person = (x, y, c = MUT, s = 1) => `<g transform="translate(${x},${y}) scale(${s})"><circle cy="-46" r="15" fill="${c}"/><path d="M-22,22 L-22,-8 Q-22,-26 0,-26 Q22,-26 22,-8 L22,22 Z" fill="${c}"/></g>`;
+// Chromosom (X-Form) mit Markierung
+function chromosome(x, y, s = 1, mark = true){
+  return `<g transform="translate(${x},${y}) scale(${s})">
+    <path d="M-34,-120 Q-20,-120 -8,-10 Q-20,110 -34,120 Q-48,120 -46,108 Q-30,0 -46,-108 Q-48,-120 -34,-120Z" fill="#e3eafb" stroke="${ACC}" stroke-width="3"/>
+    <path d="M34,-120 Q20,-120 8,-10 Q20,110 34,120 Q48,120 46,108 Q30,0 46,-108 Q48,-120 34,-120Z" fill="#e3eafb" stroke="${ACC}" stroke-width="3"/>
+    <circle cy="-8" r="9" fill="${ACC}"/>
+    ${mark ? `<rect x="-46" y="-78" width="16" height="14" rx="3" fill="${WARM}"/><rect x="30" y="-78" width="16" height="14" rx="3" fill="${WARM}"/>` : ''}</g>`;
+}
+// DNA-Doppelhelix (waagerecht)
+function helix(x, y, w = 600, amp = 34, turns = 3, rungs = true){
+  const n = 120; let a = '', b = '', r = '';
+  for(let i = 0; i <= n; i++){
+    const t = i / n, xx = x + t * w, ph = t * turns * 2 * Math.PI;
+    a += `${i ? 'L' : 'M'}${xx.toFixed(1)},${(y + Math.sin(ph) * amp).toFixed(1)} `;
+    b += `${i ? 'L' : 'M'}${xx.toFixed(1)},${(y - Math.sin(ph) * amp).toFixed(1)} `;
+    if(rungs && i % 5 === 2) r += `<line x1="${xx.toFixed(1)}" x2="${xx.toFixed(1)}" y1="${(y + Math.sin(ph) * amp).toFixed(1)}" y2="${(y - Math.sin(ph) * amp).toFixed(1)}" stroke="${MUT}" stroke-width="3"/>`;
+  }
+  return `${r}<path d="${a}" fill="none" stroke="${ACC}" stroke-width="5" stroke-linecap="round"/><path d="${b}" fill="none" stroke="${WARM}" stroke-width="5" stroke-linecap="round"/>`;
+}
+// DNA-Base als Kästchen
+const BASECOL = { A: '#bfe6d5', T: '#fdeee3', G: '#e6dff7', C: '#e3eafb' };
+const base = (x, y, l, w = 56) => `<g transform="translate(${x},${y})"><rect x="${-w/2}" y="-30" width="${w}" height="60" rx="10" fill="${BASECOL[l]}" stroke="${INK}" stroke-width="2.5"/><text class="t-mid" y="10">${l}</text></g>`;
+// Kuh, Ziege, Schaf (vereinfacht)
+const cow = (x, y, s = 1) => `<g transform="translate(${x},${y}) scale(${s})"><rect x="-46" y="-26" width="86" height="44" rx="18" fill="#fff" stroke="${INK}" stroke-width="2.5"/><circle cx="-18" cy="-10" r="9" fill="${INK}" opacity=".8"/><circle cx="16" cy="4" r="7" fill="${INK}" opacity=".8"/><rect x="34" y="-40" width="30" height="28" rx="10" fill="#fff" stroke="${INK}" stroke-width="2.5"/><path d="M38,-40 L34,-50 M58,-40 L62,-50" stroke="${INK}" stroke-width="2.5"/><path d="M-36,18 L-36,40 M-14,18 L-14,40 M14,18 L14,40 M30,18 L30,40" stroke="${INK}" stroke-width="4" stroke-linecap="round"/><ellipse cx="-2" cy="22" rx="8" ry="5" fill="#f6b6c4"/></g>`;
+const goat = (x, y, s = 1) => `<g transform="translate(${x},${y}) scale(${s})"><rect x="-34" y="-20" width="64" height="34" rx="14" fill="#e8dcc8" stroke="${INK}" stroke-width="2.5"/><rect x="24" y="-38" width="22" height="24" rx="8" fill="#e8dcc8" stroke="${INK}" stroke-width="2.5"/><path d="M30,-38 Q24,-54 14,-52 M40,-38 Q42,-54 52,-54" fill="none" stroke="${INK}" stroke-width="2.5"/><path d="M36,-14 L34,-4" stroke="${INK}" stroke-width="3"/><path d="M-26,14 L-26,34 M-8,14 L-8,34 M10,14 L10,34 M22,14 L22,34" stroke="${INK}" stroke-width="4" stroke-linecap="round"/></g>`;
+const sheep = (x, y, s = 1) => `<g transform="translate(${x},${y}) scale(${s})">${[[-24,-6],[-6,-14],[12,-6],[-14,6],[6,6],[20,4]].map(([a,b])=>`<circle cx="${a}" cy="${b}" r="16" fill="#fff" stroke="${INK}" stroke-width="2.5"/>`).join('')}<rect x="28" y="-24" width="22" height="26" rx="9" fill="${INK}" opacity=".85"/><path d="M-20,18 L-20,36 M-4,18 L-4,36 M10,18 L10,36 M22,18 L22,36" stroke="${INK}" stroke-width="4" stroke-linecap="round"/></g>`;
+// Würfel = Zufall
+const dice = (x, y, s = 1) => `<g transform="translate(${x},${y}) scale(${s})"><rect x="-30" y="-30" width="60" height="60" rx="12" fill="#fff" stroke="${INK}" stroke-width="3"/>${[[-14,-14],[14,-14],[0,0],[-14,14],[14,14]].map(([a,b])=>`<circle cx="${a}" cy="${b}" r="5.5" fill="${INK}"/>`).join('')}</g>`;
+const cheese = (x, y, s = 1) => `<g transform="translate(${x},${y}) scale(${s})"><path d="M-40,20 L40,20 L40,-8 L-40,-30 Z" fill="#ffd77a" stroke="${INK}" stroke-width="2.5"/><circle cx="-14" cy="0" r="6" fill="#f2b84b"/><circle cx="14" cy="8" r="5" fill="#f2b84b"/><circle cx="24" cy="-6" r="4" fill="#f2b84b"/></g>`;
+const lockIcon = (x, y, s = 1) => `<g transform="translate(${x},${y}) scale(${s})"><path d="M-14,-6 L-14,-20 A14,14 0 0,1 14,-20 L14,-6" fill="none" stroke="${INK}" stroke-width="5"/><rect x="-22" y="-8" width="44" height="34" rx="7" fill="${INK}"/><circle cy="6" r="5" fill="#fff"/></g>`;
+const plus = (x, y, c = OK) => g(x, y, `<circle r="20" fill="${c}"/><path d="M-9,0 H9 M0,-9 V9" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/>`);
+// kleine Kurve „Laktase über das Leben“
+function lifeCurve(X0, Y0, W, H, pts){
+  return pts.map(([t, v], i) => `${i ? 'L' : 'M'}${(X0 + t * W).toFixed(1)},${(Y0 - v * H).toFixed(1)}`).join(' ');
+}
+
+/* ================= FRAGE 2: Liegt Laktoseintoleranz in den Genen? ================= */
+const F2 = {
+  duration: 204.5,
+  chapters: [[0,'Frage 2'],[4.58,'Was ist Laktoseintoleranz?'],[44.57,'Das LCT-Gen'],[86.21,'Die entscheidende Mutation'],[126.72,'Was die Variante bewirkt'],[141.06,'Vererbung'],[167.19,'Verändert Milchtrinken die Gene?']],
+  subs: [
+    [0, "Frage 2: Liegt Laktoseintoleranz in den Genen?"],
+    [4.58, "Was ist Laktoseintoleranz?"],
+    [7.01, "Laktoseintoleranz ist die Unverträglichkeit gegenüber Milchzucker."],
+    [11.41, "Sie entsteht, wenn der menschliche Körper nicht genügend des Enzyms Laktase produziert, um den Milchzucker im Dünndarm vollständig zu spalten."],
+    [18.72, "Normalerweise zerlegt Laktase die Laktose in die beiden Einfachzucker Glukose und Galaktose, die anschließend vom Körper aufgenommen werden können."],
+    [27.1, "Fehlt dieses Enzym oder wird zu wenig davon produziert, gelangt die unverdaute Laktose in den Dickdarm."],
+    [33.39, "Dort wird sie von Darmbakterien abgebaut, wobei Gase und andere Stoffwechselprodukte entstehen."],
+    [39.52, "Dadurch können Beschwerden wie Bauchschmerzen, Blähungen und Durchfall auftreten."],
+    [44.57, "Das LCT-Gen"],
+    [46.47, "Die genetische Grundlage dafür liegt hauptsächlich im sogenannten LCT-Gen auf Chromosom 2."],
+    [52.32, "Dieses Gen enthält die Bauanleitung für das Enzym Laktase."],
+    [56.0, "Bei fast allen Menschen wird das Enzym während der Säuglingszeit in ausreichender Menge produziert, da Milch in dieser Lebensphase die wichtigste Nahrungsquelle ist."],
+    [64.57, "Bei den meisten Menschen nimmt die Aktivität des LCT-Gens jedoch nach dem Abstillen ab."],
+    [70.18, "Das bedeutet, dass immer weniger Laktase hergestellt wird und die Fähigkeit, Milchzucker zu verdauen, im Laufe des Lebens nachlässt."],
+    [77.74, "Dieses natürliche Phänomen wird als Laktase-Nichtpersistenz bezeichnet und ist die häufigste genetische Ursache für Laktoseintoleranz."],
+    [86.21, "Die entscheidende Mutation"],
+    [88.17, "Interessanterweise befindet sich die entscheidende genetische Veränderung nicht direkt im LCT-Gen, sondern im benachbarten Gen MCM6."],
+    [96.16, "Dort liegt ein sogenanntes regulatorisches Element, das die Aktivität des LCT-Gens beeinflusst."],
+    [102.41, "Eine besonders wichtige Genvariante ist die sogenannte SNP-Mutation −13910 C>T."],
+    [109.83, "Sie liegt 13.910 Basen vor dem Beginn des LCT-Gens."],
+    [114.92, "SNP steht für Single Nucleotide Polymorphism und bezeichnet eine Veränderung an einer einzelnen Stelle der DNA."],
+    [122.07, "Bei dieser Variante wird die DNA-Base Cytosin durch Thymin ersetzt."],
+    [126.72, "Diese Veränderung sorgt dafür, dass das LCT-Gen auch im Erwachsenenalter aktiv bleibt und weiterhin ausreichend Laktase produziert wird."],
+    [134.79, "Menschen mit dieser Genvariante besitzen deshalb meistens eine lebenslange Fähigkeit, Milchzucker zu verdauen."],
+    [141.06, "Die Variante wird autosomal-dominant vererbt."],
+    [143.92, "Das bedeutet, dass bereits eine Kopie dieser Genvariante, also von einem Elternteil, ausreicht, um die Laktaseproduktion im Erwachsenenalter aufrechtzuerhalten."],
+    [152.83, "Menschen ohne eine solche Variante entwickeln dagegen häufig eine Laktase-Nichtpersistenz."],
+    [158.03, "Neben der europäischen Variante gibt es weitere genetische Veränderungen, die beispielsweise in afrikanischen und nahöstlichen Bevölkerungsgruppen vorkommen."],
+    [167.19, "Verändert Milchtrinken die Gene?"],
+    [169.53, "Ein wichtiger Punkt ist, dass der Konsum von Milch die eigene DNA nicht verändert."],
+    [173.97, "Wer regelmäßig Milch trinkt, kann dadurch also nicht die genetische Veranlagung zur Laktasepersistenz entwickeln."],
+    [180.12, "Die genetischen Unterschiede entstehen durch Mutationen, die zufällig bei der Weitergabe und Veränderung der DNA auftreten."],
+    [187.47, "Allerdings kann regelmäßiger Milchkonsum Einfluss darauf haben, wie gut manche Menschen Milchprodukte vertragen, da sich beispielsweise die Darmbakterien an die Nahrungszusammensetzung anpassen können."],
+    [197.86, "Dadurch kann es bei einigen Menschen zu weniger Beschwerden kommen, ohne dass sich ihre genetische Veranlagung verändert."]
+  ],
+  scenes: [
+    { start: 0, svg: () =>
+      `<g ${at(0.2)}><text class="t-sm t-c" x="480" y="120">FRAGE 2</text></g>
+       <g ${at(0.5)}><text class="t-big" x="480" y="180">Liegt Laktoseintoleranz in den Genen?</text></g>
+       <g ${at(1.2,'draw')}>${helix(180, 340, 600, 50, 3)}</g>` },
+    { start: 4.58, svg: () =>
+      `<g ${at(4.6)}><text class="t-mid" x="480" y="70">Was ist Laktoseintoleranz?</text></g>
+       <g ${at(7.1,'pop')}>${milkGlass(200, 250, 1.7)}<text class="t-lbl t-c" x="200" y="350">Milch</text></g>
+       <g ${at(8.6)}>${arrow(285, 250, 380, 250)}</g>
+       <g ${at(9.0,'pop')}>${lac(520, 250, 40)}<text class="t-lbl t-c" x="520" y="330">Milchzucker (Laktose)</text></g>
+       <g ${at(13.2)}><rect class="card" x="230" y="390" width="500" height="110" rx="16"/></g>
+       <g ${at(13.4,'pop')}>${enzymeMissing(300, 470, 1.1)}</g>
+       <g ${at(13.6)}><text class="t-lbl" x="350" y="432">zu wenig Enzym <tspan class="t-ok">Laktase</tspan></text><text class="t-sm" x="350" y="468">Milchzucker wird im Dünndarm</text><text class="t-sm" x="350" y="490">nicht vollständig gespalten</text></g>
+       <g ${at(14.8,'pop')}>${cross(800, 445)}</g>` },
+    { start: 18.72, svg: () => {
+      const mols = [[200,150],[480,110],[760,160]];
+      return gutWall() +
+        `<g ${at(18.8)}><rect class="card" x="560" y="16" width="380" height="52" rx="14"/><text class="t-lbl t-ok" x="580" y="50">normalerweise: mit Laktase</text></g>` +
+        mols.map(([x,y],i)=>`<g ${at(19.4+i*0.2)}><g ${mv(20.4+i*0.2,0,26)}>${enzyme(x,y+70,0.6)}</g></g>
+          <line class="bond gone" data-at="${21.5+i*0.25}" x1="${x-22}" y1="${y}" x2="${x+22}" y2="${y}"/>
+          <g ${mv(21.55+i*0.25,-20,0)}><g ${mv(24.3+i*0.15, villusTop(2*i)[0]-(x-42), 300-y)}><g ${at(25.6+i*0.1,'gone')}>${sugar('gal',x-22,y,17,false)}</g></g></g>
+          <g ${mv(21.55+i*0.25,20,0)}><g ${mv(24.3+i*0.15, villusTop(2*i+1)[0]-(x+42), 300-y)}><g ${at(25.6+i*0.1,'gone')}>${sugar('glu',x+22,y,17,false)}</g></g></g>`).join('') +
+        `<g ${at(22.4)}><text class="t-lbl t-warm" x="60" y="300" style="paint-order:stroke; stroke:#eef3fc; stroke-width:6">Glukose</text><text class="t-lbl t-acc" x="200" y="300" style="paint-order:stroke; stroke:#eef3fc; stroke-width:6">+ Galaktose</text></g>
+         <g ${at(24.6)}><text class="t-sm" x="700" y="300">werden aufgenommen</text></g>`;
+    }},
+    { start: 27.1, svg: () => {
+      const mols = [[150,170],[330,250],[520,160],[690,240],[820,150]];
+      return `<rect class="lumen" x="0" y="0" width="960" height="540" style="fill:#f6efe6"/>
+        <text class="t-sm" x="18" y="34">Dickdarm</text>
+        <g ${at(27.3)}><rect class="card" x="250" y="16" width="460" height="52" rx="14"/><text class="t-lbl t-bad t-c" x="480" y="50">unverdaute Laktose im Dickdarm</text></g>` +
+        mols.map(([x,y],i)=>`<g ${at(28.0+i*0.15)}><g ${at(36.0+i*0.2,'gone')}>${lac(x,y,15,false)}</g></g>`).join('') +
+        mols.map(([x,y],i)=>`<g ${at(33.6+i*0.25,'pop')}><g class="${i%2?'float':'float2'}">${bact(x+(i%2?30:-30),y+50,i*25)}</g></g>`).join('') +
+        [[180,110,'H₂'],[420,90,'CO₂'],[610,110,'CH₄'],[760,90,'H₂']].map(([x,y,t],i)=>`<g ${at(36.4+i*0.3,'pop')}><g class="float">${gas(x,y,t)}</g></g>`).join('') +
+        `<g ${at(35.0)}><text class="t-sm t-c" x="480" y="335">Darmbakterien bauen die Laktose ab, dabei entstehen Gase</text></g>
+         <g ${at(39.7)}>${card(70,390,250,64,'Bauchschmerzen','t-bad')}</g>
+         <g ${at(40.6)}>${card(355,390,250,64,'Blähungen','t-bad')}</g>
+         <g ${at(41.5)}>${card(640,390,250,64,'Durchfall','t-bad')}</g>`;
+    }},
+    { start: 44.57, svg: () =>
+      `<g ${at(44.6)}><text class="t-mid" x="480" y="60">Das LCT-Gen</text></g>
+       <g ${at(46.6,'pop')}>${chromosome(210, 290, 1.3)}</g>
+       <g ${at(48.6)}><text class="t-lbl t-c" x="210" y="490">Chromosom 2</text></g>
+       <g ${at(49.6)}><line class="ln ln-mut" x1="260" y1="190" x2="420" y2="150" stroke-dasharray="6 6"/><line class="ln ln-mut" x1="260" y1="206" x2="420" y2="250" stroke-dasharray="6 6"/></g>
+       <g ${at(49.8)}><rect class="card" x="420" y="140" width="460" height="120" rx="14"/>${helix(440, 200, 420, 26, 2)}<rect x="560" y="164" width="160" height="72" rx="10" fill="${WARM}" opacity=".9"/><text class="t-mid" x="640" y="210" style="fill:#fff">LCT</text></g>
+       <g ${at(52.5)}>${arrow(640, 275, 640, 345)}<text class="t-sm" x="660" y="318">Bauanleitung für</text></g>
+       <g ${at(54.0,'pop')}>${enzyme(640, 430, 1.4)}<text class="t-lbl t-ok" x="690" y="420">Laktase</text></g>` },
+    { start: 56.0, svg: () => {
+      const X0 = 150, Y0 = 400, W = 700, H = 250;
+      const curve = lifeCurve(X0, Y0, W, H, [[0,.95],[.08,1],[.14,.95],[.22,.5],[.32,.28],[.5,.2],[.75,.17],[1,.15]]);
+      return `<g ${at(56.0)}><text class="t-mid" x="480" y="60">Laktase im Lauf des Lebens</text></g>
+        <line class="axis" x1="${X0}" y1="${Y0}" x2="${X0+W}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y0}" x2="${X0}" y2="${Y0-H-20}"/>
+        <text class="t-sm" x="${X0-12}" y="${Y0-H}" text-anchor="end">viel</text><text class="t-sm" x="${X0-12}" y="${Y0}" text-anchor="end">wenig</text>
+        <text class="t-sm" x="${X0+W}" y="${Y0+34}" text-anchor="end">Alter →</text>
+        <g ${at(57.0)}><text class="t-sm t-c" x="${X0+0.06*W}" y="${Y0+34}">Säugling</text></g>
+        <g ${at(58.6)}>${milkGlass(X0+0.06*W, Y0-H-60+0, 0.6)}</g>
+        <path class="ln draw" data-at="58.0" d="${curve}" style="stroke:${OK}; stroke-width:5"/>
+        <g ${at(65.2)}><line x1="${X0+0.16*W}" x2="${X0+0.16*W}" y1="${Y0}" y2="${Y0-H}" stroke="${WARM}" stroke-width="3" stroke-dasharray="7 7"/><text class="t-lbl t-warm" x="${X0+0.16*W+12}" y="${Y0-H+10}">Abstillen</text></g>
+        <g ${at(70.5)}><text class="t-lbl t-bad" x="${X0+0.42*W}" y="${Y0-90}">immer weniger Laktase</text></g>
+        <g ${at(78.0)}><rect class="card" x="230" y="455" width="500" height="64" rx="14"/><text class="t-lbl t-c" x="480" y="495">Laktase-<tspan class="t-bad">Nicht</tspan>persistenz</text></g>
+        <g ${at(81.8)}><text class="t-sm" x="740" y="492">häufigste Ursache</text></g>`;
+    }},
+    { start: 86.21, svg: () => {
+      const Y = 240;
+      return `<g ${at(86.3)}><text class="t-mid" x="480" y="60">Die entscheidende Mutation</text></g>
+        <line x1="40" x2="920" y1="${Y}" y2="${Y}" stroke="${MUT}" stroke-width="6" stroke-linecap="round"/>
+        <g ${at(88.4)}><rect x="90" y="${Y-36}" width="330" height="72" rx="12" fill="#e6dff7" stroke="#7a5cc4" stroke-width="3"/><text class="t-mid" x="255" y="${Y+10}">MCM6</text></g>
+        <g ${at(88.4)}><rect x="560" y="${Y-36}" width="330" height="72" rx="12" fill="${WARM}"/><text class="t-mid" x="725" y="${Y+10}" style="fill:#fff">LCT</text></g>
+        <g ${at(90.6)}><g ${at(109.8,'gone')}><text class="t-sm t-c" x="255" y="${Y+70}">Nachbar-Gen</text></g></g>
+        <g ${at(96.4,'pop')}><rect x="150" y="${Y-46}" width="40" height="92" rx="8" fill="none" stroke="${ACC}" stroke-width="4"/></g>
+        <g ${at(96.8)}><text class="t-lbl t-acc" x="70" y="140">regulatorisches Element</text></g>
+        <path class="ln ln-acc draw" data-at="98.6" d="M170,${Y-50} C200,120 560,110 640,${Y-42}" marker-end="url(#ah)"/>
+        <g ${at(99.6)}><text class="t-sm" x="440" y="128">steuert die Aktivität</text></g>
+        <g ${at(103.0)}><rect class="card" x="60" y="345" width="320" height="60" rx="14"/><text class="t-lbl t-c" x="220" y="383">−13910 C&gt;T</text></g>
+        <g ${at(110.0)}><path d="M170,${Y+56} L170,${Y+70} L560,${Y+70} L560,${Y+56}" fill="none" stroke="${INK}" stroke-width="3"/></g>
+        <g ${at(110.4)}><text class="t-lbl t-c" x="470" y="${Y+104}">13.910 Basen vor dem LCT-Gen</text></g>`;
+    }},
+    { start: 114.92, svg: () => {
+      const seq = 'GATCACGTAG'.split(''), X = 480 - (seq.length - 1) * 33;
+      return `<g ${at(115.0)}><text class="t-mid" x="480" y="70">SNP = Single Nucleotide Polymorphism</text></g>
+        <g ${at(117.0)}><text class="t-sm t-c" x="480" y="110">Veränderung an einer einzelnen Stelle der DNA</text></g>
+        <g ${at(115.5)}>${seq.map((l,i)=> i===4 ? '' : base(X+i*66, 250, l)).join('')}</g>
+        <g ${at(115.5)}><g ${at(123.6,'gone')}>${base(X+4*66, 250, 'C')}</g></g>
+        <g ${at(123.7,'pop')}>${base(X+4*66, 250, 'T')}</g>
+        <g ${at(119.5,'pop')}><rect x="${X+4*66-36}" y="206" width="72" height="88" rx="14" fill="none" stroke="${BAD}" stroke-width="4"/></g>
+        <g ${at(122.3)}><text class="t-lbl t-acc" x="${X+4*66-60}" y="370" text-anchor="end">Cytosin (C)</text></g>
+        <g ${at(123.6)}>${arrow(X+4*66-40, 362, X+4*66+40, 362)}</g>
+        <g ${at(124.2)}><text class="t-lbl t-warm" x="${X+4*66+60}" y="370">Thymin (T)</text></g>`;
+    }},
+    { start: 126.72, svg: () => {
+      const X0 = 150, Y0 = 400, W = 700, H = 250;
+      const down = lifeCurve(X0, Y0, W, H, [[0,.95],[.08,1],[.14,.95],[.22,.5],[.32,.28],[.5,.2],[.75,.17],[1,.15]]);
+      const stay = lifeCurve(X0, Y0, W, H, [[0,.95],[.08,1],[.14,.97],[.3,.9],[.5,.88],[.75,.86],[1,.85]]);
+      return `<g ${at(126.8)}><text class="t-mid" x="480" y="60">Mit der Genvariante bleibt das LCT-Gen aktiv</text></g>
+        <line class="axis" x1="${X0}" y1="${Y0}" x2="${X0+W}" y2="${Y0}"/><line class="axis" x1="${X0}" y1="${Y0}" x2="${X0}" y2="${Y0-H-20}"/>
+        <text class="t-sm" x="${X0-12}" y="${Y0-H}" text-anchor="end">viel</text><text class="t-sm" x="${X0-12}" y="${Y0}" text-anchor="end">wenig</text>
+        <text class="t-sm" x="${X0+W}" y="${Y0+34}" text-anchor="end">Alter →</text>
+        <path d="${down}" fill="none" stroke="${MUT}" stroke-width="4" stroke-dasharray="8 8"/>
+        <text class="t-sm" x="${X0+0.55*W}" y="${Y0-0.2*H-14}">ohne Variante</text>
+        <path class="ln draw" data-at="127.6" d="${stay}" style="stroke:${OK}; stroke-width:5"/>
+        <g ${at(130.4)}><text class="t-lbl t-ok" x="${X0+0.55*W}" y="${Y0-0.86*H-16}">mit Variante</text></g>
+        <g ${at(135.5)}><rect class="card" x="230" y="440" width="500" height="64" rx="14"/>${check(276,472)}<text class="t-lbl" x="312" y="480">lebenslang Milchzucker verdauen</text></g>`;
+    }},
+    { start: 141.06, svg: () =>
+      `<g ${at(141.1)}><text class="t-mid" x="480" y="56">Vererbung: autosomal-dominant</text></g>
+       <g ${at(141.8)}>${person(300, 170, MUT, 1.2)}<rect x="262" y="210" width="38" height="34" rx="7" fill="${BASECOL.C}" stroke="${INK}" stroke-width="2"/><text class="t-lbl t-c" x="281" y="235">C</text><rect x="300" y="210" width="38" height="34" rx="7" fill="${BASECOL.C}" stroke="${INK}" stroke-width="2"/><text class="t-lbl t-c" x="319" y="235">C</text></g>
+       <g ${at(142.3)}>${person(660, 170, OK, 1.2)}<rect x="622" y="210" width="38" height="34" rx="7" fill="${BASECOL.T}" stroke="${INK}" stroke-width="2"/><text class="t-lbl t-c" x="641" y="235">T</text><rect x="660" y="210" width="38" height="34" rx="7" fill="${BASECOL.C}" stroke="${INK}" stroke-width="2"/><text class="t-lbl t-c" x="679" y="235">C</text></g>
+       <g ${at(142.3)}><text class="t-sm t-c" x="300" y="270">Elternteil</text><text class="t-sm t-c" x="660" y="270">Elternteil mit Variante</text></g>
+       <g ${at(145.0)}>${arrow(330, 285, 450, 360)}${arrow(630, 285, 510, 360)}</g>
+       <g ${at(146.4,'pop')}>${person(480, 440, OK, 1.1)}<rect x="444" y="476" width="36" height="32" rx="7" fill="${BASECOL.C}" stroke="${INK}" stroke-width="2"/><text class="t-lbl t-c" x="462" y="500">C</text><rect x="480" y="476" width="36" height="32" rx="7" fill="${BASECOL.T}" stroke="${INK}" stroke-width="2"/><text class="t-lbl t-c" x="498" y="500">T</text></g>
+       <g ${at(147.6)}><rect class="card" x="560" y="390" width="360" height="94" rx="14"/><text class="t-lbl t-ok" x="580" y="428">eine Kopie reicht:</text><text class="t-sm" x="580" y="462">Laktase bleibt erhalten</text></g>
+       <g ${at(153.0)}><rect class="card" x="40" y="390" width="360" height="94" rx="14"/><text class="t-lbl t-bad" x="60" y="428">ohne Variante (C / C):</text><text class="t-sm" x="60" y="462">meist Nichtpersistenz</text></g>` },
+    { start: 158.03, svg: () =>
+      `<g ${at(158.1)}><text class="t-mid" x="480" y="70">Verschiedene Genvarianten</text></g>
+       <g ${at(158.8,'pop')}><rect class="card" x="60" y="150" width="260" height="210" rx="18"/><text class="t-lbl t-c" x="190" y="200">Europa</text><text class="t-mid t-c t-acc" x="190" y="270">−13910 C&gt;T</text><text class="t-sm t-c" x="190" y="320">(in dieser Frage)</text></g>
+       <g ${at(162.0,'pop')}><rect class="card" x="350" y="150" width="260" height="210" rx="18"/><text class="t-lbl t-c" x="480" y="200">Ostafrika</text><text class="t-mid t-c t-warm" x="480" y="270">z. B. −14010 G&gt;C</text></g>
+       <g ${at(163.6,'pop')}><rect class="card" x="640" y="150" width="260" height="210" rx="18"/><text class="t-lbl t-c" x="770" y="200">Naher Osten</text><text class="t-mid t-c t-ok" x="770" y="270">z. B. −13915 T&gt;G</text></g>
+       <g ${at(164.4)}><text class="t-sm t-c" x="480" y="430">verschiedene Mutationen mit derselben Wirkung: Laktase bleibt erhalten</text></g>` },
+    { start: 167.19, svg: () =>
+      `<g ${at(167.2)}><text class="t-mid" x="480" y="60">Verändert Milchtrinken die Gene?</text></g>
+       <g ${at(169.6,'pop')}>${milkGlass(180, 230, 1.6)}</g>
+       <g ${at(170.3)}>${arrow(260, 230, 380, 230)}</g>
+       <g ${at(170.6)}><rect class="card" x="400" y="160" width="460" height="140" rx="16"/>${helix(420, 230, 420, 30, 2)}</g>
+       <g ${at(172.2,'pop')}>${cross(860, 160)}</g>
+       <g ${at(172.6)}><text class="t-lbl t-c" x="630" y="345">DNA bleibt gleich</text></g>
+       <g ${at(180.4,'pop')}>${dice(260, 440, 1.1)}</g>
+       <g ${at(180.9)}><text class="t-lbl" x="310" y="434">Genvarianten entstehen durch</text><text class="t-lbl t-acc" x="310" y="466">zufällige Mutationen</text></g>` },
+    { start: 187.47, svg: () => {
+      const bs = [[170,170,10],[260,220,-30],[360,160,40],[220,290,70],[330,280,-10],[120,250,30],[410,240,15]];
+      return `<g ${at(187.5)}><text class="t-mid" x="480" y="60">Was sich anpassen kann: die Darmbakterien</text></g>
+        <g><rect class="card" x="60" y="100" width="420" height="260" rx="18"/></g>
+        ${bs.map(([x,y,r],i)=> i < 3 ? `<g class="${i%2?'float':'float2'}">${bact(x,y,r)}</g>` : `<g ${at(190.0+i*0.35,'pop')}><g class="${i%2?'float':'float2'}">${bact(x,y,r)}</g></g>`).join('')}
+        <g ${at(189.0)}><text class="t-sm t-c" x="270" y="395">regelmäßiger Milchkonsum</text></g>
+        <g ${at(192.0)}><text class="t-sm" x="540" y="150">Beschwerden</text>${meter(540, 162, 360, 1, BAD)}</g>
+        <g ${at(198.0)}><rect x="540" y="162" width="360" height="34" rx="10" fill="#eef1f6"/></g>
+        <g ${at(198.2,'grow-x')}><rect x="540" y="162" width="${360*0.5}" height="34" rx="10" fill="${WARM}"/></g>
+        <g ${at(199.0)}><text class="t-lbl t-ok" x="540" y="240">bei manchen: weniger Beschwerden</text></g>
+        <g ${at(201.0)}><rect class="card" x="540" y="280" width="360" height="80" rx="14"/>${helix(560, 320, 200, 18, 2, false)}<text class="t-lbl" x="780" y="328">gleich</text></g>`;
+    }}
+  ]
+};
+
+/* ================= FRAGE 3: Wie hat sich die Laktasepersistenz entwickelt? ================= */
+const F3 = {
+  duration: 164.9,
+  chapters: [[0,'Frage 3'],[4.45,'Evolution'],[13.13,'Vor 10.000 Jahren'],[27.4,'Zufällige Mutation'],[36.51,'Ein Vorteil'],[55.76,'Natürliche Selektion'],[69.54,'Unterschiede weltweit'],[80.9,'Wieder loswerden?'],[116.53,'Sekundäre Laktoseintoleranz'],[133.64,'Zusammenfassung']],
+  subs: [
+    [0, "Frage 3: Wie hat sich die Laktasepersistenz entwickelt?"],
+    [4.45, "Wie sich die Laktasepersistenz entwickelt hat"],
+    [7.46, "Die Entwicklung der Laktasepersistenz lässt sich besonders gut durch die Evolution des Menschen erklären."],
+    [13.13, "Vor ungefähr 10.000 Jahren begannen Menschen in verschiedenen Regionen der Welt, Tiere wie Rinder, Ziegen und Schafe zu domestizieren und deren Milch als Nahrungsmittel zu nutzen."],
+    [23.08, "Zu dieser Zeit waren die meisten erwachsenen Menschen noch laktoseintolerant."],
+    [27.4, "Durch zufällige Mutationen entstanden jedoch genetische Varianten, die dafür sorgten, dass die Laktaseproduktion auch im Erwachsenenalter erhalten blieb."],
+    [36.51, "Menschen mit diesen Varianten hatten in Gesellschaften, in denen Milch eine wichtige Nahrungsquelle war, teilweise einen Überlebens- und Fortpflanzungsvorteil."],
+    [44.73, "Milch konnte zusätzliche Energie, Flüssigkeit und Nährstoffe liefern."],
+    [48.95, "Dadurch hatten diese Menschen unter bestimmten Umweltbedingungen bessere Chancen, zu überleben und ihre Gene weiterzugeben."],
+    [55.76, "Durch die natürliche Selektion wurden die entsprechenden Genvarianten über viele Generationen häufiger."],
+    [61.26, "Dieser Vorgang wird auch als Koevolution von Genen und Kultur bezeichnet, da die menschliche Ernährungsweise die evolutionäre Entwicklung beeinflusste."],
+    [69.54, "Besonders in Nordeuropa verbreitete sich die Laktasepersistenz stark."],
+    [73.75, "In anderen Regionen, beispielsweise in Ostasien, blieb die Laktase-Nichtpersistenz dagegen deutlich häufiger."],
+    [80.9, "Kann man Laktoseintoleranz wieder loswerden?"],
+    [84.03, "Ob man Laktoseintoleranz wieder loswerden kann, hängt von ihrer Ursache ab."],
+    [88.59, "Bei der genetisch bedingten Laktase-Nichtpersistenz gibt es bisher keine etablierte Möglichkeit, die genetische Veranlagung dauerhaft zu verändern oder die natürliche Laktaseproduktion wiederherzustellen."],
+    [99.47, "Allerdings können Betroffene ihre Beschwerden durch laktosefreie Milchprodukte, Laktase-Tabletten oder den Konsum kleinerer Mengen Milchprodukte reduzieren."],
+    [108.13, "Joghurt und bestimmte Käsesorten werden ebenfalls häufig besser vertragen, da bei ihrer Herstellung ein Teil der Laktose abgebaut wird."],
+    [116.53, "Anders sieht es bei einer sogenannten sekundären Laktoseintoleranz aus."],
+    [121.18, "Diese kann beispielsweise durch Erkrankungen oder eine Schädigung des Dünndarms entstehen."],
+    [125.9, "Wenn die eigentliche Ursache behandelt wird und sich die Darmschleimhaut erholt, kann sich auch die Laktaseproduktion wieder verbessern."],
+    [133.64, "Zusammenfassung"],
+    [135.18, "Die Laktoseintoleranz beruht bei den meisten Betroffenen auf einer genetisch gesteuerten Abnahme der Laktaseproduktion nach der Kindheit."],
+    [142.87, "Entscheidend sind dabei vor allem das LCT-Gen und seine regulatorischen Abschnitte im MCM6-Gen."],
+    [149.36, "Die Fähigkeit, auch als Erwachsener Milch zu verdauen, entwickelte sich durch zufällige Mutation und natürliche Selektion."],
+    [156.35, "Der Milchkonsum selbst verändert die Gene eines Menschen nicht, spielte aber eine wichtige Rolle bei der evolutionären Verbreitung der Laktasepersistenz."]
+  ],
+  scenes: [
+    { start: 0, svg: () =>
+      `<g ${at(0.2)}><text class="t-sm t-c" x="480" y="120">FRAGE 3</text></g>
+       <g ${at(0.5)}><text class="t-big" x="480" y="180" style="font-size:35px">Wie hat sich die Laktasepersistenz entwickelt?</text></g>
+       ${[0,1,2,3,4,5,6].map(i=>`<g ${at(1.0+i*0.15,'pop')}>${person(240+i*80, 360, i>=4 ? OK : MUT, 1)}</g>`).join('')}` },
+    { start: 4.45, svg: () =>
+      `<g ${at(4.5)}><text class="t-mid" x="480" y="70">Wie sich die Laktasepersistenz entwickelt hat</text></g>
+       <g ${at(7.6)}><line class="axis" x1="100" y1="300" x2="860" y2="300" marker-end="url(#ah)"/></g>
+       <g ${at(8.2)}><text class="t-lbl t-c" x="480" y="260">Evolution des Menschen</text></g>
+       ${[0,1,2,3].map(i=>`<g ${at(8.6+i*0.6,'pop')}>${person(200+i*180, 400, i>=2 ? OK : MUT, 0.9)}</g>`).join('')}` },
+    { start: 13.13, svg: () =>
+      `<g ${at(13.2)}><rect class="card" x="300" y="30" width="360" height="60" rx="14"/><text class="t-mid" x="480" y="70">vor ca. 10.000 Jahren</text></g>
+       <g ${at(16.2,'pop')}>${cow(200, 200, 1.2)}<text class="t-sm t-c" x="210" y="270">Rinder</text></g>
+       <g ${at(16.9,'pop')}>${goat(470, 200, 1.3)}<text class="t-sm t-c" x="470" y="270">Ziegen</text></g>
+       <g ${at(17.4,'pop')}>${sheep(730, 200, 1.3)}<text class="t-sm t-c" x="740" y="270">Schafe</text></g>
+       <g ${at(18.6)}><text class="t-sm t-c" x="480" y="125">Tiere werden domestiziert, ihre Milch wird zum Nahrungsmittel</text></g>
+       <g ${at(20.4,'pop')}>${milkGlass(860, 200, 0.9)}</g>
+       ${[0,1,2,3,4,5,6,7,8,9].map(i=>`<g ${at(23.3+i*0.08,'pop')}>${person(150+i*73, 440, BAD, 0.85)}</g>`).join('')}
+       <g ${at(24.2)}><text class="t-lbl t-bad t-c" x="480" y="520">die meisten Erwachsenen: laktoseintolerant</text></g>` },
+    { start: 27.4, svg: () =>
+      `<g ${at(27.5,'pop')}>${dice(140, 150, 1.3)}</g>
+       <g ${at(27.8)}><text class="t-mid" x="200" y="140" style="text-anchor:start">zufällige Mutationen</text><text class="t-sm" x="200" y="172">neue genetische Varianten entstehen</text></g>
+       ${[0,1,2,3,4,5,6,7,8,9].map(i=>`<g ${at(27.5)}>${i===6 ? `<g ${at(31.0,'gone')}>${person(150+i*73, 360, BAD, 0.85)}</g><g ${at(31.0,'pop')}>${person(150+i*73, 360, OK, 0.85)}</g>` : person(150+i*73, 360, BAD, 0.85)}</g>`).join('')}
+       <g ${at(31.4)}>${arrow(588, 470, 588, 410, 'ln-ok')}</g>
+       <g ${at(32.4)}><rect class="card" x="250" y="470" width="460" height="56" rx="14"/><text class="t-lbl t-ok t-c" x="480" y="506">Laktase bleibt im Erwachsenenalter</text></g>` },
+    { start: 36.51, svg: () =>
+      `<g ${at(36.6)}><text class="t-mid" x="480" y="60">Ein Vorteil, wo Milch wichtig war</text></g>
+       <g ${at(37.0)}>${person(200, 250, OK, 1.6)}${milkGlass(290, 230, 0.8)}</g>
+       <g ${at(44.9)}>${plus(430, 150)}<text class="t-lbl" x="465" y="158">Energie</text></g>
+       <g ${at(45.9)}>${plus(430, 220)}<text class="t-lbl" x="465" y="228">Flüssigkeit</text></g>
+       <g ${at(46.9)}>${plus(430, 290)}<text class="t-lbl" x="465" y="298">Nährstoffe</text></g>
+       <g ${at(49.2)}><rect class="card" x="160" y="370" width="640" height="130" rx="16"/><text class="t-lbl t-c" x="480" y="410">bessere Chancen, zu überleben</text><text class="t-lbl t-c" x="480" y="444">und die Gene weiterzugeben</text></g>
+       ${[0,1,2].map(i=>`<g ${at(52.5+i*0.3,'pop')}>${person(760+i*50, 300, OK, 0.6)}</g>`).join('')}` },
+    { start: 55.76, svg: () => {
+      const gens = [1, 3, 6, 8];
+      return `<g ${at(55.8)}><text class="t-mid" x="480" y="56">Natürliche Selektion</text></g>` +
+        gens.map((n, r)=>`<g ${at(56.3+r*1.0)}><text class="t-sm" x="60" y="${128+r*80}">Generation ${r+1}</text>${[0,1,2,3,4,5,6,7,8,9].map(i=>person(260+i*62, 140+r*80, i < n ? OK : BAD, 0.55)).join('')}</g>`).join('') +
+        `<g ${at(60.0)}><text class="t-lbl t-ok" x="60" y="470">Genvarianten werden über viele Generationen häufiger</text></g>
+         <g ${at(61.5)}><rect class="card" x="60" y="490" width="840" height="44" rx="12"/><text class="t-sm t-c" x="480" y="518">Koevolution von Genen und Kultur: die Ernährung beeinflusst die Evolution</text></g>`;
+    }},
+    { start: 69.54, svg: () =>
+      `<g ${at(69.6)}><text class="t-mid" x="480" y="56">Wer kann als Erwachsener Laktose verdauen?</text></g>
+       <g ${at(70.0)}><text class="t-lbl" x="80" y="160">Nordeuropa, z. B. Dänemark</text><text class="t-sm" x="80" y="186">Studie von 1975</text></g>
+       <g ${at(70.2)}><rect x="80" y="200" width="800" height="44" rx="10" fill="#eef1f6"/></g>
+       <g ${at(70.4,'grow-x')}><rect x="80" y="200" width="${800*0.96}" height="44" rx="10" fill="${OK}"/></g>
+       <g ${at(71.4)}><text class="t-lbl" x="${80+800*0.96-16}" y="230" text-anchor="end" style="fill:#fff">96 %</text></g>
+       <g ${at(74.0)}><text class="t-lbl" x="80" y="320">Ostasien, z. B. Nordchina</text><text class="t-sm" x="80" y="346">Studie von 1984</text></g>
+       <g ${at(74.2)}><rect x="80" y="360" width="800" height="44" rx="10" fill="#eef1f6"/></g>
+       <g ${at(74.4,'grow-x')}><rect x="80" y="360" width="${800*0.08}" height="44" rx="10" fill="${OK}"/></g>
+       <g ${at(75.4)}><text class="t-lbl" x="${80+800*0.08+14}" y="390">8 %</text></g>
+       <g ${at(76.5)}><text class="t-sm" x="80" y="460">Daten: GLAD, University College London (mehr Länder auf der Karte bei Frage 4)</text></g>` },
+    { start: 80.9, svg: () =>
+      `<g ${at(81.0)}><text class="t-mid" x="480" y="60">Kann man Laktoseintoleranz wieder loswerden?</text></g>
+       <g ${at(84.2)}><rect class="card" x="380" y="100" width="200" height="56" rx="14"/><text class="t-lbl t-c" x="480" y="136">Ursache?</text></g>
+       <g ${at(86.0)}>${arrow(430, 160, 250, 225)}${arrow(530, 160, 710, 225)}</g>
+       <g ${at(88.8,'pop')}><rect class="card" x="60" y="230" width="380" height="250" rx="18"/><text class="t-lbl t-c" x="250" y="272">genetisch bedingt</text>${helix(120, 340, 210, 22, 2)}${lockIcon(370, 340, 1.1)}<text class="t-sm t-c" x="250" y="410">Veranlagung nicht</text><text class="t-sm t-c" x="250" y="434">dauerhaft änderbar</text></g>
+       <g ${at(95.5,'pop')}>${cross(250, 470)}</g>
+       <g ${at(86.4)}><rect class="card" x="520" y="230" width="380" height="250" rx="18" style="stroke-dasharray:8 8"/><text class="t-lbl t-c" x="710" y="272">sekundär</text><text class="t-sm t-c" x="710" y="360">dazu gleich mehr</text></g>` },
+    { start: 99.47, svg: () =>
+      `<g ${at(99.5)}><text class="t-mid" x="480" y="60">Was gegen die Beschwerden hilft</text></g>
+       <g ${at(101.6,'pop')}>${milkGlass(150, 200, 1.4, 'laktosefrei')}<text class="t-sm t-c" x="150" y="290">laktosefreie Produkte</text></g>
+       <g ${at(103.4,'pop')}>${capsule(390, 200, '#1f9d6b', '#bfe6d5', -15, 1.8)}<text class="t-sm t-c" x="390" y="290">Laktase-Tabletten</text></g>
+       <g ${at(105.0,'pop')}>${milkGlass(600, 210, 0.9)}${milkGlass(650, 225, 0.6)}<text class="t-sm t-c" x="620" y="290">kleinere Mengen</text></g>
+       <g ${at(108.3,'pop')}>${yogurt(210, 420, 1.2)}</g>
+       <g ${at(109.2,'pop')}>${cheese(380, 430, 1.3)}</g>
+       <g ${at(111.2)}><rect class="card" x="480" y="370" width="420" height="100" rx="16"/><text class="t-lbl" x="500" y="410">oft besser verträglich:</text><text class="t-sm" x="500" y="444">Laktose wird bei der Herstellung</text><text class="t-sm" x="500" y="466">teilweise abgebaut</text></g>` },
+    { start: 116.53, svg: () => {
+      let short = '', healed = '';
+      for(let i = 0; i < 9; i++){
+        const x = 30 + i * 104;
+        short += `<path class="tissue" d="M${x},340 L${x},310 Q${x},296 ${x+30},296 Q${x+60},296 ${x+60},310 L${x+60},340 Z"/>`;
+        healed += `<path class="tissue" d="M${x},340 L${x},250 Q${x},214 ${x+30},214 Q${x+60},214 ${x+60},250 L${x+60},340 Z"/>`;
+      }
+      return `<rect class="lumen" x="0" y="0" width="960" height="540"/><rect class="tissue" x="-5" y="330" width="970" height="220"/>
+        <g ${at(126.0,'gone')}>${short}</g>
+        <g ${at(126.0,'grow')}>${healed}</g>
+        <g ${at(116.6)}><rect class="card" x="250" y="20" width="460" height="56" rx="14"/><text class="t-lbl t-c" x="480" y="56">sekundäre Laktoseintoleranz</text></g>
+        <g ${at(121.4)}><text class="t-sm t-c" x="480" y="120">Dünndarm durch eine Erkrankung geschädigt</text></g>
+        <g ${at(121.6)}><g ${at(126.0,'gone')}><text class="t-lbl t-bad t-c" x="480" y="270">geschädigte Darmschleimhaut</text></g></g>
+        ${[0,2,4,6,8].map((i,k)=>`<g ${at(129.5+k*0.2,'pop')}>${enzyme(villusTop(i)[0], villusTop(i)[1]-4, 0.55)}</g>`).join('')}
+        <g ${at(126.4)}><text class="t-sm t-c" x="480" y="160">Ursache behandelt, Schleimhaut erholt sich</text></g>
+        <g ${at(130.2)}><rect class="card" x="250" y="420" width="460" height="60" rx="14"/><text class="t-lbl t-ok t-c" x="480" y="458">Laktaseproduktion kann sich erholen</text></g>`;
+    }},
+    { start: 133.64, svg: () =>
+      `<g ${at(133.7)}><text class="t-mid" x="480" y="56">Zusammenfassung</text></g>
+       <g ${at(135.3)}><rect class="card" x="60" y="90" width="840" height="86" rx="16"/><text class="t-lbl" x="90" y="128">Ursache: genetisch gesteuerte Abnahme</text><text class="t-sm" x="90" y="158">der Laktaseproduktion nach der Kindheit</text></g>
+       <g ${at(143.0)}><rect class="card" x="60" y="190" width="840" height="86" rx="16"/><text class="t-lbl" x="90" y="228">Gene: das <tspan class="t-warm">LCT-Gen</tspan> und seine Steuerung im <tspan style="fill:#7a5cc4">MCM6-Gen</tspan></text></g>
+       <g ${at(149.5)}><rect class="card" x="60" y="290" width="840" height="86" rx="16"/><text class="t-lbl" x="90" y="328">Evolution: zufällige Mutation + natürliche Selektion</text><text class="t-sm" x="90" y="358">so entstand die Laktasepersistenz</text></g>
+       <g ${at(156.5)}><rect class="card" x="60" y="390" width="840" height="86" rx="16"/><text class="t-lbl" x="90" y="428">Milchtrinken verändert die Gene <tspan class="t-bad">nicht</tspan></text><text class="t-sm" x="90" y="458">aber Milch war wichtig für die Verbreitung der Variante</text></g>` }
+  ]
+};
+
+const VIDEOS = { 'frage1-teil1': TEIL1, 'frage1-teil2': TEIL2, 'frage2': F2, 'frage3': F3, 'frage5-teil1': F5T1, 'frage5-teil2': F5T2, 'frage6-teil1': F6T1, 'frage6-teil2': F6T2 };
 
 /* ---------- Player ---------- */
 const fmt = s => { s = Math.max(0, Math.floor(s)); return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`; };
