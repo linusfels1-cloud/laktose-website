@@ -210,6 +210,16 @@ body:not([data-page="start"]) .top-quellen{display:none}
 
 .fragen{list-style:none; margin:44px 0 0; padding:0; display:grid; grid-template-columns:1fr 1fr; gap:14px}
 .fragen li.wide{grid-column:1 / -1}
+/* Buffet-Beitrag auf der Startseite */
+.buffet{display:grid; grid-template-columns:auto minmax(0,1fr); gap:28px; align-items:center; margin-top:36px; padding:26px; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius)}
+.buffet img{display:block; width:180px; height:180px; border-radius:12px}
+.buffet h2{margin:4px 0 8px; font-size:clamp(24px,4vw,32px)}
+.buffet p{margin:0 0 14px; max-width:60ch}
+.buffet-btn{display:inline-block; padding:12px 20px; border-radius:12px; background:var(--accent); color:#fff; font:700 16px var(--f-display); text-decoration:none}
+.buffet-btn:hover{filter:brightness(1.1)}
+.buffet .buffet-src{margin:12px 0 0; font-size:13px; color:var(--muted)}
+@media (max-width:600px){ .buffet{grid-template-columns:1fr; justify-items:center; text-align:center; padding:22px 18px} .buffet img{width:200px; height:200px} }
+
 .fragen a{--mx:50%; --my:50%; position:relative; overflow:hidden; display:grid; grid-template-columns:auto 1fr auto; gap:6px 18px; align-items:start; align-content:start; height:100%; padding:24px 24px 24px 22px; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); color:var(--ink); text-decoration:none; transition:border-color .2s, box-shadow .2s, transform .2s}
 .fragen a::before{content:""; position:absolute; inset:0; background:radial-gradient(280px circle at var(--mx) var(--my), rgba(31,79,196,.10), transparent 65%); opacity:0; transition:opacity .25s; pointer-events:none}
 .fragen a:hover{border-color:var(--accent); box-shadow:0 12px 28px -16px rgba(31,79,196,.55); transform:translateY(-3px)}
@@ -628,6 +638,18 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
         <li style="--i:5"><a href="#essen"><span class="nr">06</span><span class="q">Wie ernährt man sich mit Laktoseintoleranz?</span><span class="sub">Laktosefreie Lebensmittel und wo überraschend viel oder wenig Laktose drinsteckt · mit Quiz</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
       </ol>
       <p class="seen-note" id="seenNote" aria-live="polite"></p>
+
+      <!-- BUFFET-BEITRAG: QR-Code vom Flyer (Bild: img/qr-buffet.png) -->
+      <section class="buffet" aria-labelledby="buffetTitle">
+        <img src="img/qr-buffet.png" width="180" height="180" alt="QR-Code zum Rezept für Käse-Obst-Spieße">
+        <div>
+          <div class="eyebrow">Unser Beitrag zum Schulbuffet</div>
+          <h2 id="buffetTitle">Käse-Obst-Spieße</h2>
+          <p>Gouda, Emmentaler, Butterkäse und Gorgonzola mit Trauben, Mandarinen, Feige und Cocktailtomaten. Alle vier Käsesorten enthalten weniger als 0,1&nbsp;g Laktose pro 100&nbsp;g. Deshalb vertragen die meisten Menschen mit Laktoseintoleranz die Spieße gut.</p>
+          <a class="buffet-btn" href="https://www.gutekueche.de/kaese-obst-spiesse-rezept-65" target="_blank" rel="noopener">Rezept ansehen →</a>
+          <p class="buffet-src">QR-Code scannen oder auf den Knopf tippen · Rezept: gutekueche.de · Laktosewerte: Lactosegehaltstabelle, siehe <a href="#quellen">Quellen</a></p>
+        </div>
+      </section>
     </div>
   </section>
 
@@ -1020,6 +1042,8 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
           <dl class="qmeta"><dt>Autor</dt><dd><span class="na">nicht angegeben</span> (keine Einzelperson); Herausgeber: Verbraucherzentrale Hamburg</dd><dt>Veröffentlicht</dt><dd>Stand 9. November 2017; Erstveröffentlichung <span class="na">nicht angegeben</span></dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
         <li>Sprachausgabe für Frage 2 und 3: Piper (Text-to-Speech-Programm) mit der Stimme „Thorsten“ (high). <a href="https://github.com/thorstenMueller/Thorsten-Voice" target="_blank" rel="noopener">github.com/thorstenMueller/Thorsten-Voice</a> (Stimme unter CC0-Lizenz frei nutzbar)
           <dl class="qmeta"><dt>Autor</dt><dd>Thorsten Müller (Stimme); Programm Piper: The Home Assistant Authors</dd><dt>Veröffentlicht</dt><dd><span class="na">nicht angegeben</span>; verwendet wurde Piper Version 1.8.0</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
+        <li>Käse-Obst-Spieße (Rezept für unseren Buffet-Beitrag). <a href="https://www.gutekueche.de/kaese-obst-spiesse-rezept-65" target="_blank" rel="noopener">gutekueche.de</a> (Zutaten der Spieße; Laktosewerte der Käsesorten aus der Lactosegehaltstabelle oben)
+          <dl class="qmeta"><dt>Autor</dt><dd><span class="na">keine Person angegeben</span>; Herausgeber: GuteKueche.de</dd><dt>Veröffentlicht</dt><dd>29. September 2010</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
         <!-- WEITERE QUELLEN DER GRUPPE HIER ERGÄNZEN -->
       </ol>
       <nav class="pager" aria-label="Fragen wechseln"></nav>
