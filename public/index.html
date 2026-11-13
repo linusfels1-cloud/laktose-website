@@ -55,6 +55,14 @@ h1:focus,h2:focus{outline:none}
 .text h3:first-child{margin-top:0}
 .text p{margin:0 0 12px}
 .text > :last-child{margin-bottom:0}
+/* Deep Dive (Frage 1) */
+.dd-badge{display:inline-block; padding:2px 9px; font-family:var(--f-display); font-size:.9em; border-radius:999px; background:#e3f1fb; color:#0f5f8f; font-weight:700; letter-spacing:.02em; text-transform:none; white-space:nowrap}
+.deepdive{margin:0 0 28px; padding:20px 22px; border-radius:var(--radius); background:linear-gradient(135deg,#e8f4fc,#eef3fc); border:1px solid #bcdcf2}
+.deepdive .dd-head{display:flex; align-items:center; gap:10px; margin-bottom:8px}
+.deepdive .dd-head span{font-size:28px; line-height:1}
+.deepdive h3{margin:0; font-size:clamp(20px,3vw,24px); color:#0f4f78}
+.deepdive p{margin:0 0 12px}
+.deepdive .dd-src{margin:14px 0 0; font-size:14px; color:var(--muted); overflow-wrap:anywhere}
 .text .kurz{font:600 18px/1.45 var(--f-display); color:var(--accent); background:var(--accent-soft); padding:12px 14px; border-radius:10px; margin-bottom:20px}
 .text .gl span{white-space:nowrap}
 .text .gl{font-family:var(--f-mono); font-size:15px; text-align:center; padding:10px 12px; border:1px dashed var(--line); border-radius:10px; margin:4px 0 14px}
@@ -610,7 +618,7 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
       <!-- FRAGEN: Platzhalter "Frage 1" usw. durch eure echten Fragen ersetzen
            (auch oben in der Navigation und im data-title des jeweiligen Kapitels) -->
       <ol class="fragen">
-        <li style="--i:0"><a href="#laktose"><span class="nr">01</span><span class="q">Was ist Laktoseintoleranz?</span><span class="sub">Wie unser Körper Milchzucker verdaut und was passiert, wenn Laktase fehlt</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
+        <li style="--i:0"><a href="#laktose"><span class="nr">01</span><span class="q">Was ist Laktoseintoleranz?</span><span class="sub">Wie unser Körper Milchzucker verdaut und was passiert, wenn Laktase fehlt · <span class="dd-badge">🤿 Unser Deep Dive</span></span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
         <li style="--i:1"><a href="#biologie"><span class="nr">02</span><span class="q">Liegt Laktoseintoleranz in den Genen?</span><span class="sub">Das LCT-Gen und die entscheidende Mutation</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
         <li style="--i:2" class="wide"><a href="#evolution"><span class="nr">03</span><span class="q">Wie hat sich die Laktasepersistenz entwickelt?</span><span class="sub">Die Evolution des Menschen und ob man Laktoseintoleranz wieder loswird</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
         <li style="--i:3" class="wide"><a href="#karte"><span class="nr">04</span><span class="q">Wo ist Laktoseintoleranz besonders häufig?</span><span class="sub">Interaktive Weltkarte mit Daten aus 54 Ländern · mit Quiz</span><span class="seen-tag">✓ angeschaut</span><span class="go" aria-hidden="true">→</span></a></li>
@@ -636,8 +644,16 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
   <!-- ===================== FRAGE 1 ===================== -->
   <section class="page kapitel" data-id="laktose" data-title="Was ist Laktoseintoleranz?">
     <div class="wrap">
-      <header class="khead"><div class="eyebrow">Frage 1 von 6</div><h2>Was ist Laktoseintoleranz?</h2><p class="topic">Wie unser Körper Milchzucker verdaut und was passiert, wenn Laktase fehlt</p></header>
+      <header class="khead"><div class="eyebrow">Frage 1 von 6 · <span class="dd-badge">🤿 Unser Deep Dive</span></div><h2>Was ist Laktoseintoleranz?</h2><p class="topic">Wie unser Körper Milchzucker verdaut und was passiert, wenn Laktase fehlt</p></header>
       <div class="col">
+        <!-- DEEP DIVE: Frage 1 ist unser Deep Dive für das Buffet -->
+        <aside class="deepdive" aria-label="Deep Dive">
+          <div class="dd-head"><span aria-hidden="true">🤿</span><h3>Frage 1 ist unser Deep Dive</h3></div>
+          <p>Für unseren Buffet-Beitrag sind wir einem einzigen Aspekt auf den Grund gegangen: <strong>Was passiert im Körper mit der Laktose?</strong> Vom Enzym Laktase im Dünndarm bis zu den Bakterien im Dickdarm. Unsere Erkenntnisse zeigen wir in den beiden Erklärvideos unten (Tab „Video ansehen“).</p>
+          <p><strong>Vom Deep Dive zum Buffet:</strong> Lang gereifter Käse enthält fast keine Laktose, Hartkäse nur etwa 0,1&nbsp;g pro 100&nbsp;g. Beim Käsemachen fließt der größte Teil der Laktose mit der Molke ab, den Rest bauen Bakterien während der Reifung ab. Deshalb gibt es von uns <strong>Käse-Obst-Spieße</strong>.</p>
+          <p class="dd-src">Wissenschaftliche Quelle: Misselwitz, B., Butter, M., Verbeke, K. &amp; Fox, M. R. (2019): Update on lactose malabsorption and intolerance: pathogenesis, diagnosis and clinical management. <em>Gut</em>, 68(11), 2080–2091. <a href="https://doi.org/10.1136/gutjnl-2019-318404" target="_blank" rel="noopener">doi:10.1136/gutjnl-2019-318404</a> · Reifung: DGE 2011 · alle Angaben siehe <a href="#quellen">Quellen</a></p>
+        </aside>
+
         <!-- TEIL 1 · Aufnahme und Video (Grafiken stehen in video.js) -->
         <div class="beitrag" data-audio="audio/frage1-teil1.m4a" data-video="frage1-teil1">
           <div class="beitrag-head"><span class="teil">Teil 1</span><h3>Wie Laktose normalerweise verdaut wird</h3></div>
@@ -985,6 +1001,9 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
         <li>„Laktoseintoleranz“. MedlinePlus Genetics, Gesundheitsportal der US-Gesundheitsbehörde NIH. <a href="https://medlineplus.gov/genetics/condition/lactose-intolerance/" target="_blank" rel="noopener">medlineplus.gov</a> (weltweit etwa 65 %, Genetik)
           <span class="orig">Originaltitel: Lactose intolerance</span>
           <dl class="qmeta"><dt>Autor</dt><dd><span class="na">nicht angegeben</span> (keine Einzelperson); Herausgeber: U.S. National Library of Medicine</dd><dt>Veröffentlicht</dt><dd>zuletzt aktualisiert am 24. März 2023; Erstveröffentlichung <span class="na">nicht angegeben</span></dd><dt>Sprache</dt><dd>Englisch</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
+        <li><strong>Wissenschaftliche Quelle für unseren Deep Dive (Frage 1):</strong> „Neues zu Laktose-Malabsorption und Laktoseintoleranz: Entstehung, Diagnose und Behandlung“. Übersichtsartikel in der Fachzeitschrift <em>Gut</em>, 68(11), 2080–2091. <a href="https://doi.org/10.1136/gutjnl-2019-318404" target="_blank" rel="noopener">doi:10.1136/gutjnl-2019-318404</a> (frei lesbar über <a href="https://europepmc.org/articles/PMC6839734" target="_blank" rel="noopener">Europe PMC</a>; Laktase im Bürstensaum spaltet Laktose in Glukose und Galaktose, Bakterien im Dickdarm vergären unverdaute Laktose zu Gasen und kurzkettigen Fettsäuren, etwa 12 g Laktose meist verträglich, gereifter Käse fast laktosefrei)
+          <span class="orig">Originaltitel: Update on lactose malabsorption and intolerance: pathogenesis, diagnosis and clinical management</span>
+          <dl class="qmeta"><dt>Autor</dt><dd>Benjamin Misselwitz, Matthias Butter, Kristin Verbeke &amp; Mark R. Fox</dd><dt>Veröffentlicht</dt><dd>online am 19. August 2019; im Heft November 2019</dd><dt>Sprache</dt><dd>Englisch</dd><dt>Zuletzt aufgerufen</dt><dd>13. November 2026</dd></dl></li>
         <li>„Symptome und Ursachen der Laktoseintoleranz“. US-Institut für Verdauungs- und Stoffwechselkrankheiten (NIDDK). <a href="https://www.niddk.nih.gov/health-information/digestive-diseases/lactose-intolerance/symptoms-causes" target="_blank" rel="noopener">niddk.nih.gov</a> (Beschwerden innerhalb weniger Stunden, Ursachen)
           <span class="orig">Originaltitel: Symptoms &amp; Causes of Lactose Intolerance</span>
           <dl class="qmeta"><dt>Autor</dt><dd><span class="na">nicht angegeben</span> (keine Einzelperson); Herausgeber: National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK)</dd><dt>Veröffentlicht</dt><dd><span class="na">nicht angegeben</span>; zuletzt geprüft im Februar 2018</dd><dt>Sprache</dt><dd>Englisch</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
