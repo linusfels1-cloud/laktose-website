@@ -117,6 +117,7 @@ aside.detail{display:flex; flex-direction:column; gap:16px; min-width:0}
 .qmeta dt{font:500 11px var(--f-mono); letter-spacing:.06em; text-transform:uppercase; color:var(--muted); padding-top:.2em}
 .qmeta dd{margin:0}
 .qmeta .na{font-style:italic; color:var(--muted)}
+.quellen .orig{display:block; margin-top:4px; font-size:.86em; color:var(--muted); font-style:italic}
 @media (max-width:480px){ .qmeta{grid-template-columns:1fr; gap:0} .qmeta dd{margin-bottom:6px} .qmeta dd:last-child{margin-bottom:0} }
 
 @media (max-width:880px){
@@ -310,28 +311,9 @@ footer{padding-block:28px calc(28px + env(safe-area-inset-bottom,0px)); border-t
 @keyframes float{50%{transform:translateY(-5px)}}
 
 /* 2: Laktase im Lauf des Lebens */
-.curve{display:block; width:100%; height:auto}
-.curve .ax{stroke:var(--line); stroke-width:1.5}
-.curve .tk{font:13px var(--f-mono); fill:var(--muted)}
-.curve .ln{fill:none; stroke-width:4; stroke-linecap:round; stroke-dasharray:1 1}
-.curve .ln.p{stroke:var(--accent)}
-.curve .ln.n{stroke:var(--warm)}
-.curve.draw .ln{animation:draw 1.6s cubic-bezier(.4,0,.2,1) both}
-.curve.draw .ln.n{animation-delay:.3s}
 @keyframes draw{from{stroke-dashoffset:1} to{stroke-dashoffset:0}}
-.curve .guide{stroke:var(--ink); stroke-width:1.5; stroke-dasharray:3 5; opacity:.45}
-.curve .dot{stroke:var(--surface); stroke-width:3}
-.curve .dot.p{fill:var(--accent)} .curve .dot.n{fill:var(--warm)}
-.curve .lg{font:500 13px var(--f-mono)}
-.age-row{display:flex; align-items:center; gap:14px; margin-top:6px}
-.age-row label{font:600 15px var(--f-display)}
-.age-row output{font:600 15px var(--f-mono); min-width:5.6em; text-align:right}
 input[type=range]{flex:1; accent-color:var(--accent); height:28px; cursor:pointer}
-.age-read{display:flex; gap:14px; align-items:flex-start; margin-top:12px; background:var(--bg); border-radius:12px; padding:14px 16px}
-.age-read .emo{font-size:36px; line-height:1}
-.age-read .emo.pop{animation:pop .45s}
 @keyframes pop{40%{transform:scale(1.3) rotate(-8deg)} 100%{transform:none}}
-.age-read p{margin:0; font-size:16px}
 
 /* 3: Schätzen */
 .guess .gq{font:700 20px/1.3 var(--f-display); margin:0 0 12px; text-wrap:balance}
@@ -481,7 +463,8 @@ body.quiz .qchip{display:block}
   .steps a[aria-current] span{display:inline}
   .steps a[aria-current]{padding-right:11px}
 }
-@media (min-width:641px){ .steps a[href="#quellen"] span{display:inline} .steps a[href="#quellen"]{padding-right:11px} }
+@media (max-width:900px){ body:not([data-page="start"]) .brand .long{display:none} }
+@media (min-width:641px){ .steps a:is([href="#quellen"],[href="#begriffe"]) span{display:inline} .steps a:is([href="#quellen"],[href="#begriffe"]){padding-right:11px} }
 @media (max-width:640px){
   .start{padding-block:40px 48px}
   .fragen{grid-template-columns:1fr; margin-top:32px}
@@ -567,8 +550,6 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
   .mol .rt{font-size:20px}
   .mol .rl,.mol .enz-l,.mol .oh{font-size:19px}
   .mol .w{font-size:20px}
-  .curve .tk{font-size:18px}
-  .curve .lg{font-size:17px}
   .trip .st .l{font-size:20px}
   .trip .nolak text{font-size:19px}
 }
@@ -610,7 +591,6 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
     <div class="wrap">
       <div class="hero-grid">
         <div class="intro">
-          <div class="eyebrow">Semesterprojekt · Biologie · Klasse 11</div>
           <h1>Laktose&shy;intoleranz</h1>
           <p class="lead">Warum vertragen die meisten Erwachsenen weltweit keinen Milchzucker, und warum ist das in Nordeuropa anders? Sucht euch eine Frage aus.</p>
         </div>
@@ -764,15 +744,6 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
           </div>
         </div>
 
-        <div class="lab" id="lab2">
-          <div class="lab-head"><span class="tag">Schieberegler</span><h3>Laktase im Lauf des Lebens</h3></div>
-          <svg class="curve" id="curve" viewBox="0 0 640 270" role="img" aria-label="Schematisches Diagramm: Laktase-Aktivität nach Alter, mit und ohne Laktasepersistenz"></svg>
-          <div class="age-row"><label for="age">Alter</label><input type="range" id="age" min="0" max="30" step="0.5" value="0"><output id="ageOut" for="age">0 Jahre</output></div>
-          <div class="age-read"><span class="emo" id="ageEmo" aria-hidden="true">👶</span><p id="ageText" aria-live="polite"></p></div>
-          <p class="note">Schematische Darstellung, keine Messwerte. Wann die Laktase abnimmt, ist von Mensch zu Mensch verschieden.</p>
-        </div>
-
-        </div>
       </div>
       <nav class="pager" aria-label="Fragen wechseln"></nav>
     </div>
@@ -792,9 +763,8 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
             <h3>Kann man Laktoseintoleranz wieder loswerden?</h3>
             <p>Ob man Laktoseintoleranz wieder loswerden kann, hängt von ihrer Ursache ab. Bei der genetisch bedingten Laktase-Nichtpersistenz gibt es bisher keine etablierte Möglichkeit, die genetische Veranlagung dauerhaft zu verändern oder die natürliche Laktaseproduktion wiederherzustellen. Allerdings können Betroffene ihre Beschwerden durch laktosefreie Milchprodukte, Laktase-Tabletten oder den Konsum kleinerer Mengen Milchprodukte reduzieren. Joghurt und bestimmte Käsesorten werden ebenfalls häufig besser vertragen, da bei ihrer Herstellung ein Teil der Laktose abgebaut wird.</p>
             <p>Anders sieht es bei einer sogenannten sekundären Laktoseintoleranz aus. Diese kann beispielsweise durch Erkrankungen oder eine Schädigung des Dünndarms entstehen. Wenn die eigentliche Ursache behandelt wird und sich die Darmschleimhaut erholt, kann sich auch die Laktaseproduktion wieder verbessern.</p>
-            <h3>Zusammenfassung</h3>
-            <p class="kurz">Die Laktoseintoleranz beruht bei den meisten Betroffenen auf einer genetisch gesteuerten Abnahme der Laktaseproduktion nach der Kindheit. Entscheidend sind dabei vor allem das LCT-Gen und seine regulatorischen Abschnitte im MCM6-Gen. Die Fähigkeit, auch als Erwachsener Milch zu verdauen, entwickelte sich durch zufällige Mutation und natürliche Selektion. Der Milchkonsum selbst verändert die Gene eines Menschen nicht, spielte aber eine wichtige Rolle bei der evolutionären Verbreitung der Laktasepersistenz.</p>
           </div>
+        </div>
       </div>
       <nav class="pager" aria-label="Fragen wechseln"></nav>
     </div>
@@ -1010,38 +980,57 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
     <div class="wrap">
       <header class="khead"><div class="eyebrow">Anhang</div><h2>Quellen</h2></header>
       <ol>
-        <li>Global Lactase Persistence Association Database (GLAD), Molecular and Cultural Evolution Lab, University College London: Tabelle „LP phenotypes with Americas“ (rev1). <a href="https://www.ucl.ac.uk/life-sciences/gee/gee-research-centres/research-groups/global-lactase-persistence-association-database-glad" target="_blank" rel="noopener">ucl.ac.uk</a> (Kartendaten; die Einzelstudie steht bei jedem Land in der Karte)
-          <dl class="qmeta"><dt>Autor</dt><dd>Molecular and Cultural Evolution Lab, UCL (Ansprechpartnerin: Prof. Dallas Swallow). Die Tabelle gehört zu Ingram, C. J. E., Montalva, N. &amp; Swallow, D. M. (2022): Lactose Malabsorption. In: <em>Advanced Dairy Chemistry</em>, Band 3</dd><dt>Veröffentlicht</dt><dd>Datenstand November 2020; Datum der Website <span class="na">nicht angegeben</span></dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
-        <li>MedlinePlus Genetics: Lactose intolerance. <a href="https://medlineplus.gov/genetics/condition/lactose-intolerance/" target="_blank" rel="noopener">medlineplus.gov</a> (weltweit etwa 65 %, Genetik)
-          <dl class="qmeta"><dt>Autor</dt><dd><span class="na">nicht angegeben</span> (keine Einzelperson); Herausgeber: U.S. National Library of Medicine</dd><dt>Veröffentlicht</dt><dd>zuletzt aktualisiert am 24. März 2023; Erstveröffentlichung <span class="na">nicht angegeben</span></dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
-        <li>Symptoms &amp; Causes of Lactose Intolerance. <a href="https://www.niddk.nih.gov/health-information/digestive-diseases/lactose-intolerance/symptoms-causes" target="_blank" rel="noopener">niddk.nih.gov</a> (Beschwerden innerhalb weniger Stunden, Ursachen)
-          <dl class="qmeta"><dt>Autor</dt><dd><span class="na">nicht angegeben</span> (keine Einzelperson); Herausgeber: National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK)</dd><dt>Veröffentlicht</dt><dd><span class="na">nicht angegeben</span>; zuletzt geprüft im Februar 2018</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
-        <li>The molecular basis of lactase persistence: Linking genetics and epigenetics. <em>Annals of Human Genetics</em>, 89(5), 321–332. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12336946/" target="_blank" rel="noopener">PubMed Central</a> (LCT-Gen, MCM6, Variante −13910 C&gt;T)
-          <dl class="qmeta"><dt>Autor</dt><dd>Céleste E. Cohen, Dallas M. Swallow &amp; Catherine Walker</dd><dt>Veröffentlicht</dt><dd>online am 22. August 2024; im Heft September 2025</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
-        <li>On the Evolution of Lactase Persistence in Humans. <em>Annual Review of Genomics and Human Genetics</em>, 18, 297–319. <a href="https://doi.org/10.1146/annurev-genom-091416-035340" target="_blank" rel="noopener">doi:10.1146/annurev-genom-091416-035340</a> (Evolution der Laktasepersistenz)
-          <dl class="qmeta"><dt>Autor</dt><dd>Laure Ségurel &amp; Céline Bon</dd><dt>Veröffentlicht</dt><dd>online am 19. April 2017; im Band vom 31. August 2017</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
-        <li>Effects of probiotics administration on lactose intolerance in adulthood: A meta-analysis. <em>Journal of Dairy Science</em>, 106(7), 4489–4501. <a href="https://doi.org/10.3168/jds.2022-22762" target="_blank" rel="noopener">doi:10.3168/jds.2022-22762</a> (Probiotika)
-          <dl class="qmeta"><dt>Autor</dt><dd>Sung-Il Ahn, Moon Seong Kim, Dong Gun Park, Bok Kyung Han &amp; Young Jun Kim</dd><dt>Veröffentlicht</dt><dd>Juli 2023 (genauer Tag <span class="na">nicht angegeben</span>)</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
-        <li>Do probiotics reduce adult lactose intolerance? A systematic review. <em>The Journal of Family Practice</em>, 54(7), 613–620. <a href="https://pubmed.ncbi.nlm.nih.gov/16009090/" target="_blank" rel="noopener">PubMed</a> (Probiotika)
-          <dl class="qmeta"><dt>Autor</dt><dd>Kara M. Levri, Kari Ketvertis, Mark Deramo, Joel H. Merenstein &amp; Frank D’Amico</dd><dt>Veröffentlicht</dt><dd>Juli 2005 (genauer Tag <span class="na">nicht angegeben</span>)</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
-        <li>Colonic adaptation to daily lactose feeding in lactose maldigesters reduces lactose intolerance. <em>The American Journal of Clinical Nutrition</em>, 64(2), 232–236. <a href="https://pubmed.ncbi.nlm.nih.gov/8694025/" target="_blank" rel="noopener">PubMed</a> (Gewöhnung der Darmbakterien)
-          <dl class="qmeta"><dt>Autor</dt><dd>S. R. Hertzler &amp; D. A. Savaiano (Vornamen nur abgekürzt angegeben)</dd><dt>Veröffentlicht</dt><dd>August 1996 (genauer Tag <span class="na">nicht angegeben</span>)</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
-        <li>Laktosefreie Lebensmittel: Nicht für jeden sinnvoll. <a href="https://www.verbraucherzentrale.de/wissen/lebensmittel/kennzeichnung-und-inhaltsstoffe/laktosefreie-lebensmittel-nicht-fuer-jeden-sinnvoll-11053" target="_blank" rel="noopener">verbraucherzentrale.de</a> (12 g Laktose laut EFSA, Hartkäse, Grenzwert „laktosefrei“)
-          <dl class="qmeta"><dt>Autor</dt><dd><span class="na">nicht angegeben</span> (keine Einzelperson); Herausgeber: Verbraucherzentrale e.&nbsp;V.</dd><dt>Veröffentlicht</dt><dd>Stand 11. Juni 2026; Erstveröffentlichung <span class="na">nicht angegeben</span></dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
-        <li>Lactrase 1.500 FCC Kapseln, Produktinformation. <a href="https://www.shop-apotheke.com/arzneimittel/9175787/lactrase-1500-fcc-kapseln.htm" target="_blank" rel="noopener">shop-apotheke.com</a> (Einnahme, Auflösen im Magen)
-          <dl class="qmeta"><dt>Autor</dt><dd><span class="na">nicht angegeben</span>; Online-Shop: Shop Apotheke; Hersteller: Pro Natura Gesellschaft für gesunde Ernährung mbH</dd><dt>Veröffentlicht</dt><dd><span class="na">nicht angegeben</span></dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
+        <li>Laktoseintoleranz: Symptome und Therapie. gesund.bund.de, das Gesundheitsportal des Bundesministeriums für Gesundheit. <a href="https://gesund.bund.de/laktoseintoleranz" target="_blank" rel="noopener">gesund.bund.de</a> (Beschwerden, primäre und sekundäre Laktoseintoleranz, etwa 12 g Laktose auf einmal meist verträglich)
+          <dl class="qmeta"><dt>Autor</dt><dd><span class="na">nicht angegeben</span> (keine Einzelperson); Herausgeber: Bundesministerium für Gesundheit, erstellt mit dem Institut für Qualität und Wirtschaftlichkeit im Gesundheitswesen (IQWiG)</dd><dt>Veröffentlicht</dt><dd>Stand 23. Februar 2026; Erstveröffentlichung <span class="na">nicht angegeben</span></dd><dt>Sprache</dt><dd>Deutsch</dd><dt>Zuletzt aufgerufen</dt><dd>13. November 2026</dd></dl></li>
+        <li>„Laktoseintoleranz“. MedlinePlus Genetics, Gesundheitsportal der US-Gesundheitsbehörde NIH. <a href="https://medlineplus.gov/genetics/condition/lactose-intolerance/" target="_blank" rel="noopener">medlineplus.gov</a> (weltweit etwa 65 %, Genetik)
+          <span class="orig">Originaltitel: Lactose intolerance</span>
+          <dl class="qmeta"><dt>Autor</dt><dd><span class="na">nicht angegeben</span> (keine Einzelperson); Herausgeber: U.S. National Library of Medicine</dd><dt>Veröffentlicht</dt><dd>zuletzt aktualisiert am 24. März 2023; Erstveröffentlichung <span class="na">nicht angegeben</span></dd><dt>Sprache</dt><dd>Englisch</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
+        <li>„Symptome und Ursachen der Laktoseintoleranz“. US-Institut für Verdauungs- und Stoffwechselkrankheiten (NIDDK). <a href="https://www.niddk.nih.gov/health-information/digestive-diseases/lactose-intolerance/symptoms-causes" target="_blank" rel="noopener">niddk.nih.gov</a> (Beschwerden innerhalb weniger Stunden, Ursachen)
+          <span class="orig">Originaltitel: Symptoms &amp; Causes of Lactose Intolerance</span>
+          <dl class="qmeta"><dt>Autor</dt><dd><span class="na">nicht angegeben</span> (keine Einzelperson); Herausgeber: National Institute of Diabetes and Digestive and Kidney Diseases (NIDDK)</dd><dt>Veröffentlicht</dt><dd><span class="na">nicht angegeben</span>; zuletzt geprüft im Februar 2018</dd><dt>Sprache</dt><dd>Englisch</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
+        <li>Essen und Trinken bei Lactoseintoleranz: Genereller Verzicht auf Milch und Milchprodukte meist nicht nötig. Pressemeldung DGE aktuell 05/2011. <a href="https://www.dge.de/fileadmin/dok/presse/meldungen/2011-2018/DGE-Pressemeldung-aktuell-05-2011-Lactoseintoleranz.pdf" target="_blank" rel="noopener">PDF</a> (etwa 15–20 % in Deutschland, Hart- und Schnittkäse fast laktosefrei)
+          <dl class="qmeta"><dt>Autor</dt><dd>Silke Restemeyer (Ansprechpartnerin, Öffentlichkeitsarbeit); Herausgeber: Deutsche Gesellschaft für Ernährung e.&nbsp;V. (DGE)</dd><dt>Veröffentlicht</dt><dd>20. Dezember 2011</dd><dt>Sprache</dt><dd>Deutsch</dd><dt>Zuletzt aufgerufen</dt><dd>13. November 2026</dd></dl></li>
+        <li>„Die molekularen Grundlagen der Laktasepersistenz: Wie Genetik und Epigenetik zusammenhängen“. Fachartikel in <em>Annals of Human Genetics</em>, 89(5), 321–332. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12336946/" target="_blank" rel="noopener">PubMed Central</a> (LCT-Gen, MCM6, Variante −13910 C&gt;T)
+          <span class="orig">Originaltitel: The molecular basis of lactase persistence: Linking genetics and epigenetics</span>
+          <dl class="qmeta"><dt>Autor</dt><dd>Céleste E. Cohen, Dallas M. Swallow &amp; Catherine Walker</dd><dt>Veröffentlicht</dt><dd>online am 22. August 2024; im Heft September 2025</dd><dt>Sprache</dt><dd>Englisch</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
+        <li>Wie Kultur die Gene beeinflusst. <em>Pharmazeutische Zeitung</em>, Ausgabe 11/2007. <a href="https://www.pharmazeutische-zeitung.de/ausgabe-112007/wie-kultur-die-gene-beeinflusst/" target="_blank" rel="noopener">pharmazeutische-zeitung.de</a> (Mutation im Steuerbereich des LCT-Gens, mehrere Varianten in Ostafrika, Milchwirtschaft und Selektion)
+          <dl class="qmeta"><dt>Autor</dt><dd>Christina Hohmann</dd><dt>Veröffentlicht</dt><dd>12. März 2007</dd><dt>Sprache</dt><dd>Deutsch</dd><dt>Zuletzt aufgerufen</dt><dd>13. November 2026</dd></dl></li>
+        <li>„Zur Evolution der Laktasepersistenz beim Menschen“. Übersichtsartikel in <em>Annual Review of Genomics and Human Genetics</em>, 18, 297–319. <a href="https://doi.org/10.1146/annurev-genom-091416-035340" target="_blank" rel="noopener">doi:10.1146/annurev-genom-091416-035340</a> (Evolution der Laktasepersistenz)
+          <span class="orig">Originaltitel: On the Evolution of Lactase Persistence in Humans</span>
+          <dl class="qmeta"><dt>Autor</dt><dd>Laure Ségurel &amp; Céline Bon</dd><dt>Veröffentlicht</dt><dd>online am 19. April 2017; im Band vom 31. August 2017</dd><dt>Sprache</dt><dd>Englisch</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
+        <li>Die Milch-Revolution. <em>Spektrum.de</em>, deutsche Übersetzung eines Artikels aus <em>Nature</em> 500, S. 20–22. <a href="https://www.spektrum.de/news/die-milch-revolution/1203870" target="_blank" rel="noopener">spektrum.de</a> (Milchwirtschaft seit gut 10.000 Jahren, Selektionsvorteil, Gene und Kultur entwickeln sich gemeinsam)
+          <dl class="qmeta"><dt>Autor</dt><dd>Andrew Curry</dd><dt>Veröffentlicht</dt><dd>12. August 2013</dd><dt>Sprache</dt><dd>Deutsch</dd><dt>Zuletzt aufgerufen</dt><dd>13. November 2026</dd></dl></li>
+        <li>Laktasepersistenz: Milchverträglichkeit verbreitete sich in wenigen tausend Jahren in Mitteleuropa. <em>Deutsches Ärzteblatt</em>. <a href="https://www.aerzteblatt.de/nachrichten/116287/Laktasepersistenz-Milchvertraeglichkeit-verbreitete-sich-in-wenigen-tausend-Jahren-in-Mitteleuropa" target="_blank" rel="noopener">aerzteblatt.de</a> (schnelle Ausbreitung der Genvariante, stark positive Selektion)
+          <dl class="qmeta"><dt>Autor</dt><dd>Redaktion Deutsches Ärzteblatt (Kürzel „rme“, voller Name <span class="na">nicht angegeben</span>)</dd><dt>Veröffentlicht</dt><dd>28. September 2020</dd><dt>Sprache</dt><dd>Deutsch</dd><dt>Zuletzt aufgerufen</dt><dd>13. November 2026</dd></dl></li>
+        <li>Global Lactase Persistence Association Database (GLAD, „Weltweite Datenbank zur Laktasepersistenz“), Molecular and Cultural Evolution Lab, University College London: Tabelle „Laktasepersistenz-Phänotypen einschließlich Amerika“ (rev1). <a href="https://www.ucl.ac.uk/life-sciences/gee/gee-research-centres/research-groups/global-lactase-persistence-association-database-glad" target="_blank" rel="noopener">ucl.ac.uk</a> (Kartendaten; die Einzelstudie steht bei jedem Land in der Karte)
+          <span class="orig">Originaltitel: LP phenotypes with Americas</span>
+          <dl class="qmeta"><dt>Autor</dt><dd>Molecular and Cultural Evolution Lab, UCL (Ansprechpartnerin: Prof. Dallas Swallow). Die Tabelle gehört zu Ingram, C. J. E., Montalva, N. &amp; Swallow, D. M. (2022): Lactose Malabsorption. In: <em>Advanced Dairy Chemistry</em>, Band 3</dd><dt>Veröffentlicht</dt><dd>Datenstand November 2020; Datum der Website <span class="na">nicht angegeben</span></dd><dt>Sprache</dt><dd>Englisch</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
         <li>Kartengrundlage: world-atlas, Version 2.0.2 (fertige Weltkarte aus den Natural-Earth-Daten, gemeinfrei). <a href="https://www.npmjs.com/package/world-atlas" target="_blank" rel="noopener">npmjs.com</a>
-          <dl class="qmeta"><dt>Autor</dt><dd>Mike Bostock (Paket world-atlas); Kartendaten: Natural Earth, ohne einzelne Autoren</dd><dt>Veröffentlicht</dt><dd>5. September 2019 (Version 2.0.2)</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
-        <li><strong>Nicht mehr verwendet:</strong> Country, regional, and global estimates for lactose malabsorption in adults: a systematic review and meta-analysis. <em>The Lancet Gastroenterology &amp; Hepatology</em>, 2(10), 738–746. Die Studie wurde 2024 mit einer offiziellen Warnung versehen und im Januar 2025 zurückgezogen. <a href="https://doi.org/10.1016/S2468-1253(24)00398-4" target="_blank" rel="noopener">Rückzugsnotiz</a>
-          <dl class="qmeta"><dt>Autor</dt><dd>Christian Løvold Storhaug, Svein Kjetil Fosse &amp; Lars T. Fadnes; Rückzugsnotiz: die Herausgeber der Zeitschrift</dd><dt>Veröffentlicht</dt><dd>Oktober 2017; Rückzugsnotiz Januar 2025 (Band 10, Heft 1, S. 13)</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
+          <dl class="qmeta"><dt>Autor</dt><dd>Mike Bostock (Paket world-atlas); Kartendaten: Natural Earth, ohne einzelne Autoren</dd><dt>Veröffentlicht</dt><dd>5. September 2019 (Version 2.0.2)</dd><dt>Sprache</dt><dd>Englisch</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
+        <li>„Wirkung von Probiotika auf die Laktoseintoleranz bei Erwachsenen: eine Metaanalyse“. Fachartikel in <em>Journal of Dairy Science</em>, 106(7), 4489–4501. <a href="https://doi.org/10.3168/jds.2022-22762" target="_blank" rel="noopener">doi:10.3168/jds.2022-22762</a> (Probiotika)
+          <span class="orig">Originaltitel: Effects of probiotics administration on lactose intolerance in adulthood: A meta-analysis</span>
+          <dl class="qmeta"><dt>Autor</dt><dd>Sung-Il Ahn, Moon Seong Kim, Dong Gun Park, Bok Kyung Han &amp; Young Jun Kim</dd><dt>Veröffentlicht</dt><dd>Juli 2023 (genauer Tag <span class="na">nicht angegeben</span>)</dd><dt>Sprache</dt><dd>Englisch</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
+        <li>Lactrase 1.500 FCC Kapseln, Produktinformation. <a href="https://www.shop-apotheke.com/arzneimittel/9175787/lactrase-1500-fcc-kapseln.htm" target="_blank" rel="noopener">shop-apotheke.com</a> (Einnahme, Auflösen im Magen)
+          <dl class="qmeta"><dt>Autor</dt><dd><span class="na">nicht angegeben</span>; Online-Shop: Shop Apotheke; Hersteller: Pro Natura Gesellschaft für gesunde Ernährung mbH</dd><dt>Veröffentlicht</dt><dd><span class="na">nicht angegeben</span></dd><dt>Sprache</dt><dd>Deutsch</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
+        <li>„Verringern Probiotika die Laktoseintoleranz bei Erwachsenen? Eine systematische Übersichtsarbeit“. Fachartikel in <em>The Journal of Family Practice</em>, 54(7), 613–620. <a href="https://pubmed.ncbi.nlm.nih.gov/16009090/" target="_blank" rel="noopener">PubMed</a> (Probiotika)
+          <span class="orig">Originaltitel: Do probiotics reduce adult lactose intolerance? A systematic review</span>
+          <dl class="qmeta"><dt>Autor</dt><dd>Kara M. Levri, Kari Ketvertis, Mark Deramo, Joel H. Merenstein &amp; Frank D’Amico</dd><dt>Veröffentlicht</dt><dd>Juli 2005 (genauer Tag <span class="na">nicht angegeben</span>)</dd><dt>Sprache</dt><dd>Englisch</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
+        <li>Laktosefreie Lebensmittel: Nicht für jeden sinnvoll. <a href="https://www.verbraucherzentrale.de/wissen/lebensmittel/kennzeichnung-und-inhaltsstoffe/laktosefreie-lebensmittel-nicht-fuer-jeden-sinnvoll-11053" target="_blank" rel="noopener">verbraucherzentrale.de</a> (12 g Laktose laut EFSA, Hartkäse, Grenzwert „laktosefrei“)
+          <dl class="qmeta"><dt>Autor</dt><dd><span class="na">nicht angegeben</span> (keine Einzelperson); Herausgeber: Verbraucherzentrale e.&nbsp;V.</dd><dt>Veröffentlicht</dt><dd>Stand 11. Juni 2026; Erstveröffentlichung <span class="na">nicht angegeben</span></dd><dt>Sprache</dt><dd>Deutsch</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
+        <li>„Gewöhnung des Dickdarms an tägliche Laktose verringert die Beschwerden bei Menschen, die Laktose schlecht verdauen“. Fachartikel in <em>The American Journal of Clinical Nutrition</em>, 64(2), 232–236. <a href="https://pubmed.ncbi.nlm.nih.gov/8694025/" target="_blank" rel="noopener">PubMed</a> (Gewöhnung der Darmbakterien)
+          <span class="orig">Originaltitel: Colonic adaptation to daily lactose feeding in lactose maldigesters reduces lactose intolerance</span>
+          <dl class="qmeta"><dt>Autor</dt><dd>S. R. Hertzler &amp; D. A. Savaiano (Vornamen nur abgekürzt angegeben)</dd><dt>Veröffentlicht</dt><dd>August 1996 (genauer Tag <span class="na">nicht angegeben</span>)</dd><dt>Sprache</dt><dd>Englisch</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
         <li>Essen und Trinken bei Laktoseintoleranz. Werte nach: <em>Der kleine Souci Fachmann Kraut, Lebensmitteltabelle für die Praxis</em>, 5. Auflage. <a href="https://www.mri.tum.de/sites/default/files/2023-07/laktoseintoleranz_ernaehrung_2016.pdf" target="_blank" rel="noopener">PDF</a> (Laktosewerte im Quiz bei Frage 6)
-          <dl class="qmeta"><dt>Autor</dt><dd><span class="na">nicht angegeben</span> (keine Einzelperson); Herausgeber: Institut für Ernährungsmedizin, Klinikum rechts der Isar der TU München</dd><dt>Veröffentlicht</dt><dd>Stand März 2016</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
+          <dl class="qmeta"><dt>Autor</dt><dd><span class="na">nicht angegeben</span> (keine Einzelperson); Herausgeber: Institut für Ernährungsmedizin, Klinikum rechts der Isar der TU München</dd><dt>Veröffentlicht</dt><dd>Stand März 2016</dd><dt>Sprache</dt><dd>Deutsch</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
         <li>Lactosegehaltstabelle (Informationsmaterial zu Lactrase, ohne eigenen Titel). <a href="https://www.bildungsinstitut-rlp.drk.de/fileadmin/downloads/Bereitschaften/Fachdienstausbildung_Verpflegungsdienst/Hintergrundinfos/02_Lactosegehaltstabelle.pdf" target="_blank" rel="noopener">PDF</a> (Käse unter 0,1 g, Magermilchpulver)
-          <dl class="qmeta"><dt>Autor</dt><dd><span class="na">nicht angegeben</span> (keine Einzelperson); Herausgeber: Gesellschaft für gesunde Ernährung mbH, Frankfurt am Main</dd><dt>Veröffentlicht</dt><dd><span class="na">nicht angegeben</span></dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
+          <dl class="qmeta"><dt>Autor</dt><dd><span class="na">nicht angegeben</span> (keine Einzelperson); Herausgeber: Gesellschaft für gesunde Ernährung mbH, Frankfurt am Main</dd><dt>Veröffentlicht</dt><dd><span class="na">nicht angegeben</span></dd><dt>Sprache</dt><dd>Deutsch</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
         <li>Nutella: Weniger Kakao – mehr Milchpulver. <a href="https://www.vzhh.de/themen/lebensmittel-ernaehrung/produktchecks/nutella-weniger-kakao-mehr-milchpulver" target="_blank" rel="noopener">vzhh.de</a> (8,7 % Magermilchpulver)
-          <dl class="qmeta"><dt>Autor</dt><dd><span class="na">nicht angegeben</span> (keine Einzelperson); Herausgeber: Verbraucherzentrale Hamburg</dd><dt>Veröffentlicht</dt><dd>Stand 9. November 2017; Erstveröffentlichung <span class="na">nicht angegeben</span></dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
-        <li>Sprachausgabe für Frage 2 und 3: Piper (Text-to-Speech-Programm) mit der Stimme „Thorsten“ (high). <a href="https://github.com/thorstenMueller/Thorsten-Voice" target="_blank" rel="noopener">github.com/thorstenMueller/Thorsten-Voice</a> (Stimme unter CC0-Lizenz frei nutzbar)
-          <dl class="qmeta"><dt>Autor</dt><dd>Thorsten Müller (Stimme); Programm Piper: The Home Assistant Authors</dd><dt>Veröffentlicht</dt><dd><span class="na">nicht angegeben</span>; verwendet wurde Piper Version 1.8.0</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
+          <dl class="qmeta"><dt>Autor</dt><dd><span class="na">nicht angegeben</span> (keine Einzelperson); Herausgeber: Verbraucherzentrale Hamburg</dd><dt>Veröffentlicht</dt><dd>Stand 9. November 2017; Erstveröffentlichung <span class="na">nicht angegeben</span></dd><dt>Sprache</dt><dd>Deutsch</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
+        <li>Sprachausgabe für Frage 2 und 3: Piper (Programm zur Sprachausgabe) mit der Stimme „Thorsten“ (high). <a href="https://github.com/thorstenMueller/Thorsten-Voice" target="_blank" rel="noopener">github.com/thorstenMueller/Thorsten-Voice</a> (Stimme unter CC0-Lizenz frei nutzbar)
+          <dl class="qmeta"><dt>Autor</dt><dd>Thorsten Müller (Stimme); Programm Piper: The Home Assistant Authors</dd><dt>Veröffentlicht</dt><dd><span class="na">nicht angegeben</span>; verwendet wurde Piper Version 1.8.0</dd><dt>Sprache</dt><dd>Deutsch (Stimme); Website Englisch</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
+        <li><strong>Nicht mehr verwendet:</strong> „Laktose-Malabsorption bei Erwachsenen nach Ländern, Regionen und weltweit: eine systematische Übersichtsarbeit und Metaanalyse“. Fachartikel in <em>The Lancet Gastroenterology &amp; Hepatology</em>, 2(10), 738–746. Die Studie wurde 2024 mit einer offiziellen Warnung versehen und im Januar 2025 zurückgezogen. <a href="https://doi.org/10.1016/S2468-1253(24)00398-4" target="_blank" rel="noopener">Rückzugsnotiz</a>
+          <span class="orig">Originaltitel: Country, regional, and global estimates for lactose malabsorption in adults: a systematic review and meta-analysis</span>
+          <dl class="qmeta"><dt>Autor</dt><dd>Christian Løvold Storhaug, Svein Kjetil Fosse &amp; Lars T. Fadnes; Rückzugsnotiz: die Herausgeber der Zeitschrift</dd><dt>Veröffentlicht</dt><dd>Oktober 2017; Rückzugsnotiz Januar 2025 (Band 10, Heft 1, S. 13)</dd><dt>Sprache</dt><dd>Englisch</dd><dt>Zuletzt aufgerufen</dt><dd>12. November 2026</dd></dl></li>
         <!-- WEITERE QUELLEN DER GRUPPE HIER ERGÄNZEN -->
       </ol>
       <nav class="pager" aria-label="Fragen wechseln"></nav>
@@ -1049,7 +1038,7 @@ a, button, input, select, label{touch-action:manipulation; -webkit-tap-highlight
   </section>
 </main>
 
-<footer><div class="wrap">Semesterprojekt Laktoseintoleranz · Biologie Klasse 11</div></footer>
+<footer><div class="wrap">Semesterprojekt Laktoseintoleranz · Klasse 11a · Fachschwerpunkt Biologie</div></footer>
 <div class="toast" id="toast" role="status"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
@@ -1309,7 +1298,7 @@ function renderSeen(){
   const n=CH.filter(c=>seen.has(c)).length;
   const pips=CH.map(c=>`<i class="${seen.has(c)?'on':''}"></i>`).join('');
   $('seenNote').innerHTML = n===0
-    ? 'Tipp: Fangt bei Frage 1 an oder springt direkt zur Weltkarte.'
+    ? ''
     : n<CH.length ? `<span class="pips">${pips}</span> ${n} von ${CH.length} Fragen angeschaut`
           : `<span class="pips">${pips}</span> Alle Fragen angeschaut 🎉`;
 }
@@ -1357,41 +1346,6 @@ sBtn.onclick=()=>{
 
 /* ===== 2: Laktase im Lauf des Lebens (schematisch) ===== */
 const NS='http://www.w3.org/2000/svg';
-const cv=$('curve');
-const X0=56, X1=612, Y0=220, Y1=44, AMAX=30;
-const sx=a=>X0+a/AMAX*(X1-X0), sy=v=>Y0-v*(Y0-Y1);
-const pers=a=> a<1 ? 1 : 1-0.12*(1-Math.exp(-(a-1)/4));
-const non =a=> a<2 ? 1 : 0.1+0.9*Math.exp(-(a-2)/2.4);
-const pathOf=f=>{ let d=''; for(let i=0;i<=150;i++){ const a=i/150*AMAX; d+=(i?'L':'M')+sx(a).toFixed(1)+','+sy(f(a)).toFixed(1); } return d; };
-let svgs=`<line class="ax" x1="${X0}" y1="${Y0}" x2="${X1}" y2="${Y0}"/><line class="ax" x1="${X0}" y1="${Y1-14}" x2="${X0}" y2="${Y0}"/>`;
-for(let a=0;a<=AMAX;a+=5) svgs+=`<text class="tk" x="${sx(a)}" y="${Y0+20}" text-anchor="middle">${a}</text>`;
-svgs+=`<text class="tk" x="${X1}" y="${Y0+40}" text-anchor="end">Alter in Jahren</text>`;
-svgs+=`<text class="tk" x="${X0-8}" y="${Y1+4}" text-anchor="end">hoch</text><text class="tk" x="${X0-8}" y="${Y0-4}" text-anchor="end">0</text>`;
-svgs+=`<text class="tk" x="${X0+6}" y="${Y1-22}">Laktase-Aktivität</text>`;
-svgs+=`<g class="lg"><line x1="380" y1="20" x2="404" y2="20" stroke="var(--accent)" stroke-width="4" stroke-linecap="round"/><text x="410" y="25" fill="var(--accent)">mit Laktasepersistenz</text>`;
-svgs+=`<line x1="380" y1="42" x2="404" y2="42" stroke="var(--warm)" stroke-width="4" stroke-linecap="round"/><text x="410" y="47" fill="var(--warm)">ohne (häufigster Fall)</text></g>`;
-svgs+=`<path class="ln p" pathLength="1" d="${pathOf(pers)}"/><path class="ln n" pathLength="1" d="${pathOf(non)}"/>`;
-svgs+=`<line class="guide" id="cGuide" y1="${Y1-10}" y2="${Y0}"/><circle class="dot p" id="cDp" r="8"/><circle class="dot n" id="cDn" r="8"/>`;
-cv.innerHTML=svgs;
-const ageIn=$('age'), ageOut=$('ageOut'), ageEmo=$('ageEmo'), ageText=$('ageText');
-const PHASES=[
-  {max:2, emo:'👶', txt:'Baby: Die Laktase arbeitet auf Hochtouren, denn Muttermilch enthält viel Laktose. Das gilt für fast alle Menschen.'},
-  {max:6, emo:'🧒', txt:'Nach dem Abstillen fahren die meisten Menschen die Laktase-Produktion langsam herunter. Bei Säugetieren ist das der Normalfall.'},
-  {max:18, emo:'🧑', txt:'Ohne Laktasepersistenz ist nur noch wenig Laktase übrig. Mit Laktasepersistenz bleibt sie aktiv.'},
-  {max:99, emo:'🧔', txt:'Erwachsene mit Laktasepersistenz vertragen Milch weiterhin. Grund ist eine Genvariante in der Nähe des LCT-Gens, die die Laktase-Produktion eingeschaltet lässt.'}
-];
-let lastPhase=-1;
-function updAge(){
-  const a=+ageIn.value, x=sx(a);
-  ageOut.textContent = a===1 ? '1 Jahr' : `${String(a).replace('.',',')} Jahre`;
-  $('cGuide').setAttribute('x1',x); $('cGuide').setAttribute('x2',x);
-  $('cDp').setAttribute('cx',x); $('cDp').setAttribute('cy',sy(pers(a)));
-  $('cDn').setAttribute('cx',x); $('cDn').setAttribute('cy',sy(non(a)));
-  const pi=PHASES.findIndex(p=>a<p.max);
-  if(pi!==lastPhase){ lastPhase=pi; ageEmo.textContent=PHASES[pi].emo; ageText.textContent=PHASES[pi].txt;
-    ageEmo.classList.remove('pop'); void ageEmo.offsetWidth; ageEmo.classList.add('pop'); }
-}
-ageIn.addEventListener('input',updAge); updAge();
 
 /* ===== 3: Karten-Quiz =====
    5 zufällige Länder (nur Werte aus der Originaltabelle, q "A"). Während des Quiz sind die
@@ -1709,10 +1663,8 @@ document.addEventListener('pagechange',e=>{
   const id=e.detail.id;
   if(id==='start'){ renderSeen(); heroCount(); }
   if(id==='karte' && !document.body.classList.contains('quiz')){ revealMap(); const dv=$('dVal'); dv.dataset.v=0; select(selected); }
-  if(id==='biologie' && !REDUCED){ cv.classList.remove('draw'); void cv.getBoundingClientRect(); cv.classList.add('draw'); }
   if(CH.includes(id) && !seen.has(id)){
     seen.add(id); saveSeen(); renderSeen();
-    if(CH.every(c=>seen.has(c))){ setTimeout(()=>{ confetti(); toast('Alle sechs Fragen angeschaut! 🎉'); },T(600)); }
   }
 });
 renderSeen();

@@ -787,8 +787,8 @@ const F2 = {
 
 /* ================= FRAGE 3: Wie hat sich die Laktasepersistenz entwickelt? ================= */
 const F3 = {
-  duration: 164.9,
-  chapters: [[0,'Frage 3'],[4.45,'Evolution'],[13.13,'Vor 10.000 Jahren'],[27.4,'Zufällige Mutation'],[36.51,'Ein Vorteil'],[55.76,'Natürliche Selektion'],[69.54,'Unterschiede weltweit'],[80.9,'Wieder loswerden?'],[116.53,'Sekundäre Laktoseintoleranz'],[133.64,'Zusammenfassung']],
+  duration: 133.6,
+  chapters: [[0,'Frage 3'],[4.45,'Evolution'],[13.13,'Vor 10.000 Jahren'],[27.4,'Zufällige Mutation'],[36.51,'Ein Vorteil'],[55.76,'Natürliche Selektion'],[69.54,'Unterschiede weltweit'],[80.9,'Wieder loswerden?'],[116.53,'Sekundäre Laktoseintoleranz']],
   subs: [
     [0, "Frage 3: Wie hat sich die Laktasepersistenz entwickelt?"],
     [4.45, "Wie sich die Laktasepersistenz entwickelt hat"],
@@ -811,11 +811,6 @@ const F3 = {
     [116.53, "Anders sieht es bei einer sogenannten sekundären Laktoseintoleranz aus."],
     [121.18, "Diese kann beispielsweise durch Erkrankungen oder eine Schädigung des Dünndarms entstehen."],
     [125.9, "Wenn die eigentliche Ursache behandelt wird und sich die Darmschleimhaut erholt, kann sich auch die Laktaseproduktion wieder verbessern."],
-    [133.64, "Zusammenfassung"],
-    [135.18, "Die Laktoseintoleranz beruht bei den meisten Betroffenen auf einer genetisch gesteuerten Abnahme der Laktaseproduktion nach der Kindheit."],
-    [142.87, "Entscheidend sind dabei vor allem das LCT-Gen und seine regulatorischen Abschnitte im MCM6-Gen."],
-    [149.36, "Die Fähigkeit, auch als Erwachsener Milch zu verdauen, entwickelte sich durch zufällige Mutation und natürliche Selektion."],
-    [156.35, "Der Milchkonsum selbst verändert die Gene eines Menschen nicht, spielte aber eine wichtige Rolle bei der evolutionären Verbreitung der Laktasepersistenz."]
   ],
   scenes: [
     { start: 0, svg: () =>
@@ -899,13 +894,8 @@ const F3 = {
         ${[0,2,4,6,8].map((i,k)=>`<g ${at(129.5+k*0.2,'pop')}>${enzyme(villusTop(i)[0], villusTop(i)[1]-4, 0.55)}</g>`).join('')}
         <g ${at(126.4)}><text class="t-sm t-c" x="480" y="160">Ursache behandelt, Schleimhaut erholt sich</text></g>
         <g ${at(130.2)}><rect class="card" x="250" y="420" width="460" height="60" rx="14"/><text class="t-lbl t-ok t-c" x="480" y="458">Laktaseproduktion kann sich erholen</text></g>`;
-    }},
-    { start: 133.64, svg: () =>
-      `<g ${at(133.7)}><text class="t-mid" x="480" y="56">Zusammenfassung</text></g>
-       <g ${at(135.3)}><rect class="card" x="60" y="90" width="840" height="86" rx="16"/><text class="t-lbl" x="90" y="128">Ursache: genetisch gesteuerte Abnahme</text><text class="t-sm" x="90" y="158">der Laktaseproduktion nach der Kindheit</text></g>
-       <g ${at(143.0)}><rect class="card" x="60" y="190" width="840" height="86" rx="16"/><text class="t-lbl" x="90" y="228">Gene: das <tspan class="t-warm">LCT-Gen</tspan> und seine Steuerung im <tspan style="fill:#7a5cc4">MCM6-Gen</tspan></text></g>
-       <g ${at(149.5)}><rect class="card" x="60" y="290" width="840" height="86" rx="16"/><text class="t-lbl" x="90" y="328">Evolution: zufällige Mutation + natürliche Selektion</text><text class="t-sm" x="90" y="358">so entstand die Laktasepersistenz</text></g>
-       <g ${at(156.5)}><rect class="card" x="60" y="390" width="840" height="86" rx="16"/><text class="t-lbl" x="90" y="428">Milchtrinken verändert die Gene <tspan class="t-bad">nicht</tspan></text><text class="t-sm" x="90" y="458">aber Milch war wichtig für die Verbreitung der Variante</text></g>` }
+    }}
+
   ]
 };
 
